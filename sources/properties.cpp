@@ -64,6 +64,51 @@ bool CreateMissingIntermediateGroupsPropertyBase::getCreateMissingIntermediateGr
     );
     return create_missing_intermediate_groups==1;
 }
+//@+node:gcross.20110526150836.1970: *3* DatasetAccessProperties
+DatasetAccessProperties::DatasetAccessProperties()
+  : Properties(assertSuccess("creating dataset access properties",H5Pcreate(H5P_DATASET_ACCESS)))
+{}
+
+
+
+//@+others
+//@-others
+//@+node:gcross.20110526150836.1966: *3* DatasetCreationProperties
+DatasetCreationProperties::DatasetCreationProperties()
+  : Properties(assertSuccess("creating dataset creation properties",H5Pcreate(H5P_DATASET_CREATE)))
+{}
+
+DatasetCreationProperties DatasetCreationProperties::setChunk(hsize_t const chunk_size) const {
+    return setChunk(1,&chunk_size);
+}
+
+DatasetCreationProperties DatasetCreationProperties::setChunk(unsigned int rank, hsize_t const* chunk_sizes) const {
+    assertSuccess(
+        "setting dataset chunk sizes",
+        H5Pset_chunk(getId(),rank,chunk_sizes)
+    );
+    return *this;
+}
+//@+node:gcross.20110526150836.1971: *3* DatasetTransferProperties
+DatasetTransferProperties::DatasetTransferProperties()
+  : Properties(assertSuccess("creating dataset transfer properties",H5Pcreate(H5P_DATASET_XFER)))
+{}
+//@+node:gcross.20110526150836.1977: *3* FileAccessProperties
+FileAccessProperties::FileAccessProperties()
+  : Properties(assertSuccess("creating file access properties",H5Pcreate(H5P_FILE_ACCESS)))
+{}
+
+FileAccessProperties FileAccessProperties::useCoreDriver(size_t increment_size_in_bytes, bool write_to_backing_store) const {
+    assertSuccess(
+        "setting file to use CORE (memory) driver",
+        H5Pset_fapl_core(getId(),increment_size_in_bytes,write_to_backing_store)
+    );
+    return *this;
+}
+//@+node:gcross.20110526150836.1979: *3* FileCreationProperties
+FileCreationProperties::FileCreationProperties()
+  : Properties(assertSuccess("creating file creation properties",H5Pcreate(H5P_FILE_CREATE)))
+{}
 //@+node:gcross.20110525201928.3099: *3* LinkCreationProperties
 LinkCreationProperties::LinkCreationProperties()
   : Properties(assertSuccess("creating link creation properties",H5Pcreate(H5P_LINK_CREATE)))

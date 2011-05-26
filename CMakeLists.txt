@@ -2,7 +2,7 @@
 #@+node:gcross.20110520211700.1428: * @file CMakeLists.txt
 cmake_minimum_required (VERSION 2.8)
 project (HDF++ C CXX)
-set (version 0.1)
+set (version 0.2)
 
 #@+<< Settings >>
 #@+node:gcross.20110520211700.1429: ** << Settings >>

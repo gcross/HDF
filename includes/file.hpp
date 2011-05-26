@@ -40,20 +40,8 @@ namespace HDF {
 //@+others
 //@+node:gcross.20110520194631.1395: ** class File
 class File: public Locatable, public Parent, public Attributable {
-    //@+<< Nested types >>
-    //@+node:gcross.20110520211700.1387: *3* << Nested Types >>
-    public:
-
-    struct AccessProperties: public Properties {
-        AccessProperties();
-
-        AccessProperties useCoreDriver(size_t increment_size_in_bytes, bool write_to_backing_store) const;
-    };
-
-    struct CreationProperties: public Properties { CreationProperties(); };
-    //@-<< Nested types >>
     //@+others
-    //@+node:gcross.20110520194631.1424: *3* Constructors/Destructors
+    //@+node:gcross.20110520194631.1424: *3* Constructors
     protected:
 
     File(hid_t id);
@@ -66,14 +54,14 @@ class File: public Locatable, public Parent, public Attributable {
     File(
         char const* filepath
       , FileOpenMode mode
-      , boost::optional<AccessProperties const&> const& optional_properties = boost::none
+      , boost::optional<FileAccessProperties const&> const& optional_properties = boost::none
     );
 
     File(
         char const* filepath
       , FileCreateMode mode
-      , boost::optional<CreationProperties const&> const& optional_creation_properties = boost::none
-      , boost::optional<AccessProperties const&> const& optional_access_properties = boost::none
+      , boost::optional<FileCreationProperties const&> const& optional_creation_properties = boost::none
+      , boost::optional<FileAccessProperties const&> const& optional_access_properties = boost::none
     );
     //@+node:gcross.20110523113700.1690: *3* Fields
     protected:

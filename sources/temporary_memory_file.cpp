@@ -35,8 +35,8 @@ namespace HDF {
 //@+node:gcross.20110521115623.3215: *3* Constructors
 TemporaryMemoryFile::TemporaryMemoryFile(
     size_t increment_size_in_bytes
-  , boost::optional<CreationProperties const&> const& optional_creation_properties
-  , boost::optional<AccessProperties const&> const& optional_access_properties
+  , boost::optional<FileCreationProperties const&> const& optional_creation_properties
+  , boost::optional<FileAccessProperties const&> const& optional_access_properties
 )
   : MemoryFile(
         getTemporaryFileName(),

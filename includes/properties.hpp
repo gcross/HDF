@@ -42,7 +42,7 @@ class Properties: public Identifiable {
     Properties();
     //@-others
 };
-//@+node:gcross.20110521115623.2860: ** Properties
+//@+node:gcross.20110526150836.1975: ** Shared properties
 //@+node:gcross.20110525201928.3113: *3* CreateMissingIntermediateGroupsPropertyBase
 class CreateMissingIntermediateGroupsPropertyBase : public virtual Properties {
 protected:
@@ -71,8 +71,43 @@ public:
         return setCreateMissingIntermediateGroups(false);
     }
 };
+//@+node:gcross.20110521115623.2860: ** Properties
+//@+node:gcross.20110526150836.1961: *3* DatasetAccessProperties
+struct DatasetAccessProperties: public Properties {
+    DatasetAccessProperties();
+};
+//@+node:gcross.20110526150836.1972: *3* DatasetCreationProperties
+struct DatasetCreationProperties: Properties {
+    DatasetCreationProperties();
+
+    DatasetCreationProperties setChunk(hsize_t const chunk_size) const;
+    DatasetCreationProperties setChunk(unsigned int rank, hsize_t const* chunk_sizes) const;
+};
+//@+node:gcross.20110526150836.1962: *3* DatasetTransferProperties
+struct DatasetTransferProperties: public Properties {
+    DatasetTransferProperties();
+};
+//@+node:gcross.20110526150836.1974: *3* FileAccessProperties
+struct FileAccessProperties: public Properties {
+    FileAccessProperties();
+
+    FileAccessProperties useCoreDriver(size_t increment_size_in_bytes, bool write_to_backing_store) const;
+};
+//@+node:gcross.20110526150836.1973: *3* FileCreationProperties
+struct FileCreationProperties: public Properties {
+    FileCreationProperties();
+};
+//@+node:gcross.20110526150836.1960: *3* GroupCreationProperties
+struct GroupCreationProperties
+  : public virtual Properties
+  , public CreateMissingIntermediateGroupsProperty<GroupCreationProperties>
+{
+    GroupCreationProperties();
+};
 //@+node:gcross.20110525201928.3097: *3* LinkAccessProperties
-struct LinkAccessProperties: public Properties { LinkAccessProperties(); };
+struct LinkAccessProperties: public Properties {
+    LinkAccessProperties();
+};
 //@+node:gcross.20110525201928.3098: *3* LinkCreationProperties
 struct LinkCreationProperties
   : public virtual Properties

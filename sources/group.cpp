@@ -54,7 +54,7 @@ Group::Group(
 Group::Group(
     CreateAt<Location const> location
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
-  , optional<CreationProperties const&> const& optional_group_creation_properties
+  , optional<GroupCreationProperties const&> const& optional_group_creation_properties
 )
   : Object(
         location->getFileIdentity(),
@@ -73,10 +73,6 @@ Group::Group(
 {}
 //@+node:gcross.20110523113700.1706: *3* Fields
 hid_t Group::getParentId() const { return getId(); }
-//@+node:gcross.20110521115623.2923: *3* Nested types
-Group::CreationProperties::CreationProperties()
-  : Properties(assertSuccess("creating group creation properties",H5Pcreate(H5P_GROUP_CREATE)))
-{}
 //@-others
 
 }

@@ -43,7 +43,7 @@ GroupArray::GroupArray(
 GroupArray::GroupArray(
     CreateAt<Location const> location
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
-  , optional<CreationProperties const&> const& optional_group_creation_properties
+  , optional<GroupCreationProperties const&> const& optional_group_creation_properties
 )
   : Group(location,optional_link_creation_properties,optional_group_creation_properties)
 {}

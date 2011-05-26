@@ -49,7 +49,7 @@ class GroupArray: public Group {
     GroupArray(
         CreateAt<Location const> location
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
-      , boost::optional<Group::CreationProperties const&> const& optional_creation_properties = boost::none
+      , boost::optional<GroupCreationProperties const&> const& optional_group_creation_properties = boost::none
     );
     //@+node:gcross.20110521115623.3002: *3* I/O support
     template<typename T> void operator<<(RangeOf<T> values) const {

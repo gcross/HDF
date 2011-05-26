@@ -54,7 +54,7 @@ Container::Container(Location const& location)
 Container::Container(
     CreateAt<Location const> location
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
-  , optional<Group::CreationProperties const&> const& optional_creation_properties
+  , optional<GroupCreationProperties const&> const& optional_creation_properties
 )
   : Locatable(location->getFileIdentity(),Identity::Ptr())
 {
@@ -65,7 +65,7 @@ void Container::initialize(
     Location const& location
   , optional<pair<
         optional<LinkCreationProperties const&>
-     ,  optional<Group::CreationProperties const&>
+     ,  optional<GroupCreationProperties const&>
     > > const& creation_properties
 ) {
     string const& name = location.getName();

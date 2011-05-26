@@ -36,8 +36,8 @@ class TemporaryMemoryFile: public MemoryFile {
 
     TemporaryMemoryFile(
         size_t increment_size_in_bytes = 4096
-      , boost::optional<CreationProperties const&> const& optional_creation_properties = boost::none
-      , boost::optional<AccessProperties const&> const& optional_access_properties = boost::none
+      , boost::optional<FileCreationProperties const&> const& optional_creation_properties = boost::none
+      , boost::optional<FileAccessProperties const&> const& optional_access_properties = boost::none
     );
     //@+node:gcross.20110521115623.3219: *3* Miscellaneous
     protected:

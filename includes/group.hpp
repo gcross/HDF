@@ -34,12 +34,6 @@ namespace HDF {
 //@+others
 //@+node:gcross.20110521115623.2896: ** class Group
 class Group: public Object, public Parent {
-    //@+<< Nested types >>
-    //@+node:gcross.20110521115623.2921: *3* << Nested Types >>
-    public:
-
-    struct CreationProperties: public Properties { CreationProperties(); };
-    //@-<< Nested types >>
     //@+others
     //@+node:gcross.20110521115623.2897: *3* Constructors
     public:
@@ -51,7 +45,7 @@ class Group: public Object, public Parent {
     Group(
         CreateAt<Location const> location
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
-      , boost::optional<CreationProperties const&> const& optional_creation_properties = boost::none
+      , boost::optional<GroupCreationProperties const&> const& optional_group_creation_properties = boost::none
     );
     //@+node:gcross.20110523113700.1704: *3* Fields
     protected:
@@ -65,7 +59,7 @@ namespace Implementation {
 hid_t createGroup(
     CreateAt<Location const> location
   , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties
-  , boost::optional<Group::CreationProperties const&> const& optional_group_creation_properties
+  , boost::optional<GroupCreationProperties const&> const& optional_group_creation_properties
 );
 hid_t openGroup(Location const& location);
 

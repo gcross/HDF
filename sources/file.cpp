@@ -49,8 +49,8 @@ File::File(Identity::Ptr const& identity)
 File::File(
     const char* filepath
   , FileCreateMode mode
-  , optional<CreationProperties const&> const& optional_creation_properties
-  , optional<AccessProperties const&> const& optional_access_properties
+  , optional<FileCreationProperties const&> const& optional_creation_properties
+  , optional<FileAccessProperties const&> const& optional_access_properties
 ) 
   : Locatable(
         assertSuccess(
@@ -69,7 +69,7 @@ File::File(
 File::File(
     const char* filepath
   , FileOpenMode mode
-  , optional<AccessProperties const&> const& optional_properties
+  , optional<FileAccessProperties const&> const& optional_properties
 )
   : Locatable(
         assertSuccess(
@@ -84,23 +84,6 @@ File::File(
     )
 {}
 //@-others
-//@+node:gcross.20110520211700.1480: *3* Nested types
-//@+node:gcross.20110521115623.3152: *4* Access Properties
-File::AccessProperties::AccessProperties()
-  : Properties(assertSuccess("creating file access properties",H5Pcreate(H5P_FILE_ACCESS)))
-{}
-
-File::AccessProperties File::AccessProperties::useCoreDriver(size_t increment_size_in_bytes, bool write_to_backing_store) const {
-    assertSuccess(
-        "setting file to use CORE (memory) driver",
-        H5Pset_fapl_core(getId(),increment_size_in_bytes,write_to_backing_store)
-    );
-    return *this;
-}
-//@+node:gcross.20110521115623.3153: *4* Creation Properties
-File::CreationProperties::CreationProperties()
-  : Properties(assertSuccess("creating file creation properties",H5Pcreate(H5P_FILE_CREATE)))
-{}
 //@+node:gcross.20110523113700.1688: *3* Fields
 Containable const& File::getAttributeContainable() const { return *this; }
 hid_t File::getParentId() const { return getId(); }

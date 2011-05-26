@@ -39,7 +39,7 @@ using std::vector;
 //@+node:gcross.20110523113700.1820: *3* Constructors
 Dataset::Dataset(
     Location const& location
-  , optional<AccessProperties const&> const& optional_access_properties
+  , optional<DatasetAccessProperties const&> const& optional_access_properties
 )
   : Object(
         location.getFileIdentity(),
@@ -61,8 +61,8 @@ Dataset::Dataset(
   , Datatype const& datatype
   , Dataspace const& dataspace
   , optional<void const*> const& optional_data
-  , optional<CreationProperties const&> const& optional_creation_properties
-  , optional<AccessProperties const&> const& optional_access_properties
+  , optional<DatasetCreationProperties const&> const& optional_creation_properties
+  , optional<DatasetAccessProperties const&> const& optional_access_properties
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
 )
   : Object(location->getFileIdentity(),Identity::Ptr())
@@ -84,8 +84,8 @@ Dataset::Dataset(
   , unsigned int rank
   , hsize_t const* dimensions
   , optional<void const*> const& optional_data
-  , optional<CreationProperties const&> const& optional_creation_properties
-  , optional<AccessProperties const&> const& optional_access_properties
+  , optional<DatasetCreationProperties const&> const& optional_creation_properties
+  , optional<DatasetAccessProperties const&> const& optional_access_properties
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
 )
   : Object(location->getFileIdentity(),Identity::Ptr())
@@ -106,8 +106,8 @@ Dataset::Dataset(
   , Datatype const& datatype
   , vector<hsize_t> const& dimensions
   , optional<void const*> const& optional_data
-  , optional<CreationProperties const&> const& optional_creation_properties
-  , optional<AccessProperties const&> const& optional_access_properties
+  , optional<DatasetCreationProperties const&> const& optional_creation_properties
+  , optional<DatasetAccessProperties const&> const& optional_access_properties
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
 )
   : Object(location->getFileIdentity(),Identity::Ptr())
@@ -128,8 +128,8 @@ void Dataset::createAndInitialize(
   , Datatype const& datatype
   , Dataspace const& dataspace
   , optional<void const*> const& optional_data
-  , optional<CreationProperties const&> const& optional_creation_properties
-  , optional<AccessProperties const&> const& optional_access_properties
+  , optional<DatasetCreationProperties const&> const& optional_creation_properties
+  , optional<DatasetAccessProperties const&> const& optional_access_properties
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
 ) {
     identity =
@@ -156,7 +156,7 @@ void Dataset::read(
   , Datatype const& datatype
   , optional<Dataspace const&> const& optional_memory_dataspace
   , optional<Dataspace const&> const& optional_dataset_dataspace
-  , optional<TransferProperties const&> const& optional_transfer_properties
+  , optional<DatasetTransferProperties const&> const& optional_transfer_properties
 ) const {
     assertSuccess(
         "reading data from the dataset",
@@ -176,7 +176,7 @@ void Dataset::write(
   , Datatype const& datatype
   , optional<Dataspace const&> const& optional_memory_dataspace
   , optional<Dataspace const&> const& optional_dataset_dataspace
-  , optional<TransferProperties const&> const& optional_transfer_properties
+  , optional<DatasetTransferProperties const&> const& optional_transfer_properties
 ) const {
     assertSuccess(
         "writing data to the dataset",
@@ -200,34 +200,6 @@ vector<hsize_t> Dataset::dimensionsWithAssertedRank(unsigned int expected_rank) 
 
 unsigned int Dataset::rank() const { return Dataspace(*this).rank(); }
 unsigned int Dataset::size() const { return Dataspace(*this).size(); }
-//@+node:gcross.20110523113700.1824: *3* Nested types
-Dataset::AccessProperties::AccessProperties()
-  : Properties(assertSuccess("creating dataset access properties",H5Pcreate(H5P_DATASET_ACCESS)))
-{}
-
-Dataset::TransferProperties::TransferProperties()
-  : Properties(assertSuccess("creating dataset transfer properties",H5Pcreate(H5P_DATASET_XFER)))
-{}
-
-//@+others
-//@+node:gcross.20110524225139.1867: *4* CreationProperties
-//@+node:gcross.20110524225139.1868: *5* Constructors
-Dataset::CreationProperties::CreationProperties()
-  : Properties(assertSuccess("creating dataset creation properties",H5Pcreate(H5P_DATASET_CREATE)))
-{}
-//@+node:gcross.20110524225139.1869: *5* Chunk
-Dataset::CreationProperties Dataset::CreationProperties::setChunk(hsize_t const chunk_size) const {
-    return setChunk(1,&chunk_size);
-}
-
-Dataset::CreationProperties Dataset::CreationProperties::setChunk(unsigned int rank, hsize_t const* chunk_sizes) const {
-    assertSuccess(
-        "setting dataset chunk sizes",
-        H5Pset_chunk(getId(),rank,chunk_sizes)
-    );
-    return *this;
-}
-//@-others
 //@+node:gcross.20110523113700.2371: *3* Resizing
 void Dataset::resize(hsize_t const* dimensions) const {
     assertSuccess(

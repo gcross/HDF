@@ -38,42 +38,13 @@ namespace HDF {
 //@+others
 //@+node:gcross.20110523113700.1807: ** class Dataset
 class Dataset: public Object {
-    //@+<< Nested types >>
-    //@+node:gcross.20110523113700.1827: *3* << Nested types >>
-    public:
-
-    struct AccessProperties: public Properties { AccessProperties(); };
-
-    struct TransferProperties: public Properties { TransferProperties(); };
-
-    //@+others
-    //@+node:gcross.20110524225139.1861: *4* CreationProperties
-    class CreationProperties: public Properties {
-    //@+others
-    //@+node:gcross.20110524225139.1862: *5* Constructors
-    public:
-
-    CreationProperties();
-    //@+node:gcross.20110524225139.1863: *5* Chunk
-    public:
-
-    CreationProperties setChunk(hsize_t chunk_size) const;
-    CreationProperties setChunk(unsigned int rank, hsize_t const* chunk_sizes) const;
-    template<typename Dimensions> CreationProperties setChunk(RangeOf<Dimensions> chunk_sizes) const {
-        HSizeArray dims(*chunk_sizes);
-        return setChunk(dims.size(),dims);
-    }
-    //@-others
-    };
-    //@-others
-    //@-<< Nested types >>
     //@+others
     //@+node:gcross.20110523113700.1808: *3* Constructors
     public:
 
     Dataset(
         Location const& location
-      , boost::optional<AccessProperties const&> const& optional_access_properties = boost::none
+      , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
     );
 
     Dataset(
@@ -81,8 +52,8 @@ class Dataset: public Object {
       , Datatype const& datatype
       , Dataspace const& dataspace
       , boost::optional<void const*> const& optional_data = boost::none
-      , boost::optional<CreationProperties const&> const& optional_creation_properties = boost::none
-      , boost::optional<AccessProperties const&> const& optional_access_properties = boost::none
+      , boost::optional<DatasetCreationProperties const&> const& optional_creation_properties = boost::none
+      , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
     );
 
@@ -92,8 +63,8 @@ class Dataset: public Object {
       , unsigned int rank
       , hsize_t const* dimensions
       , boost::optional<void const*> const& optional_data = boost::none
-      , boost::optional<CreationProperties const&> const& optional_creation_properties = boost::none
-      , boost::optional<AccessProperties const&> const& optional_access_properties = boost::none
+      , boost::optional<DatasetCreationProperties const&> const& optional_creation_properties = boost::none
+      , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
     );
 
@@ -102,8 +73,8 @@ class Dataset: public Object {
       , Datatype const& datatype
       , std::vector<hsize_t> const& dimensions
       , boost::optional<void const*> const& optional_data = boost::none
-      , boost::optional<CreationProperties const&> const& optional_creation_properties = boost::none
-      , boost::optional<AccessProperties const&> const& optional_access_properties = boost::none
+      , boost::optional<DatasetCreationProperties const&> const& optional_creation_properties = boost::none
+      , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
     );
 
@@ -113,8 +84,8 @@ class Dataset: public Object {
       , unsigned int rank
       , hsize_t const* dimensions
       , T const* data
-      , boost::optional<CreationProperties const&> const& optional_creation_properties = boost::none
-      , boost::optional<AccessProperties const&> const& optional_access_properties = boost::none
+      , boost::optional<DatasetCreationProperties const&> const& optional_creation_properties = boost::none
+      , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
     )
       : Object(location->getFileIdentity(),Identity::Ptr())
@@ -136,8 +107,8 @@ class Dataset: public Object {
         CreateAt<Location const> location
       , std::vector<hsize_t> const& dimensions
       , T const* data
-      , boost::optional<CreationProperties const&> const& optional_creation_properties = boost::none
-      , boost::optional<AccessProperties const&> const& optional_access_properties = boost::none
+      , boost::optional<DatasetCreationProperties const&> const& optional_creation_properties = boost::none
+      , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
     )
       : Object(location->getFileIdentity(),Identity::Ptr())
@@ -158,8 +129,8 @@ class Dataset: public Object {
         CreateAt<Location const> location
       , RangeOf<Dimensions> dimensions
       , T const* data
-      , boost::optional<CreationProperties const&> const& optional_creation_properties = boost::none
-      , boost::optional<AccessProperties const&> const& optional_access_properties = boost::none
+      , boost::optional<DatasetCreationProperties const&> const& optional_creation_properties = boost::none
+      , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
     )
       : Object(location->getFileIdentity(),Identity::Ptr())
@@ -180,8 +151,8 @@ class Dataset: public Object {
         CreateAt<Location const> location
       , hsize_t const dimension
       , T const* data
-      , boost::optional<CreationProperties const&> const& optional_creation_properties = boost::none
-      , boost::optional<AccessProperties const&> const& optional_access_properties = boost::none
+      , boost::optional<DatasetCreationProperties const&> const& optional_creation_properties = boost::none
+      , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
     )
       : Object(location->getFileIdentity(),Identity::Ptr())
@@ -201,8 +172,8 @@ class Dataset: public Object {
     Dataset(
         CreateAt<Location const> location
       , RangeOf<DataRange> data
-      , boost::optional<CreationProperties const&> const& optional_creation_properties = boost::none
-      , boost::optional<AccessProperties const&> const& optional_access_properties = boost::none
+      , boost::optional<DatasetCreationProperties const&> const& optional_creation_properties = boost::none
+      , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
     )
       : Object(location->getFileIdentity(),Identity::Ptr())
@@ -227,8 +198,8 @@ class Dataset: public Object {
       , Datatype const& datatype
       , Dataspace const& dataspace
       , boost::optional<void const*> const& optional_data
-      , boost::optional<CreationProperties const&> const& optional_creation_properties
-      , boost::optional<AccessProperties const&> const& optional_access_properties
+      , boost::optional<DatasetCreationProperties const&> const& optional_creation_properties
+      , boost::optional<DatasetAccessProperties const&> const& optional_access_properties
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties
     );
     //@+node:gcross.20110523113700.1826: *3* Data access
@@ -239,21 +210,21 @@ class Dataset: public Object {
       , Datatype const& datatype
       , boost::optional<Dataspace const&> const& optional_memory_dataspace = boost::none
       , boost::optional<Dataspace const&> const& optional_dataset_dataspace = boost::none
-      , boost::optional<TransferProperties const&> const& optional_transfer_properties = boost::none
+      , boost::optional<DatasetTransferProperties const&> const& optional_transfer_properties = boost::none
     ) const;
 
     template<typename T> void read(
         T* data
       , boost::optional<Dataspace const&> const& optional_memory_dataspace = boost::none
       , boost::optional<Dataspace const&> const& optional_dataset_dataspace = boost::none
-      , boost::optional<TransferProperties const&> const& optional_transfer_properties = boost::none
+      , boost::optional<DatasetTransferProperties const&> const& optional_transfer_properties = boost::none
     ) const {
         read(data,datatypeOf<T>::get(),optional_memory_dataspace,optional_dataset_dataspace,optional_transfer_properties);
     }
 
     template<typename T> std::vector<T> readVector(
         boost::optional<Dataspace const&> const& optional_dataset_dataspace = boost::none
-      , boost::optional<TransferProperties const&> const& optional_transfer_properties = boost::none
+      , boost::optional<DatasetTransferProperties const&> const& optional_transfer_properties = boost::none
     ) const {
         std::vector<T> data(
             optional_dataset_dataspace
@@ -269,14 +240,14 @@ class Dataset: public Object {
       , Datatype const& datatype
       , boost::optional<Dataspace const&> const& optional_memory_dataspace = boost::none
       , boost::optional<Dataspace const&> const& optional_dataset_dataspace = boost::none
-      , boost::optional<TransferProperties const&> const& optional_transfer_properties = boost::none
+      , boost::optional<DatasetTransferProperties const&> const& optional_transfer_properties = boost::none
     ) const;
 
     template<typename T> void write(
         T const* data
       , boost::optional<Dataspace const&> const& optional_memory_dataspace = boost::none
       , boost::optional<Dataspace const&> const& optional_dataset_dataspace = boost::none
-      , boost::optional<TransferProperties const&> const& optional_transfer_properties = boost::none
+      , boost::optional<DatasetTransferProperties const&> const& optional_transfer_properties = boost::none
     ) const {
         write(data,datatypeOf<T>::get(),optional_memory_dataspace,optional_dataset_dataspace,optional_transfer_properties);
     }

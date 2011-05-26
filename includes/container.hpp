@@ -48,7 +48,7 @@ class Container: public Locatable, public Parent {
     Container(
         CreateAt<Location const> location
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
-      , boost::optional<Group::CreationProperties const&> const& optional_creation_properties = boost::none
+      , boost::optional<GroupCreationProperties const&> const& optional_creation_properties = boost::none
     );
 
     protected:
@@ -57,7 +57,7 @@ class Container: public Locatable, public Parent {
         Location const& location
       , boost::optional<std::pair<
             boost::optional<LinkCreationProperties const&>
-         ,  boost::optional<Group::CreationProperties const&>
+         ,  boost::optional<GroupCreationProperties const&>
         > > const& creation_properties = boost::none
     );
     //@+node:gcross.20110524225139.1837: *3* Fields
