@@ -135,6 +135,13 @@ class Attribute: public Containable {
         setterOf<T>::set(*this,value);
     }
 
+    template<typename T> void set(
+        boost::optional<T> const& value
+      , typename setterOf<T>::enabled dummy = boost::none
+    ) const {
+        if(value) setterOf<T>::set(*this,*value);
+    }
+
     void operator=(char value) const;
     void operator=(unsigned char value) const;
     void operator=(short value) const;
@@ -225,14 +232,6 @@ DECLARE_SETTER(char const*)
 DECLARE_SETTER(std::string const&)
 
 #undef DECLARE_SETTER
-
-template<typename T> struct Attribute::setterOf<boost::optional<T> > {
-    typedef typename Attribute::setterOf<T>::enabled enabled;
-    static void set(
-        Attribute const& attribute
-      , boost::optional<T> const& optional_value
-    ) { if(optional_value) Attribute::setterOf<T>::set(attribute,*optional_value); }
-};
 //@-others
 //@-<< Accessor specializations >>
 //@-others
