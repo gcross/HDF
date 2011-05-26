@@ -38,13 +38,45 @@ class Properties: public Identifiable {
     protected:
 
     Properties(hid_t id);
+    Properties();
     //@-others
 };
 //@+node:gcross.20110521115623.2860: ** Properties
+//@+node:gcross.20110525201928.3113: *3* CreateMissingIntermediateGroupsPropertyBase
+class CreateMissingIntermediateGroupsPropertyBase : public virtual Properties {
+protected:
+    CreateMissingIntermediateGroupsPropertyBase();
+    void setCreateMissingIntermediateGroups(bool create_missing_intermediate_groups=true) const;
+public:
+    bool getCreateMissingIntermediateGroups() const;
+};
+//@+node:gcross.20110525201928.3114: *3* CreateMissingIntermediateGroupsProperty
+template<typename T> class CreateMissingIntermediateGroupsProperty
+  : public CreateMissingIntermediateGroupsPropertyBase
+{
+private:
+    typedef CreateMissingIntermediateGroupsPropertyBase Base;
+protected:
+    CreateMissingIntermediateGroupsProperty() {}
+public:
+    T setCreateMissingIntermediateGroups(bool create_missing_intermediate_groups=true) const {
+        Base::setCreateMissingIntermediateGroups(create_missing_intermediate_groups);
+        return *static_cast<T const*>(this);
+    }
+    T createMissingIntermediateGroups() const {
+        return setCreateMissingIntermediateGroups(true);
+    }
+    T dontCreateMissingIntermediateGroups() const {
+        return setCreateMissingIntermediateGroups(false);
+    }
+};
 //@+node:gcross.20110525201928.3097: *3* LinkAccessProperties
 struct LinkAccessProperties: public Properties { LinkAccessProperties(); };
 //@+node:gcross.20110525201928.3098: *3* LinkCreationProperties
-struct LinkCreationProperties: public Properties {
+struct LinkCreationProperties
+  : public virtual Properties
+  , public CreateMissingIntermediateGroupsProperty<LinkCreationProperties>
+{
     LinkCreationProperties();
 
     enum CharacterEncoding { ASCIIEncoding, UTF8Encoding };
@@ -53,11 +85,6 @@ struct LinkCreationProperties: public Properties {
 
     LinkCreationProperties setCharacterEncoding(CharacterEncoding encoding) const;
     CharacterEncoding getCharacterEncoding() const;
-
-    LinkCreationProperties setCreateMissingIntermediateGroups(bool create_missing_intermediate_groups=true) const;
-    bool getCreateMissingIntermediateGroups() const;
-    LinkCreationProperties createMissingIntermediateGroups() const;
-    LinkCreationProperties dontCreateMissingIntermediateGroups() const;
 };
 //@+node:gcross.20110521115623.2914: ** Functions
 //@+node:gcross.20110521115623.2917: *3* getOptionalPropertiesId

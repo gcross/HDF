@@ -34,10 +34,36 @@ using boost::optional;
 //@+node:gcross.20110520211700.1478: ** class Properties
 //@+node:gcross.20110520211700.1479: *3* Constructors/Destructors
 Properties::Properties(hid_t id) : Identifiable(id,H5Pclose) {}
+
+Properties::Properties() {}
 //@+node:gcross.20110520211700.1501: ** Properties
 LinkAccessProperties::LinkAccessProperties()
   : Properties(assertSuccess("creating link access properties",H5Pcreate(H5P_LINK_ACCESS)))
 {}
+//@+node:gcross.20110525201928.3116: *3* CreateMissingIntermediateGroupsPropertyBase
+CreateMissingIntermediateGroupsPropertyBase::CreateMissingIntermediateGroupsPropertyBase() {}
+
+void CreateMissingIntermediateGroupsPropertyBase::setCreateMissingIntermediateGroups(bool create_missing_intermediate_groups) const {
+    assertSuccess(
+        "setting create intermediate groups property",
+        H5Pset_create_intermediate_group(
+            getId(),
+            create_missing_intermediate_groups
+        )
+    );
+}
+
+bool CreateMissingIntermediateGroupsPropertyBase::getCreateMissingIntermediateGroups() const {
+    unsigned int create_missing_intermediate_groups;
+    assertSuccess(
+        "getting create intermediate groups property",
+        H5Pget_create_intermediate_group(
+            getId(),
+            &create_missing_intermediate_groups
+        )
+    );
+    return create_missing_intermediate_groups==1;
+}
 //@+node:gcross.20110525201928.3099: *3* LinkCreationProperties
 LinkCreationProperties::LinkCreationProperties()
   : Properties(assertSuccess("creating link creation properties",H5Pcreate(H5P_LINK_CREATE)))
@@ -79,37 +105,6 @@ LinkCreationProperties::CharacterEncoding LinkCreationProperties::getCharacterEn
         )
     );
     return getCharacterEncodingFromId(id);
-}
-
-LinkCreationProperties LinkCreationProperties::setCreateMissingIntermediateGroups(bool create_missing_intermediate_groups) const {
-    assertSuccess(
-        "setting create intermediate groups property",
-        H5Pset_create_intermediate_group(
-            getId(),
-            create_missing_intermediate_groups
-        )
-    );
-    return *this;
-}
-
-bool LinkCreationProperties::getCreateMissingIntermediateGroups() const {
-    unsigned int create_missing_intermediate_groups;
-    assertSuccess(
-        "getting create intermediate groups property",
-        H5Pget_create_intermediate_group(
-            getId(),
-            &create_missing_intermediate_groups
-        )
-    );
-    return create_missing_intermediate_groups==1;
-}
-
-LinkCreationProperties LinkCreationProperties::createMissingIntermediateGroups() const {
-    return setCreateMissingIntermediateGroups(true);
-}
-
-LinkCreationProperties LinkCreationProperties::dontCreateMissingIntermediateGroups() const {
-    return setCreateMissingIntermediateGroups(false);
 }
 //@-others
 
