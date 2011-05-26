@@ -41,8 +41,24 @@ class Properties: public Identifiable {
     //@-others
 };
 //@+node:gcross.20110521115623.2860: ** Properties
+//@+node:gcross.20110525201928.3097: *3* LinkAccessProperties
 struct LinkAccessProperties: public Properties { LinkAccessProperties(); };
-struct LinkCreationProperties: public Properties { LinkCreationProperties(); };
+//@+node:gcross.20110525201928.3098: *3* LinkCreationProperties
+struct LinkCreationProperties: public Properties {
+    LinkCreationProperties();
+
+    enum CharacterEncoding { ASCIIEncoding, UTF8Encoding };
+    static H5T_cset_t getCharacterEncodingId(CharacterEncoding encoding);
+    static CharacterEncoding getCharacterEncodingFromId(H5T_cset_t id);
+
+    LinkCreationProperties setCharacterEncoding(CharacterEncoding encoding) const;
+    CharacterEncoding getCharacterEncoding() const;
+
+    LinkCreationProperties setCreateMissingIntermediateGroups(bool create_missing_intermediate_groups=true) const;
+    bool getCreateMissingIntermediateGroups() const;
+    LinkCreationProperties createMissingIntermediateGroups() const;
+    LinkCreationProperties dontCreateMissingIntermediateGroups() const;
+};
 //@+node:gcross.20110521115623.2914: ** Functions
 //@+node:gcross.20110521115623.2917: *3* getOptionalPropertiesId
 template<typename PropertiesType>

@@ -74,6 +74,7 @@
 <v t="gcross.20110524225139.1892"><vh>@file datasets.cpp</vh></v>
 <v t="gcross.20110525201928.3072"><vh>@file dataspace.cpp</vh></v>
 <v t="gcross.20110524225139.1874"><vh>@file datatypes.cpp</vh></v>
+<v t="gcross.20110525201928.3104"><vh>@file properties.cpp</vh></v>
 <v t="gcross.20110524225139.1905"><vh>@file files.cpp</vh></v>
 <v t="gcross.20110521115623.3227"><vh>file template.cpp</vh>
 <v t="gcross.20110521115623.3228"><vh>&lt;&lt; License &gt;&gt;</vh></v>

@@ -31,7 +31,10 @@ namespace HDF {
 //@+<< Usings >>
 //@+node:gcross.20110524225139.1845: ** << Usings >>
 using boost::algorithm::trim_left_if;
+using boost::optional;
 
+using std::make_pair;
+using std::pair;
 using std::string;
 //@-<< Usings >>
 
@@ -48,23 +51,23 @@ Container::Container(Location const& location)
     initialize(location);
 }
 
-Container::Container(CreateAt<Location const> location)
+Container::Container(
+    CreateAt<Location const> location
+  , optional<LinkCreationProperties const&> const& optional_link_creation_properties
+  , optional<Group::CreationProperties const&> const& optional_creation_properties
+)
   : Locatable(location->getFileIdentity(),Identity::Ptr())
 {
-    Location current_location = (*location) % "";
-    bool first = true;
-    BOOST_FOREACH(string const& name, SlashTokenizer(location->getName())) {
-        if(first)
-            current_location %= name;
-        else
-            current_location /= name;
-        first = false;
-        if(!current_location.exists()) Group(createAt(current_location));
-    }
-    initialize(*location);
+    initialize(*location,make_pair(optional_link_creation_properties,optional_creation_properties));
 }
 
-void Container::initialize(Location const& location) {
+void Container::initialize(
+    Location const& location
+  , optional<pair<
+        optional<LinkCreationProperties const&>
+     ,  optional<Group::CreationProperties const&>
+    > > const& creation_properties
+) {
     string const& name = location.getName();
     string trimmed_name = name;
     trim_left_if(trimmed_name,isSlashOrDot);
@@ -73,8 +76,16 @@ void Container::initialize(Location const& location) {
         || (!name.empty() && name[0] == '/')
        )
     ) identity = file_identity;
-    else
-      *this = Group(location);
+    else {
+        if(creation_properties)
+             *this =
+                Group(
+                    createAt(location),
+                    creation_properties->first,
+                    creation_properties->second
+                );
+        else *this = Group(location);
+    }
 }
 //@+node:gcross.20110524225139.1851: *3* Fields
 hid_t Container::getParentId() const { return getId(); }

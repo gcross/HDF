@@ -28,6 +28,9 @@
 #include "location.hpp"
 #include "parent.hpp"
 #include "parameters.hpp"
+
+#include <boost/optional.hpp>
+#include <utility>
 //@-<< Includes >>
 
 namespace HDF {
@@ -42,11 +45,21 @@ class Container: public Locatable, public Parent {
     Container(File const& file);
     Container(Group const& group);
     Container(Location const& location);
-    Container(CreateAt<Location const> location);
+    Container(
+        CreateAt<Location const> location
+      , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
+      , boost::optional<Group::CreationProperties const&> const& optional_creation_properties = boost::none
+    );
 
     protected:
 
-    void initialize(Location const& location);
+    void initialize(
+        Location const& location
+      , boost::optional<std::pair<
+            boost::optional<LinkCreationProperties const&>
+         ,  boost::optional<Group::CreationProperties const&>
+        > > const& creation_properties = boost::none
+    );
     //@+node:gcross.20110524225139.1837: *3* Fields
     protected:
 

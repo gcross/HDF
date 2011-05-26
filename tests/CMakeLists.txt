@@ -8,6 +8,7 @@ set(test-SOURCES
     dataspace
     datatypes
     files
+    properties
 )
 
 add_executable(test EXCLUDE_FROM_ALL ${test-SOURCES})
