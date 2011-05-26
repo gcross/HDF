@@ -22,6 +22,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110521115623.3029: ** << Includes >>
+#include "enumerations.hpp"
 #include "error.hpp"
 #include "identifiable.hpp"
 #include "parameters.hpp"
@@ -48,20 +49,12 @@ class Dataset;
 //@-<< Forward declarations >>
 
 class Dataspace: public Identifiable {
-//@+<< Nested types >>
-//@+node:gcross.20110521115623.3132: *3* << Nested types >>
-public:
-
-enum Class { ScalarSpace, SimpleSpace, NullSpace };
-
-static H5S_class_t getClassId(Class cls);
-//@-<< Nested types >>
 //@+others
 //@+node:gcross.20110521115623.3131: *3* Constructors
 public:
 
 Dataspace(CopyOf<Dataspace const> other);
-Dataspace(Class cls);
+Dataspace(DataspaceClass cls);
 Dataspace(Dataset const& dataset);
 Dataspace(unsigned int rank, hsize_t const* current_dimensions);
 Dataspace(unsigned int rank, hsize_t const* current_dimensions, hsize_t const* maximum_dimensions);

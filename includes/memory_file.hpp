@@ -36,7 +36,7 @@ class MemoryFile: public File {
 
     MemoryFile(
         char const* filepath
-      , OpenMode mode
+      , FileOpenMode mode
       , size_t increment_size_in_bytes = 4096
       , bool write_data_to_filepath = false
       , boost::optional<AccessProperties const&> const& optional_properties = boost::none
@@ -44,7 +44,7 @@ class MemoryFile: public File {
 
     MemoryFile(
         char const* filepath
-      , CreateMode mode
+      , FileCreateMode mode
       , size_t increment_size_in_bytes = 4096
       , bool write_data_to_filepath = false
       , boost::optional<CreationProperties const&> const& optional_creation_properties = boost::none

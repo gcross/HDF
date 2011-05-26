@@ -26,7 +26,9 @@
 
 //@+<< Usings >>
 //@+node:gcross.20110525201928.3107: ** << Usings >>
+using HDF::ASCIIEncoding;
 using HDF::LinkCreationProperties;
+using HDF::UTF8Encoding;
 //@-<< Usings >>
 
 //@+others
@@ -42,11 +44,11 @@ TEST_SUITE(LinkCreationProperties) {
 TEST_CASE(character_encoding) {
     LinkCreationProperties properties;
 
-    EXPECT_TRUE(properties == properties.setCharacterEncoding(LinkCreationProperties::ASCIIEncoding));
-    EXPECT_EQ(LinkCreationProperties::ASCIIEncoding,properties.getCharacterEncoding());
+    EXPECT_TRUE(properties == properties.setCharacterEncoding(ASCIIEncoding));
+    EXPECT_EQ(ASCIIEncoding,properties.getCharacterEncoding());
 
-    EXPECT_TRUE(properties == properties.setCharacterEncoding(LinkCreationProperties::UTF8Encoding));
-    EXPECT_EQ(LinkCreationProperties::UTF8Encoding,properties.getCharacterEncoding());
+    EXPECT_TRUE(properties == properties.setCharacterEncoding(UTF8Encoding));
+    EXPECT_EQ(UTF8Encoding,properties.getCharacterEncoding());
 }
 //@+node:gcross.20110525201928.3112: *4* create intermediate groups
 TEST_CASE(create_intermediate_groups) {

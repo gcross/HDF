@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110521115623.3166: * @file memory_file.cpp
+//@+node:gcross.20110526150836.1927: * @file enumerations.hpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110521115623.3167: ** << License >>
+//@+node:gcross.20110526150836.1929: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -17,52 +17,47 @@
 //@@c
 //@-<< License >>
 
+#ifndef HDFPP_ENUMERATIONS_HPP
+#define HDFPP_ENUMERATIONS_HPP
+
 //@+<< Includes >>
-//@+node:gcross.20110521115623.3168: ** << Includes >>
-#include "memory_file.hpp"
+//@+node:gcross.20110526150836.1928: ** << Includes >>
+#include "error.hpp"
+
+#include <hdf5.h>
 //@-<< Includes >>
 
 namespace HDF {
 
-//@+<< Usings >>
-//@+node:gcross.20110521115623.3169: ** << Usings >>
-//@-<< Usings >>
-
 //@+others
-//@+node:gcross.20110521115623.3172: ** class MemoryFile
-//@+node:gcross.20110521115623.3173: *3* Constructors
-MemoryFile::MemoryFile(
-    char const* filepath
-  , FileOpenMode mode
-  , size_t increment_size_in_bytes
-  , bool write_data_to_filepath
-  , boost::optional<AccessProperties const&> const& optional_properties
-)
-  : File(
-        filepath,
-        mode,
-        GET_OPTIONAL_OR(optional_properties,AccessProperties())
-            .useCoreDriver(increment_size_in_bytes,write_data_to_filepath)
-    )
-{}
+//@+node:gcross.20110526150836.1930: ** Enumerations
+//@+node:gcross.20110526150836.1952: *3* CharacterEncoding
+enum CharacterEncoding {
+    ASCIIEncoding = H5T_CSET_ASCII
+  , UTF8Encoding = H5T_CSET_UTF8
+};
+//@+node:gcross.20110526150836.1942: *3* DataspaceClass
+enum DataspaceClass {
+    SimpleSpace = H5S_SIMPLE
+  , ScalarSpace = H5S_SCALAR
+  , NullSpace = H5S_NULL
+};
+//@+node:gcross.20110526150836.1955: *3* FileCreateMode
+enum FileCreateMode { FailIfFileExisting, TruncateIfFileExisting };
 
-MemoryFile::MemoryFile(
-    char const* filepath
-  , FileCreateMode mode
-  , size_t increment_size_in_bytes
-  , bool write_data_to_filepath
-  , boost::optional<CreationProperties const&> const& optional_creation_properties
-  , boost::optional<AccessProperties const&> const& optional_access_properties
-)
-  : File(
-        filepath,
-        mode,
-        optional_creation_properties,
-        GET_OPTIONAL_OR(optional_access_properties,AccessProperties())
-            .useCoreDriver(increment_size_in_bytes,write_data_to_filepath)
-    )
-{}
+unsigned int getFileCreateModeFlag(FileCreateMode mode);
+//@+node:gcross.20110526150836.1954: *3* FileFlushScope
+enum FileFlushScope {
+    GlobalFileScope = H5F_SCOPE_GLOBAL
+  , LocalFileScope = H5F_SCOPE_LOCAL
+};
+//@+node:gcross.20110526150836.1953: *3* FileOpenMode
+enum FileOpenMode { OpenReadOnly, OpenReadWrite };
+
+unsigned int getFileOpenModeFlag(FileOpenMode mode);
 //@-others
 
 }
+
+#endif
 //@-leo

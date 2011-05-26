@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110521115623.3166: * @file memory_file.cpp
+//@+node:gcross.20110526150836.1935: * @file enumerations.cpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110521115623.3167: ** << License >>
+//@+node:gcross.20110526150836.1936: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -18,50 +18,41 @@
 //@-<< License >>
 
 //@+<< Includes >>
-//@+node:gcross.20110521115623.3168: ** << Includes >>
-#include "memory_file.hpp"
+//@+node:gcross.20110526150836.1937: ** << Includes >>
+#include "enumerations.hpp"
+
+#include <boost/lexical_cast.hpp>
+#include <stdexcept>
 //@-<< Includes >>
 
 namespace HDF {
 
 //@+<< Usings >>
-//@+node:gcross.20110521115623.3169: ** << Usings >>
+//@+node:gcross.20110526150836.1938: ** << Usings >>
+using boost::lexical_cast;
+
+using std::invalid_argument;
+using std::string;
 //@-<< Usings >>
 
 //@+others
-//@+node:gcross.20110521115623.3172: ** class MemoryFile
-//@+node:gcross.20110521115623.3173: *3* Constructors
-MemoryFile::MemoryFile(
-    char const* filepath
-  , FileOpenMode mode
-  , size_t increment_size_in_bytes
-  , bool write_data_to_filepath
-  , boost::optional<AccessProperties const&> const& optional_properties
-)
-  : File(
-        filepath,
-        mode,
-        GET_OPTIONAL_OR(optional_properties,AccessProperties())
-            .useCoreDriver(increment_size_in_bytes,write_data_to_filepath)
-    )
-{}
-
-MemoryFile::MemoryFile(
-    char const* filepath
-  , FileCreateMode mode
-  , size_t increment_size_in_bytes
-  , bool write_data_to_filepath
-  , boost::optional<CreationProperties const&> const& optional_creation_properties
-  , boost::optional<AccessProperties const&> const& optional_access_properties
-)
-  : File(
-        filepath,
-        mode,
-        optional_creation_properties,
-        GET_OPTIONAL_OR(optional_access_properties,AccessProperties())
-            .useCoreDriver(increment_size_in_bytes,write_data_to_filepath)
-    )
-{}
+//@+node:gcross.20110526150836.1956: ** Functions
+//@+node:gcross.20110526150836.1957: *3* getFileCreateModeFlag
+unsigned int getFileCreateModeFlag(FileCreateMode mode) {
+    switch(mode) {
+        case FailIfFileExisting: return H5F_ACC_EXCL;
+        case TruncateIfFileExisting: return H5F_ACC_TRUNC;
+    }
+    throw invalid_argument(lexical_cast<string>(mode));
+}
+//@+node:gcross.20110526150836.1958: *3* getFileOpenModeFlag
+unsigned int getFileOpenModeFlag(FileOpenMode mode) {
+    switch(mode) {
+        case OpenReadOnly: return H5F_ACC_RDONLY;
+        case OpenReadWrite: return H5F_ACC_RDWR;
+    }
+    throw invalid_argument(lexical_cast<string>(mode));
+}
 //@-others
 
 }

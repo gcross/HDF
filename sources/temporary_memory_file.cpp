@@ -40,7 +40,7 @@ TemporaryMemoryFile::TemporaryMemoryFile(
 )
   : MemoryFile(
         getTemporaryFileName(),
-        FailIfExisting,
+        FailIfFileExisting,
         increment_size_in_bytes,
         false,
         optional_creation_properties,

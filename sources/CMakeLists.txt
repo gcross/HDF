@@ -8,6 +8,7 @@ add_library(HDF++
     dataset
     dataspace
     datatype
+    enumerations
     error
     file
     group

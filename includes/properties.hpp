@@ -22,6 +22,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110520211700.1464: ** << Includes >>
+#include "enumerations.hpp"
 #include "identifiable.hpp"
 
 #include <boost/optional.hpp>
@@ -78,10 +79,6 @@ struct LinkCreationProperties
   , public CreateMissingIntermediateGroupsProperty<LinkCreationProperties>
 {
     LinkCreationProperties();
-
-    enum CharacterEncoding { ASCIIEncoding, UTF8Encoding };
-    static H5T_cset_t getCharacterEncodingId(CharacterEncoding encoding);
-    static CharacterEncoding getCharacterEncodingFromId(H5T_cset_t id);
 
     LinkCreationProperties setCharacterEncoding(CharacterEncoding encoding) const;
     CharacterEncoding getCharacterEncoding() const;

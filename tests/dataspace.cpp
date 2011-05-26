@@ -20,6 +20,7 @@
 //@+<< Includes >>
 //@+node:gcross.20110525201928.3074: ** << Includes >>
 #include "dataspace.hpp"
+#include "enumerations.hpp"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/range/algorithm/equal.hpp>
@@ -29,6 +30,8 @@
 //@+<< Usings >>
 //@+node:gcross.20110525201928.3075: ** << Usings >>
 using HDF::Dataspace;
+using HDF::NullSpace;
+using HDF::ScalarSpace;
 
 using boost::assign::list_of;
 using boost::equal;
@@ -54,13 +57,13 @@ TEST_SUITE(constructors) {
 //@+others
 //@+node:gcross.20110525201928.3077: *4* null
 TEST_CASE(null) { hid_t id; {
-    Dataspace dataspace(Dataspace::NullSpace);
+    Dataspace dataspace(NullSpace);
     id = dataspace.getId();
     ASSERT_EQ(0,dataspace.dimensions().size());
 } ASSERT_TRUE(dataspaceIsClosed(id)); }
 //@+node:gcross.20110525201928.3083: *4* scalar
 TEST_CASE(scalar) { hid_t id; {
-    Dataspace dataspace(Dataspace::ScalarSpace);
+    Dataspace dataspace(ScalarSpace);
     id = dataspace.getId();
     ASSERT_EQ(0,dataspace.rank());
     ASSERT_EQ(1,dataspace.size());

@@ -69,33 +69,18 @@ LinkCreationProperties::LinkCreationProperties()
   : Properties(assertSuccess("creating link creation properties",H5Pcreate(H5P_LINK_CREATE)))
 {}
 
-H5T_cset_t LinkCreationProperties::getCharacterEncodingId(CharacterEncoding encoding) {
-    switch(encoding) {
-        case ASCIIEncoding: return H5T_CSET_ASCII;
-        case UTF8Encoding: return H5T_CSET_UTF8;
-    }
-}
-
-LinkCreationProperties::CharacterEncoding LinkCreationProperties::getCharacterEncodingFromId(H5T_cset_t id) {
-    switch(id) {
-        case H5T_CSET_ASCII: return ASCIIEncoding;
-        case H5T_CSET_UTF8: return UTF8Encoding;
-        default: return ASCIIEncoding;
-    }
-}
-
 LinkCreationProperties LinkCreationProperties::setCharacterEncoding(CharacterEncoding encoding) const {
     assertSuccess(
         "setting character encoding property",
         H5Pset_char_encoding(
             getId(),
-            getCharacterEncodingId(encoding)
+            static_cast<H5T_cset_t>(encoding)
         )
     );
     return *this;
 }
 
-LinkCreationProperties::CharacterEncoding LinkCreationProperties::getCharacterEncoding() const {
+CharacterEncoding LinkCreationProperties::getCharacterEncoding() const {
     H5T_cset_t id;
     assertSuccess(
         "getting character encoding property",
@@ -104,7 +89,7 @@ LinkCreationProperties::CharacterEncoding LinkCreationProperties::getCharacterEn
             &id
         )
     );
-    return getCharacterEncodingFromId(id);
+    return static_cast<CharacterEncoding>(id);
 }
 //@-others
 

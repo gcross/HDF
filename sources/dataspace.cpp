@@ -68,11 +68,11 @@ Dataspace::Dataspace(Dataset const& dataset)
     )
 {}
 
-Dataspace::Dataspace(Class cls)
+Dataspace::Dataspace(DataspaceClass cls)
   : Identifiable(
         assertSuccess(
             "creating empty dataspace",
-            H5Screate(getClassId(cls))
+            H5Screate(static_cast<H5S_class_t>(cls))
         ),
         H5Sclose
     )
@@ -157,14 +157,6 @@ unsigned int Dataspace::size() const {
             "obtaining dataspace size",
             H5Sget_simple_extent_npoints(getId())
         );
-}
-//@+node:gcross.20110521115623.3175: *3* Nested types
-H5S_class_t Dataspace::getClassId(Class cls) {
-    switch(cls) {
-        case ScalarSpace: return H5S_SCALAR;
-        case SimpleSpace: return H5S_SIMPLE;
-        case NullSpace: return H5S_NULL;
-    }
 }
 //@+node:gcross.20110521115623.4249: ** Function
 //@+node:gcross.20110521115623.4250: *3* getOptionalDataspaceId

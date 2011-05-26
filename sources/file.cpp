@@ -48,7 +48,7 @@ File::File(Identity::Ptr const& identity)
 //@+node:gcross.20110520211700.1389: *4* Create
 File::File(
     const char* filepath
-  , CreateMode mode
+  , FileCreateMode mode
   , optional<CreationProperties const&> const& optional_creation_properties
   , optional<AccessProperties const&> const& optional_access_properties
 ) 
@@ -57,7 +57,7 @@ File::File(
             "creating file",
             H5Fcreate(
                 filepath,
-                getCreateModeFlags(mode),
+                getFileCreateModeFlag(mode),
                 getOptionalPropertiesId(optional_creation_properties),
                 getOptionalPropertiesId(optional_access_properties)
             )
@@ -68,7 +68,7 @@ File::File(
 //@+node:gcross.20110520211700.1493: *4* Open
 File::File(
     const char* filepath
-  , OpenMode mode
+  , FileOpenMode mode
   , optional<AccessProperties const&> const& optional_properties
 )
   : Locatable(
@@ -76,7 +76,7 @@ File::File(
             "opening file",
             H5Fopen(
                 filepath,
-                getOpenModeFlags(mode),
+                getFileOpenModeFlag(mode),
                 getOptionalPropertiesId(optional_properties)
             )
         ),
@@ -105,34 +105,11 @@ File::CreationProperties::CreationProperties()
 Containable const& File::getAttributeContainable() const { return *this; }
 hid_t File::getParentId() const { return getId(); }
 //@+node:gcross.20110521115623.3024: *3* Miscellaneous
-void File::flush(FlushScope scope) const {
-    H5F_scope_t scope_id;
-    switch(scope) {
-        case GlobalScope:
-            scope_id = H5F_SCOPE_GLOBAL;
-            break;
-        case LocalScope:
-            scope_id = H5F_SCOPE_LOCAL;
-            break;
-    };
+void File::flush(FileFlushScope scope) const {
     assertSuccess(
         "flushing file",
-        H5Fflush(getId(),scope_id)
+        H5Fflush(getId(),static_cast<H5F_scope_t>(scope))
     );
-}
-
-unsigned int File::getCreateModeFlags(CreateMode mode) {
-    switch(mode) {
-        case File::FailIfExisting: return H5F_ACC_EXCL;
-        case File::TruncateIfExisting: return H5F_ACC_TRUNC;
-    }
-}
-
-unsigned int File::getOpenModeFlags(OpenMode mode) {
-    switch(mode) {
-        case File::ReadOnly: return H5F_ACC_RDONLY;
-        case File::ReadWrite: return H5F_ACC_RDWR;
-    }
 }
 //@-others
 

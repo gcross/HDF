@@ -18,6 +18,7 @@
 <v t="gcross.20110523113700.1804"><vh>@file dataset.hpp</vh></v>
 <v t="gcross.20110521115623.3028"><vh>@file dataspace.hpp</vh></v>
 <v t="gcross.20110521115623.3034"><vh>@file datatype.hpp</vh></v>
+<v t="gcross.20110526150836.1927"><vh>@file enumerations.hpp</vh></v>
 <v t="gcross.20110520194631.1420"><vh>@file error.hpp</vh></v>
 <v t="gcross.20110520194631.1392"><vh>@file file.hpp</vh></v>
 <v t="gcross.20110521115623.2893"><vh>@file group.hpp</vh></v>
@@ -48,6 +49,7 @@
 <v t="gcross.20110523113700.1813"><vh>@file dataset.cpp</vh></v>
 <v t="gcross.20110521115623.3137"><vh>@file dataspace.cpp</vh></v>
 <v t="gcross.20110521115623.3057"><vh>@file datatype.cpp</vh></v>
+<v t="gcross.20110526150836.1935"><vh>@file enumerations.cpp</vh></v>
 <v t="gcross.20110520211700.1400"><vh>@file error.cpp</vh></v>
 <v t="gcross.20110520194631.1429"><vh>@file file.cpp</vh></v>
 <v t="gcross.20110521115623.2905"><vh>@file group.cpp</vh></v>

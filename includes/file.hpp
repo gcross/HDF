@@ -44,10 +44,6 @@ class File: public Locatable, public Parent, public Attributable {
     //@+node:gcross.20110520211700.1387: *3* << Nested Types >>
     public:
 
-    enum CreateMode {FailIfExisting, TruncateIfExisting};
-    enum OpenMode {ReadOnly, ReadWrite};
-    enum FlushScope {GlobalScope, LocalScope};
-
     struct AccessProperties: public Properties {
         AccessProperties();
 
@@ -69,13 +65,13 @@ class File: public Locatable, public Parent, public Attributable {
 
     File(
         char const* filepath
-      , OpenMode mode
+      , FileOpenMode mode
       , boost::optional<AccessProperties const&> const& optional_properties = boost::none
     );
 
     File(
         char const* filepath
-      , CreateMode mode
+      , FileCreateMode mode
       , boost::optional<CreationProperties const&> const& optional_creation_properties = boost::none
       , boost::optional<AccessProperties const&> const& optional_access_properties = boost::none
     );
@@ -89,10 +85,7 @@ class File: public Locatable, public Parent, public Attributable {
     //@+node:gcross.20110521115623.3023: *3* Miscellaneous
     public:
 
-    void flush(FlushScope scope=GlobalScope) const;
-
-    static unsigned int getCreateModeFlags(CreateMode mode);
-    static unsigned int getOpenModeFlags(OpenMode mode);
+    void flush(FileFlushScope scope=GlobalFileScope) const;
     //@-others
 };
 //@-others
