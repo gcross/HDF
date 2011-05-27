@@ -28,7 +28,10 @@
 //@+node:gcross.20110525201928.3107: ** << Usings >>
 using HDF::ASCIIEncoding;
 using HDF::LinkCreationProperties;
+using HDF::FileAccessProperties;
 using HDF::UTF8Encoding;
+
+using std::pair;
 //@-<< Usings >>
 
 //@+others
@@ -36,6 +39,22 @@ using HDF::UTF8Encoding;
 TEST_SUITE(Properties) {
 
 //@+others
+//@+node:gcross.20110526194358.1939: *3* FileAccessProperties
+TEST_SUITE(FileAccessProperties) {
+
+//@+others
+//@+node:gcross.20110526194358.1940: *4* core driver
+TEST_CASE(core_driver) {
+    FileAccessProperties properties;
+
+    EXPECT_TRUE(properties == properties.useCoreDriver(16,true));
+    pair<size_t,bool> result = properties.getCoreDriverSettings();
+    EXPECT_EQ(16,result.first);
+    EXPECT_EQ(true,result.second);
+}
+//@-others
+
+}
 //@+node:gcross.20110525201928.3109: *3* LinkCreationProperties
 TEST_SUITE(LinkCreationProperties) {
 

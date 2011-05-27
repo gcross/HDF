@@ -92,6 +92,9 @@ struct FileAccessProperties: public Properties {
     FileAccessProperties();
 
     FileAccessProperties useCoreDriver(size_t increment_size_in_bytes, bool write_to_backing_store) const;
+    void getCoreDriverSettings(size_t &increment_size_in_bytes, bool &write_to_backing_store) const;
+    std::pair<size_t,bool> getCoreDriverSettings() const;
+
 };
 //@+node:gcross.20110526150836.1973: *3* FileCreationProperties
 struct FileCreationProperties: public Properties {
