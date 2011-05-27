@@ -30,6 +30,7 @@ namespace HDF {
 using boost::optional;
 
 using std::pair;
+using std::vector;
 //@-<< Usings >>
 
 //@+others
@@ -80,17 +81,35 @@ DatasetCreationProperties::DatasetCreationProperties()
   : Properties(assertSuccess("creating dataset creation properties",H5Pcreate(H5P_DATASET_CREATE)))
 {}
 
-DatasetCreationProperties DatasetCreationProperties::setChunk(hsize_t const chunk_size) const {
-    return setChunk(1,&chunk_size);
+//@+others
+//@+node:gcross.20110526194358.1941: *4* Chunk
+DatasetCreationProperties DatasetCreationProperties::setChunkSize(hsize_t const chunk_size) const {
+    return setChunkSizes(1,&chunk_size);
 }
 
-DatasetCreationProperties DatasetCreationProperties::setChunk(unsigned int rank, hsize_t const* chunk_sizes) const {
+DatasetCreationProperties DatasetCreationProperties::setChunkSizes(unsigned int rank, hsize_t const* chunk_sizes) const {
     assertSuccess(
         "setting dataset chunk sizes",
         H5Pset_chunk(getId(),rank,chunk_sizes)
     );
     return *this;
 }
+
+vector<hsize_t> DatasetCreationProperties::getChunkSizes() const {
+    unsigned int rank =
+        assertSuccess(
+            "getting chunk size rank",
+            H5Pget_chunk(getId(),0,NULL)
+        );
+    vector<hsize_t> chunk_sizes(rank);
+    if(rank > 0)
+        assertSuccess(
+            "getting chunk sizes",
+            H5Pget_chunk(getId(),rank,&chunk_sizes.front())
+        );
+    return chunk_sizes;
+}
+//@-others
 //@+node:gcross.20110526150836.1971: *3* DatasetTransferProperties
 DatasetTransferProperties::DatasetTransferProperties()
   : Properties(assertSuccess("creating dataset transfer properties",H5Pcreate(H5P_DATASET_XFER)))

@@ -21,17 +21,23 @@
 //@+node:gcross.20110525201928.3106: ** << Includes >>
 #include "properties.hpp"
 
+#include <boost/assign/list_of.hpp>
 #include <illuminate.hpp>
+#include <vector>
 //@-<< Includes >>
 
 //@+<< Usings >>
 //@+node:gcross.20110525201928.3107: ** << Usings >>
 using HDF::ASCIIEncoding;
+using HDF::DatasetCreationProperties;
 using HDF::LinkCreationProperties;
 using HDF::FileAccessProperties;
 using HDF::UTF8Encoding;
 
+using boost::assign::list_of;
+
 using std::pair;
+using std::vector;
 //@-<< Usings >>
 
 //@+others
@@ -39,6 +45,24 @@ using std::pair;
 TEST_SUITE(Properties) {
 
 //@+others
+//@+node:gcross.20110526194358.1950: *3* DatasetCreationProperties
+TEST_SUITE(DatasetCreationProperties) {
+
+//@+others
+//@+node:gcross.20110526194358.1951: *4* chunk
+TEST_CASE(chunk) {
+    DatasetCreationProperties properties;
+
+    EXPECT_TRUE(properties == properties.setChunkSizes(list_of(1)(2)(3)));
+    vector<hsize_t> chunk_sizes = properties.getChunkSizes();
+
+    EXPECT_EQ(1,chunk_sizes[0]);
+    EXPECT_EQ(2,chunk_sizes[1]);
+    EXPECT_EQ(3,chunk_sizes[2]);
+}
+//@-others
+
+}
 //@+node:gcross.20110526194358.1939: *3* FileAccessProperties
 TEST_SUITE(FileAccessProperties) {
 

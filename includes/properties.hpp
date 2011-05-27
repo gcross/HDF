@@ -24,6 +24,7 @@
 //@+node:gcross.20110520211700.1464: ** << Includes >>
 #include "enumerations.hpp"
 #include "identifiable.hpp"
+#include "utilities.hpp"
 
 #include <boost/optional.hpp>
 #include <hdf5.h>
@@ -80,8 +81,17 @@ struct DatasetAccessProperties: public Properties {
 struct DatasetCreationProperties: Properties {
     DatasetCreationProperties();
 
-    DatasetCreationProperties setChunk(hsize_t const chunk_size) const;
-    DatasetCreationProperties setChunk(unsigned int rank, hsize_t const* chunk_sizes) const;
+    //@+others
+    //@+node:gcross.20110526194358.1942: *4* Chunk
+    DatasetCreationProperties setChunkSize(hsize_t const chunk_size) const;
+    DatasetCreationProperties setChunkSizes(unsigned int rank, hsize_t const* chunk_sizes) const;
+    template<typename Dimensions> DatasetCreationProperties setChunkSizes(Dimensions dimensions) const {
+        HSizeArray dims(dimensions);
+        return setChunkSizes(dims.size,dims);
+    }
+
+    std::vector<hsize_t> getChunkSizes() const;
+    //@-others
 };
 //@+node:gcross.20110526150836.1962: *3* DatasetTransferProperties
 struct DatasetTransferProperties: public Properties {
