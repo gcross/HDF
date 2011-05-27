@@ -23,16 +23,25 @@
 //@+<< Includes >>
 //@+node:gcross.20110520211700.1464: ** << Includes >>
 #include "enumerations.hpp"
+#include "error.hpp"
 #include "identifiable.hpp"
 #include "utilities.hpp"
 
 #include <boost/optional.hpp>
+#include <boost/variant/variant.hpp>
 #include <hdf5.h>
 //@-<< Includes >>
 
 namespace HDF {
 
 //@+others
+//@+node:gcross.20110526194358.1968: ** Exception
+//@+node:gcross.20110526194358.1969: *3* NoSuchFilterException
+struct NoSuchFilterException: public Exception {
+    std::string name;
+    NoSuchFilterException(std::string const& name);
+    virtual ~NoSuchFilterException() throw();
+};
 //@+node:gcross.20110520211700.1466: ** class Properties
 class Properties: public Identifiable {
     //@+others
@@ -44,7 +53,7 @@ class Properties: public Identifiable {
     //@-others
 };
 //@+node:gcross.20110526150836.1975: ** Shared properties
-//@+node:gcross.20110525201928.3113: *3* CreateMissingIntermediateGroupsPropertyBase
+//@+node:gcross.20110525201928.3114: *3* CreateMissingIntermediateGroupsProperty
 class CreateMissingIntermediateGroupsPropertyBase : public virtual Properties {
 protected:
     CreateMissingIntermediateGroupsPropertyBase();
@@ -52,7 +61,7 @@ protected:
 public:
     bool getCreateMissingIntermediateGroups() const;
 };
-//@+node:gcross.20110525201928.3114: *3* CreateMissingIntermediateGroupsProperty
+
 template<typename T> class CreateMissingIntermediateGroupsProperty
   : public CreateMissingIntermediateGroupsPropertyBase
 {
@@ -72,17 +81,40 @@ public:
         return setCreateMissingIntermediateGroups(false);
     }
 };
+//@+node:gcross.20110526194358.1960: *3* UseGZIPCompressionProperty
+class UseGZIPCompressionPropertyBase : public virtual Properties {
+protected:
+    UseGZIPCompressionPropertyBase();
+    void useGZIPCompression(unsigned int level) const;
+};
+
+template<typename T> class UseGZIPCompressionProperty
+  : public UseGZIPCompressionPropertyBase
+{
+private:
+    typedef UseGZIPCompressionPropertyBase Base;
+protected:
+    UseGZIPCompressionProperty() {}
+public:
+    T useGZIPCompression(unsigned int level) const {
+        Base::useGZIPCompression(level);
+        return *static_cast<T const*>(this);
+    }
+};
 //@+node:gcross.20110521115623.2860: ** Properties
 //@+node:gcross.20110526150836.1961: *3* DatasetAccessProperties
 struct DatasetAccessProperties: public Properties {
     DatasetAccessProperties();
 };
 //@+node:gcross.20110526150836.1972: *3* DatasetCreationProperties
-struct DatasetCreationProperties: Properties {
+struct DatasetCreationProperties
+  : public virtual Properties
+  , public UseGZIPCompressionProperty<DatasetCreationProperties>
+{
     DatasetCreationProperties();
 
     //@+others
-    //@+node:gcross.20110526194358.1942: *4* Chunk
+    //@+node:gcross.20110526194358.1942: *4* chunk
     DatasetCreationProperties setChunkSize(hsize_t const chunk_size) const;
     DatasetCreationProperties setChunkSizes(unsigned int rank, hsize_t const* chunk_sizes) const;
     template<typename Dimensions> DatasetCreationProperties setChunkSizes(Dimensions dimensions) const {
@@ -91,6 +123,63 @@ struct DatasetCreationProperties: Properties {
     }
 
     std::vector<hsize_t> getChunkSizes() const;
+    //@+node:gcross.20110526194358.1953: *4* layout
+    DatasetCreationProperties setLayout(DatasetLayout layout) const;
+
+    DatasetLayout getLayout() const;
+    //@+node:gcross.20110526194358.1966: *4* filter
+    DatasetFilter getFilterInformation(
+        boost::variant<unsigned int,DatasetFilter> id
+      , unsigned int& flags
+      , size_t& parameters_size
+      , unsigned int* parameters
+      , size_t name_size
+      , char* name
+      , unsigned int& filter_config
+    ) const;
+
+    DatasetFilter getFilterInformation(
+        boost::variant<unsigned int,DatasetFilter> id
+      , boost::optional<std::vector<unsigned int>&> const& optional_parameters = boost::none
+      , boost::optional<unsigned int&> const& optional_flags = boost::none
+      , boost::optional<unsigned int&> const& optional_filter_config = boost::none
+      , boost::optional<std::pair<size_t,char*> > const& optional_name = boost::none
+    ) const;
+
+    std::vector<unsigned int> getFilterParameters(
+        boost::variant<unsigned int,DatasetFilter> id
+      , unsigned int expected_number = 0
+    ) const;
+
+    DatasetFilter getFilterTypeAtIndex(unsigned int index) const;
+    //@+node:gcross.20110526194358.1988: *5* Fletcher32
+    DatasetCreationProperties addFletcher32ChecksumFilter() const;
+    //@+node:gcross.20110526194358.1976: *5* GZIP
+    DatasetCreationProperties addGZIPCompressionFilter(unsigned int level) const;
+
+    unsigned int getGZIPCompressionLevel(boost::optional<unsigned int> const& optional_index = boost::none) const;
+    //@+node:gcross.20110526194358.1994: *5* NBIT
+    DatasetCreationProperties addNBitCompressionFilter() const;
+    //@+node:gcross.20110526194358.1996: *5* ScaleOffset
+    DatasetCreationProperties addScaleOffsetCompressionFilter(
+        ScaleOperationType scale_type
+      , unsigned int scale_factor
+    ) const;
+
+    std::pair<ScaleOperationType,unsigned int> getScaleOffsetFilterParameters(
+        boost::optional<unsigned int> const& optional_index = boost::none
+    ) const;
+    //@+node:gcross.20110526194358.1984: *5* Shuffle
+    DatasetCreationProperties addShuffleFilter() const;
+    //@+node:gcross.20110527143225.1981: *5* SZIP
+    DatasetCreationProperties addSZIPCompressionFilter(
+        SZIPCodingMethod coding_method
+      , unsigned int pixels_per_block
+    ) const;
+
+    std::pair<SZIPCodingMethod,unsigned int> getSZIPFilterParameters(
+        boost::optional<unsigned int> const& optional_index = boost::none
+    ) const;
     //@-others
 };
 //@+node:gcross.20110526150836.1962: *3* DatasetTransferProperties
@@ -101,10 +190,13 @@ struct DatasetTransferProperties: public Properties {
 struct FileAccessProperties: public Properties {
     FileAccessProperties();
 
+    //@+others
+    //@+node:gcross.20110526194358.1949: *4* core driver
     FileAccessProperties useCoreDriver(size_t increment_size_in_bytes, bool write_to_backing_store) const;
+
     void getCoreDriverSettings(size_t &increment_size_in_bytes, bool &write_to_backing_store) const;
     std::pair<size_t,bool> getCoreDriverSettings() const;
-
+    //@-others
 };
 //@+node:gcross.20110526150836.1973: *3* FileCreationProperties
 struct FileCreationProperties: public Properties {
@@ -114,6 +206,7 @@ struct FileCreationProperties: public Properties {
 struct GroupCreationProperties
   : public virtual Properties
   , public CreateMissingIntermediateGroupsProperty<GroupCreationProperties>
+  , public UseGZIPCompressionProperty<GroupCreationProperties>
 {
     GroupCreationProperties();
 };

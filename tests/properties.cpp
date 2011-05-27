@@ -22,19 +22,21 @@
 #include "properties.hpp"
 
 #include <boost/assign/list_of.hpp>
+#include <boost/foreach.hpp>
+#include <boost/range/irange.hpp>
 #include <illuminate.hpp>
 #include <vector>
 //@-<< Includes >>
 
 //@+<< Usings >>
 //@+node:gcross.20110525201928.3107: ** << Usings >>
-using HDF::ASCIIEncoding;
 using HDF::DatasetCreationProperties;
 using HDF::LinkCreationProperties;
 using HDF::FileAccessProperties;
-using HDF::UTF8Encoding;
 
 using boost::assign::list_of;
+using boost::irange
+;
 
 using std::pair;
 using std::vector;
@@ -59,6 +61,81 @@ TEST_CASE(chunk) {
     EXPECT_EQ(1,chunk_sizes[0]);
     EXPECT_EQ(2,chunk_sizes[1]);
     EXPECT_EQ(3,chunk_sizes[2]);
+}
+//@+node:gcross.20110526194358.1956: *4* layout
+TEST_CASE(layout) {
+    DatasetCreationProperties properties;
+
+    using HDF::CompactDatasetLayout;
+    EXPECT_TRUE(properties == properties.setLayout(CompactDatasetLayout));
+    EXPECT_EQ(CompactDatasetLayout,properties.getLayout());
+
+    using HDF::ContiguousDatasetLayout;
+    EXPECT_TRUE(properties == properties.setLayout(ContiguousDatasetLayout));
+    EXPECT_EQ(ContiguousDatasetLayout,properties.getLayout());
+
+    using HDF::ChunkedDatasetLayout;
+    EXPECT_TRUE(properties == properties.setLayout(ChunkedDatasetLayout));
+    EXPECT_EQ(ChunkedDatasetLayout,properties.getLayout());
+}
+//@+node:gcross.20110526194358.1978: *4* filter
+TEST_SUITE(filter) {
+
+//@+others
+//@+node:gcross.20110526194358.1990: *5* Fletcher32
+TEST_CASE(Fletcher32) {
+    using HDF::Fletcher32Filter;
+    DatasetCreationProperties properties;
+    EXPECT_TRUE(properties == properties.addFletcher32ChecksumFilter());
+    EXPECT_EQ(Fletcher32Filter,properties.getFilterTypeAtIndex(0));
+}
+//@+node:gcross.20110526194358.1979: *5* GZIP
+TEST_CASE(GZIP) {
+    using HDF::GZIPFilter;
+    BOOST_FOREACH(unsigned int const level, irange(1,10)) {
+        DatasetCreationProperties properties;
+        EXPECT_TRUE(properties == properties.useGZIPCompression(level));
+        EXPECT_EQ(level,properties.getGZIPCompressionLevel());
+        EXPECT_EQ(GZIPFilter,properties.getFilterTypeAtIndex(0));
+    }
+}
+//@+node:gcross.20110526194358.2000: *5* NBit
+TEST_CASE(NBit) {
+    using HDF::NBitFilter;
+    DatasetCreationProperties properties;
+    EXPECT_TRUE(properties == properties.addNBitCompressionFilter());
+    EXPECT_EQ(NBitFilter,properties.getFilterTypeAtIndex(0));
+}
+//@+node:gcross.20110527143225.1977: *5* ScaleOffset
+TEST_CASE(ScaleOffset) {
+    using HDF::ScaleOffsetFilter;
+    using HDF::IntegerScaleOperation;
+    DatasetCreationProperties properties;
+    EXPECT_TRUE(properties == properties.addScaleOffsetCompressionFilter(IntegerScaleOperation,42));
+    EXPECT_EQ(IntegerScaleOperation,properties.getScaleOffsetFilterParameters().first);
+    EXPECT_EQ(42,properties.getScaleOffsetFilterParameters().second);
+    EXPECT_EQ(ScaleOffsetFilter,properties.getFilterTypeAtIndex(0));
+}
+//@+node:gcross.20110526194358.1981: *5* Shuffle
+TEST_CASE(Shuffle) {
+    using HDF::ShuffleFilter;
+    DatasetCreationProperties properties;
+    EXPECT_TRUE(properties == properties.addShuffleFilter());
+    EXPECT_EQ(ShuffleFilter,properties.getFilterTypeAtIndex(0));
+}
+//@+node:gcross.20110527143225.1986: *5* SZIP
+//@+at
+// TEST_CASE(SZIPOffset) {
+//     using HDF::SZIPFilter;
+//     using HDF::SZIPNearestNeighborCodingMethod;
+//     DatasetCreationProperties properties;
+//     EXPECT_TRUE(properties == properties.addSZIPCompressionFilter(SZIPNearestNeighborCodingMethod,42));
+//     EXPECT_EQ(SZIPNearestNeighborCodingMethod,properties.getSZIPFilterParameters().first);
+//     EXPECT_EQ(42,properties.getSZIPFilterParameters().second);
+//     EXPECT_EQ(SZIPFilter,properties.getFilterTypeAtIndex(0));
+// }
+//@-others
+
 }
 //@-others
 
@@ -87,9 +164,11 @@ TEST_SUITE(LinkCreationProperties) {
 TEST_CASE(character_encoding) {
     LinkCreationProperties properties;
 
+    using HDF::ASCIIEncoding;
     EXPECT_TRUE(properties == properties.setCharacterEncoding(ASCIIEncoding));
     EXPECT_EQ(ASCIIEncoding,properties.getCharacterEncoding());
 
+    using HDF::UTF8Encoding;
     EXPECT_TRUE(properties == properties.setCharacterEncoding(UTF8Encoding));
     EXPECT_EQ(UTF8Encoding,properties.getCharacterEncoding());
 }

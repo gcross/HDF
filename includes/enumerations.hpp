@@ -36,6 +36,21 @@ enum CharacterEncoding {
     ASCIIEncoding = H5T_CSET_ASCII
   , UTF8Encoding = H5T_CSET_UTF8
 };
+//@+node:gcross.20110526194358.1967: *3* DatasetFilter
+enum DatasetFilter {
+    GZIPFilter = H5Z_FILTER_DEFLATE
+ ,  ShuffleFilter = H5Z_FILTER_SHUFFLE
+ ,  Fletcher32Filter = H5Z_FILTER_FLETCHER32
+ ,  SZIPFilter = H5Z_FILTER_SZIP
+ ,  NBitFilter = H5Z_FILTER_NBIT
+ ,  ScaleOffsetFilter = H5Z_FILTER_SCALEOFFSET
+};
+//@+node:gcross.20110526194358.1952: *3* DatasetLayout
+enum DatasetLayout {
+    CompactDatasetLayout = H5D_COMPACT
+  , ContiguousDatasetLayout = H5D_CONTIGUOUS
+  , ChunkedDatasetLayout = H5D_CHUNKED
+};
 //@+node:gcross.20110526150836.1942: *3* DataspaceClass
 enum DataspaceClass {
     SimpleSpace = H5S_SIMPLE
@@ -55,6 +70,17 @@ enum FileFlushScope {
 enum FileOpenMode { OpenReadOnly, OpenReadWrite };
 
 unsigned int getFileOpenModeFlag(FileOpenMode mode);
+//@+node:gcross.20110526194358.2003: *3* ScaleOperationType
+enum ScaleOperationType {
+    FloatingPointWithVariableBitsScaleOperation = H5Z_SO_FLOAT_DSCALE
+  , FloatingPointWithFixedBitsScaleOperation = H5Z_SO_FLOAT_ESCALE
+  , IntegerScaleOperation = H5Z_SO_INT
+};
+//@+node:gcross.20110527143225.1984: *3* SZIPCodingMethod
+enum SZIPCodingMethod {
+    SZIPEntropyCodingMethod = H5_SZIP_EC_OPTION_MASK
+  , SZIPNearestNeighborCodingMethod = H5_SZIP_NN_OPTION_MASK
+};
 //@-others
 
 }
