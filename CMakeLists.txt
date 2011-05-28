@@ -45,7 +45,7 @@ endif(UNIX)
 #@+others
 #@+node:gcross.20110520211700.1434: *3* Boost
 SET(Boost_ADDITIONAL_VERSIONS "1.43" "1.43.0" "1.44" "1.44.0" "1.45" "1.45.0" "1.46.0" "1.46.1")
-find_package( Boost 1.46 COMPONENTS program_options thread REQUIRED )
+find_package( Boost 1.46 COMPONENTS REQUIRED )
 link_directories ( ${Boost_LIBRARY_DIRS} )
 include_directories ( ${Boost_INCLUDE_DIRS} )
 #@+node:gcross.20110520211700.1435: *3* HDF5
@@ -69,5 +69,17 @@ include_directories ("includes")
 add_subdirectory ("includes")
 add_subdirectory ("package")
 add_subdirectory ("sources")
-add_subdirectory ("tests")
+
+#@+<< Configure tests >>
+#@+node:gcross.20110527192131.2331: ** << Configure tests >>
+find_package( Illuminate )
+
+if(${Illuminate_FOUND})
+    add_subdirectory ("tests")
+else(${Illuminate_FOUND})
+    add_custom_target(test
+        COMMAND ${CMAKE_COMMAND} -E echo "The Illuminate library is required to build the tests."
+    )
+endif(${Illuminate_FOUND})
+#@-<< Configure tests >>
 #@-leo
