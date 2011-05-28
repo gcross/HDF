@@ -133,20 +133,26 @@ vector<hsize_t> DatasetCreationProperties::getChunkSizes() const {
         );
     return chunk_sizes;
 }
-//@+node:gcross.20110526194358.1955: *4* layout
-DatasetCreationProperties DatasetCreationProperties::setLayout(DatasetLayout layout) const {
+//@+node:gcross.20110527143225.1992: *4* fill value
+DatasetCreationProperties DatasetCreationProperties::setFillValue(Datatype const& datatype, void const* value) const {
     assertSuccess(
-        "setting dataset layout",
-        H5Pset_layout(getId(),static_cast<H5D_layout_t>(layout))
+        "setting dataset fill value",
+        H5Pset_fill_value(
+            getId(),
+            datatype.getDatatypeId(),
+            value
+        )
     );
     return *this;
 }
 
-DatasetLayout DatasetCreationProperties::getLayout() const {
-    return static_cast<DatasetLayout>(
-        assertSuccess(
-            "getting dataset layout",
-            H5Pget_layout(getId())
+void DatasetCreationProperties::getFillValue(Datatype const& datatype, void* value) const {
+    assertSuccess(
+        "setting dataset fill value",
+        H5Pget_fill_value(
+            getId(),
+            datatype.getDatatypeId(),
+            value
         )
     );
 }
@@ -330,6 +336,23 @@ pair<SZIPCodingMethod,unsigned int> DatasetCreationProperties::getSZIPFilterPara
         getFilterInformation(SZIPFilter,parameters);
     }
     return make_pair(static_cast<SZIPCodingMethod>(parameters[0]),parameters[1]);
+}
+//@+node:gcross.20110526194358.1955: *4* layout
+DatasetCreationProperties DatasetCreationProperties::setLayout(DatasetLayout layout) const {
+    assertSuccess(
+        "setting dataset layout",
+        H5Pset_layout(getId(),static_cast<H5D_layout_t>(layout))
+    );
+    return *this;
+}
+
+DatasetLayout DatasetCreationProperties::getLayout() const {
+    return static_cast<DatasetLayout>(
+        assertSuccess(
+            "getting dataset layout",
+            H5Pget_layout(getId())
+        )
+    );
 }
 //@-others
 //@+node:gcross.20110526150836.1971: *3* DatasetTransferProperties

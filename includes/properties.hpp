@@ -107,6 +107,12 @@ struct DatasetAccessProperties: public Properties {
     DatasetAccessProperties();
 };
 //@+node:gcross.20110526150836.1972: *3* DatasetCreationProperties
+//@+<< Forward declarations >>
+//@+node:gcross.20110527143225.1997: *4* << Forward declarations >>
+template<class> struct datatypeOf;
+class Datatype;
+//@-<< Forward declarations >>
+
 struct DatasetCreationProperties
   : public virtual Properties
   , public UseGZIPCompressionProperty<DatasetCreationProperties>
@@ -123,10 +129,24 @@ struct DatasetCreationProperties
     }
 
     std::vector<hsize_t> getChunkSizes() const;
-    //@+node:gcross.20110526194358.1953: *4* layout
-    DatasetCreationProperties setLayout(DatasetLayout layout) const;
+    //@+node:gcross.20110527143225.1994: *4* fill value
+    DatasetCreationProperties setFillValue(Datatype const& datatype, void const* value) const;
 
-    DatasetLayout getLayout() const;
+    template<typename T> DatasetCreationProperties setFillValue(T const& value) const {
+        return setFillValue(datatypeOf<T>::get(),&value);
+    }
+
+    void getFillValue(Datatype const& datatype, void* value) const;
+
+    template<typename T> void getFillValue(T& value) const {
+        getFillValue(datatypeOf<T>::get(),&value);
+    }
+
+    template<typename T> T getFillValue() const {
+        T value;
+        getFillValue(value);
+        return value;
+    }
     //@+node:gcross.20110526194358.1966: *4* filter
     DatasetFilter getFilterInformation(
         boost::variant<unsigned int,DatasetFilter> id
@@ -180,6 +200,10 @@ struct DatasetCreationProperties
     std::pair<SZIPCodingMethod,unsigned int> getSZIPFilterParameters(
         boost::optional<unsigned int> const& optional_index = boost::none
     ) const;
+    //@+node:gcross.20110526194358.1953: *4* layout
+    DatasetCreationProperties setLayout(DatasetLayout layout) const;
+
+    DatasetLayout getLayout() const;
     //@-others
 };
 //@+node:gcross.20110526150836.1962: *3* DatasetTransferProperties
@@ -238,4 +262,9 @@ hid_t getOptionalPropertiesId(boost::optional<PropertiesType> const& optional_pr
 }
 
 #endif
+
+//@+<< Trailing includes >>
+//@+node:gcross.20110527143225.1998: ** << Trailing includes >>
+#include "datatype.hpp"
+//@-<< Trailing includes >>
 //@-leo

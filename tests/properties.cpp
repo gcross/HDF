@@ -62,22 +62,6 @@ TEST_CASE(chunk) {
     EXPECT_EQ(2,chunk_sizes[1]);
     EXPECT_EQ(3,chunk_sizes[2]);
 }
-//@+node:gcross.20110526194358.1956: *4* layout
-TEST_CASE(layout) {
-    DatasetCreationProperties properties;
-
-    using HDF::CompactDatasetLayout;
-    EXPECT_TRUE(properties == properties.setLayout(CompactDatasetLayout));
-    EXPECT_EQ(CompactDatasetLayout,properties.getLayout());
-
-    using HDF::ContiguousDatasetLayout;
-    EXPECT_TRUE(properties == properties.setLayout(ContiguousDatasetLayout));
-    EXPECT_EQ(ContiguousDatasetLayout,properties.getLayout());
-
-    using HDF::ChunkedDatasetLayout;
-    EXPECT_TRUE(properties == properties.setLayout(ChunkedDatasetLayout));
-    EXPECT_EQ(ChunkedDatasetLayout,properties.getLayout());
-}
 //@+node:gcross.20110526194358.1978: *4* filter
 TEST_SUITE(filter) {
 
@@ -136,6 +120,29 @@ TEST_CASE(Shuffle) {
 // }
 //@-others
 
+}
+//@+node:gcross.20110527143225.1996: *4* fill value
+TEST_CASE(fill_value) {
+    DatasetCreationProperties properties;
+
+    EXPECT_TRUE(properties == properties.setFillValue(3.14f));
+    EXPECT_EQ(3.14f,properties.getFillValue<float>());
+}
+//@+node:gcross.20110526194358.1956: *4* layout
+TEST_CASE(layout) {
+    DatasetCreationProperties properties;
+
+    using HDF::CompactDatasetLayout;
+    EXPECT_TRUE(properties == properties.setLayout(CompactDatasetLayout));
+    EXPECT_EQ(CompactDatasetLayout,properties.getLayout());
+
+    using HDF::ContiguousDatasetLayout;
+    EXPECT_TRUE(properties == properties.setLayout(ContiguousDatasetLayout));
+    EXPECT_EQ(ContiguousDatasetLayout,properties.getLayout());
+
+    using HDF::ChunkedDatasetLayout;
+    EXPECT_TRUE(properties == properties.setLayout(ChunkedDatasetLayout));
+    EXPECT_EQ(ChunkedDatasetLayout,properties.getLayout());
 }
 //@-others
 
