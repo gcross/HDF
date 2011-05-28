@@ -59,14 +59,14 @@ TEST_SUITE(constructors) {
 TEST_CASE(null) { hid_t id; {
     Dataspace dataspace(NullSpace);
     id = dataspace.getId();
-    ASSERT_EQ(0,dataspace.dimensions().size());
+    ASSERT_EQ(0u,dataspace.dimensions().size());
 } ASSERT_TRUE(dataspaceIsClosed(id)); }
 //@+node:gcross.20110525201928.3083: *4* scalar
 TEST_CASE(scalar) { hid_t id; {
     Dataspace dataspace(ScalarSpace);
     id = dataspace.getId();
-    ASSERT_EQ(0,dataspace.rank());
-    ASSERT_EQ(1,dataspace.size());
+    ASSERT_EQ(0u,dataspace.rank());
+    ASSERT_EQ(1u,dataspace.size());
 } ASSERT_TRUE(dataspaceIsClosed(id)); }
 //@+node:gcross.20110525201928.3086: *4* simple
 TEST_SUITE(simple) {
@@ -77,7 +77,7 @@ TEST_CASE(rank_and_ptrs_to_both_dimensions) { hid_t id; {
     hsize_t current[] = {1,2}, maximum[] = {3,4};
     Dataspace dataspace(2,current,maximum);
     id = dataspace.getId();
-    ASSERT_EQ(2,dataspace.rank());
+    ASSERT_EQ(2u,dataspace.rank());
     ASSERT_TRUE(equal(dataspace.dimensions(),current));
     ASSERT_TRUE(equal(dataspace.maximumDimensions(),maximum));
 } ASSERT_TRUE(dataspaceIsClosed(id)); }
@@ -86,7 +86,7 @@ TEST_CASE(rank_and_ptr_to_current_dimensions) { hid_t id; {
     hsize_t current[] = {1,2};
     Dataspace dataspace(2,current);
     id = dataspace.getId();
-    ASSERT_EQ(2,dataspace.rank());
+    ASSERT_EQ(2u,dataspace.rank());
     ASSERT_TRUE(equal(dataspace.dimensions(),current));
     ASSERT_TRUE(equal(dataspace.maximumDimensions(),current));
 } ASSERT_TRUE(dataspaceIsClosed(id)); }
@@ -95,7 +95,7 @@ TEST_CASE(vector_with_current_dimensions) { hid_t id; {
     vector<hsize_t> current = list_of(1)(2);
     Dataspace dataspace(current);
     id = dataspace.getId();
-    ASSERT_EQ(2,dataspace.rank());
+    ASSERT_EQ(2u,dataspace.rank());
     ASSERT_TRUE(equal(dataspace.dimensions(),current));
     ASSERT_TRUE(equal(dataspace.maximumDimensions(),current));
 } ASSERT_TRUE(dataspaceIsClosed(id)); }

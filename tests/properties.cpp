@@ -157,7 +157,7 @@ TEST_CASE(core_driver) {
 
     EXPECT_TRUE(properties == properties.useCoreDriver(16,true));
     pair<size_t,bool> result = properties.getCoreDriverSettings();
-    EXPECT_EQ(16,result.first);
+    EXPECT_EQ(16u,result.first);
     EXPECT_EQ(true,result.second);
 }
 //@-others
