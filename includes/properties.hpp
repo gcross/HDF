@@ -24,6 +24,7 @@
 //@+node:gcross.20110520211700.1464: ** << Includes >>
 #include "enumerations.hpp"
 #include "error.hpp"
+#include "filter.hpp"
 #include "identifiable.hpp"
 #include "utilities.hpp"
 
@@ -81,26 +82,6 @@ public:
         return setCreateMissingIntermediateGroups(false);
     }
 };
-//@+node:gcross.20110526194358.1960: *3* UseGZIPCompressionProperty
-class UseGZIPCompressionPropertyBase : public virtual Properties {
-protected:
-    UseGZIPCompressionPropertyBase();
-    void useGZIPCompression(unsigned int level) const;
-};
-
-template<typename T> class UseGZIPCompressionProperty
-  : public UseGZIPCompressionPropertyBase
-{
-private:
-    typedef UseGZIPCompressionPropertyBase Base;
-protected:
-    UseGZIPCompressionProperty() {}
-public:
-    T useGZIPCompression(unsigned int level) const {
-        Base::useGZIPCompression(level);
-        return *static_cast<T const*>(this);
-    }
-};
 //@+node:gcross.20110521115623.2860: ** Properties
 //@+node:gcross.20110526150836.1961: *3* DatasetAccessProperties
 struct DatasetAccessProperties: public Properties {
@@ -115,7 +96,6 @@ class Datatype;
 
 struct DatasetCreationProperties
   : public virtual Properties
-  , public UseGZIPCompressionProperty<DatasetCreationProperties>
 {
     DatasetCreationProperties();
 
@@ -147,59 +127,18 @@ struct DatasetCreationProperties
         getFillValue(value);
         return value;
     }
-    //@+node:gcross.20110526194358.1966: *4* filter
-    DatasetFilter getFilterInformation(
-        boost::variant<unsigned int,DatasetFilter> id
-      , unsigned int& flags
-      , size_t& parameters_size
-      , unsigned int* parameters
-      , size_t name_size
-      , char* name
-      , unsigned int& filter_config
-    ) const;
+    //@+node:gcross.20110528133907.2023: *4* filter
+    DatasetCreationProperties appendFilter(Filter const& filter) const;
 
-    DatasetFilter getFilterInformation(
-        boost::variant<unsigned int,DatasetFilter> id
-      , boost::optional<std::vector<unsigned int>&> const& optional_parameters = boost::none
-      , boost::optional<unsigned int&> const& optional_flags = boost::none
-      , boost::optional<unsigned int&> const& optional_filter_config = boost::none
-      , boost::optional<std::pair<size_t,char*> > const& optional_name = boost::none
-    ) const;
+    std::auto_ptr<Filter> getFilterAtIndex(unsigned int index) const;
 
-    std::vector<unsigned int> getFilterParameters(
-        boost::variant<unsigned int,DatasetFilter> id
-      , unsigned int expected_number = 0
-    ) const;
+    std::auto_ptr<Filter> getFilterWithId(H5Z_filter_t filter_id) const;
 
-    DatasetFilter getFilterTypeAtIndex(unsigned int index) const;
-    //@+node:gcross.20110526194358.1988: *5* Fletcher32
-    DatasetCreationProperties addFletcher32ChecksumFilter() const;
-    //@+node:gcross.20110526194358.1976: *5* GZIP
-    DatasetCreationProperties addGZIPCompressionFilter(unsigned int level) const;
+    template<typename FilterType> FilterType getFilterOfType() {
+        return FilterType(dynamic_cast<FilterType&>(*getFilterWithId(FilterType::filter_id)));
+    }
 
-    unsigned int getGZIPCompressionLevel(boost::optional<unsigned int> const& optional_index = boost::none) const;
-    //@+node:gcross.20110526194358.1994: *5* NBIT
-    DatasetCreationProperties addNBitCompressionFilter() const;
-    //@+node:gcross.20110526194358.1996: *5* ScaleOffset
-    DatasetCreationProperties addScaleOffsetCompressionFilter(
-        ScaleOperationType scale_type
-      , unsigned int scale_factor
-    ) const;
-
-    std::pair<ScaleOperationType,unsigned int> getScaleOffsetFilterParameters(
-        boost::optional<unsigned int> const& optional_index = boost::none
-    ) const;
-    //@+node:gcross.20110526194358.1984: *5* Shuffle
-    DatasetCreationProperties addShuffleFilter() const;
-    //@+node:gcross.20110527143225.1981: *5* SZIP
-    DatasetCreationProperties addSZIPCompressionFilter(
-        SZIPCodingMethod coding_method
-      , unsigned int pixels_per_block
-    ) const;
-
-    std::pair<SZIPCodingMethod,unsigned int> getSZIPFilterParameters(
-        boost::optional<unsigned int> const& optional_index = boost::none
-    ) const;
+    bool allAddedFiltersAreAvailable() const;
     //@+node:gcross.20110526194358.1953: *4* layout
     DatasetCreationProperties setLayout(DatasetLayout layout) const;
 
@@ -230,7 +169,6 @@ struct FileCreationProperties: public Properties {
 struct GroupCreationProperties
   : public virtual Properties
   , public CreateMissingIntermediateGroupsProperty<GroupCreationProperties>
-  , public UseGZIPCompressionProperty<GroupCreationProperties>
 {
     GroupCreationProperties();
 };

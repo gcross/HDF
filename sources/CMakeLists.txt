@@ -11,6 +11,7 @@ add_library(HDF++
     enumerations
     error
     file
+    filter
     group
     group_array
     identifiable

@@ -80,15 +80,6 @@ bool CreateMissingIntermediateGroupsPropertyBase::getCreateMissingIntermediateGr
     );
     return create_missing_intermediate_groups==1;
 }
-//@+node:gcross.20110526194358.1963: *3* UseGZIPCompressionProperty
-UseGZIPCompressionPropertyBase::UseGZIPCompressionPropertyBase() {}
-
-void UseGZIPCompressionPropertyBase::useGZIPCompression(unsigned int level) const {
-    assertSuccess(
-        "setting deflate compression",
-        H5Pset_deflate(getId(),level)
-    );
-};
 //@+node:gcross.20110520211700.1501: ** Properties
 LinkAccessProperties::LinkAccessProperties()
   : Properties(assertSuccess("creating link access properties",H5Pcreate(H5P_LINK_ACCESS)))
@@ -156,186 +147,83 @@ void DatasetCreationProperties::getFillValue(Datatype const& datatype, void* val
         )
     );
 }
-//@+node:gcross.20110526194358.1975: *4* filter
-DatasetFilter DatasetCreationProperties::getFilterInformation(
-    variant<unsigned int,DatasetFilter> id
-  , unsigned int& flags
-  , size_t& parameters_size
-  , unsigned int* parameters
-  , size_t name_size
-  , char* name
-  , unsigned int& filter_config
-) const {
-    DatasetFilter filter;
-    switch(id.which()) {
-        case 0:
-            filter = static_cast<DatasetFilter>(
-                assertSuccess(
-                    "getting filter information (by index)",
-                    H5Pget_filter(
-                        getId(),
-                        get<unsigned int>(id),
-                        &flags,
-                        &parameters_size,
-                        parameters,
-                        name_size,
-                        name,
-                        &filter_config
-                    )
-                )
-            );
-            break;
-        case 1:
-            filter = get<DatasetFilter>(id);
-            assertSuccess(
-                "getting filter information (by id)",
-                H5Pget_filter_by_id(
-                    getId(),
-                    static_cast<H5Z_filter_t>(filter),
-                    &flags,
-                    &parameters_size,
-                    parameters,
-                    name_size,
-                    name,
-                    &filter_config
-                )
-            );
-            break;
-    }
-    return filter;
+//@+node:gcross.20110528133907.2025: *4* filter
+DatasetCreationProperties DatasetCreationProperties::appendFilter(Filter const& filter) const {
+    assertSuccess(
+        "adding filter",
+        H5Pset_filter(
+            getId(),
+            filter.getFilterId(),
+            filter.getOptionalFlag() ? H5Z_FLAG_OPTIONAL : H5Z_FLAG_MANDATORY,
+            filter.numberOfParameters(), filter.parameters()
+        )
+    );
+    return *this;
 }
 
-DatasetFilter DatasetCreationProperties::getFilterInformation(
-    variant<unsigned int,DatasetFilter> id
-  , optional<vector<unsigned int>&> const& optional_parameters
-  , optional<unsigned int&> const& optional_flags
-  , optional<unsigned int&> const& optional_filter_config
-  , optional<pair<size_t,char*> > const& optional_name
-) const {
+std::auto_ptr<Filter> DatasetCreationProperties::getFilterAtIndex(unsigned int index) const {
+    size_t number_of_parameters = 0;
     unsigned int flags, filter_config;
-    size_t number_of_parameters = optional_parameters ? optional_parameters->size() : 0;
-    DatasetFilter filter = getFilterInformation(
-        id,
-        optional_flags.get_value_or(flags),
-        number_of_parameters,
-        optional_parameters ? &optional_parameters->front() : NULL,
-        optional_name ? optional_name->first : 0,
-        optional_name ? optional_name->second : NULL,
-        optional_filter_config.get_value_or(filter_config)
+    assertSuccess(
+        "getting filter (by index)",
+        H5Pget_filter(
+            getId(),
+            index,
+            &flags,
+            &number_of_parameters, NULL,
+            0, NULL,
+            &filter_config
+        )
     );
-    if(optional_parameters) {
-        vector<unsigned int>& parameters = *optional_parameters;
-        bool was_too_small = parameters.size() < number_of_parameters;
-        parameters.resize(number_of_parameters);
-        if(was_too_small) {
-            getFilterInformation(
-                id,
-                flags,
-                number_of_parameters,
-                &parameters.front(),
-                0,
-                NULL,
-                filter_config
-            );
-        }
-    }
-    return filter;
+    vector<unsigned int> parameters(number_of_parameters);
+    H5Z_filter_t filter_id = assertSuccess(
+        "getting filter (by index)",
+        H5Pget_filter(
+            getId(),
+            index,
+            &flags,
+            &number_of_parameters, &parameters.front(),
+            0, NULL,
+            &filter_config
+        )
+    );
+    return Filter::construct(filter_id,parameters,flags & H5Z_FLAG_OPTIONAL);
 }
 
-vector<unsigned int> DatasetCreationProperties::getFilterParameters(
-    variant<unsigned int,DatasetFilter> id
-  , unsigned int expected_number
-) const {
-    vector<unsigned int> parameters(expected_number);
-    getFilterInformation(id,parameters);
-    return parameters;
+std::auto_ptr<Filter> DatasetCreationProperties::getFilterWithId(H5Z_filter_t filter_id) const {
+    size_t number_of_parameters = 0;
+    unsigned int flags, filter_config;
+    assertSuccess(
+        "getting filter (by index)",
+        H5Pget_filter_by_id(
+            getId(),
+            filter_id,
+            &flags,
+            &number_of_parameters, NULL,
+            0, NULL,
+            &filter_config
+        )
+    );
+    vector<unsigned int> parameters(number_of_parameters);
+    assertSuccess(
+        "getting filter (by index)",
+        H5Pget_filter_by_id(
+            getId(),
+            filter_id,
+            &flags,
+            &number_of_parameters, &parameters.front(),
+            0, NULL,
+            &filter_config
+        )
+    );
+    return Filter::construct(filter_id,parameters,flags & H5Z_FLAG_OPTIONAL);
 }
 
-DatasetFilter DatasetCreationProperties::getFilterTypeAtIndex(
-    unsigned int index
-) const {
-    return getFilterInformation(index);
-}
-//@+node:gcross.20110526194358.1986: *5* Fletcher32
-DatasetCreationProperties DatasetCreationProperties::addFletcher32ChecksumFilter() const {
-    assertSuccess(
-        "adding Fletcher32 checksum filter",
-        H5Pset_fletcher32(getId())
-    );
-    return *this;
-}
-//@+node:gcross.20110526194358.1977: *5* GZIP
-DatasetCreationProperties DatasetCreationProperties::addGZIPCompressionFilter(unsigned int level) const {
-    return useGZIPCompression(level);
-}
-
-unsigned int DatasetCreationProperties::getGZIPCompressionLevel(optional<unsigned int> const& optional_index) const {
-    if(optional_index)
-        return getFilterParameters(*optional_index,1)[0];
-    else
-        return getFilterParameters(GZIPFilter,1)[0];
-}
-//@+node:gcross.20110526194358.1998: *5* NBit
-DatasetCreationProperties DatasetCreationProperties::addNBitCompressionFilter() const {
-    assertSuccess(
-        "adding NBit checksum filter",
-        H5Pset_nbit(getId())
-    );
-    return *this;
-}
-//@+node:gcross.20110526194358.2002: *5* ScaleOffset
-DatasetCreationProperties DatasetCreationProperties::addScaleOffsetCompressionFilter(
-    ScaleOperationType scale_type
-  , unsigned int scale_factor
-) const {
-    assertSuccess(
-        "adding scale offset checksum filter",
-        H5Pset_scaleoffset(getId(),static_cast<H5Z_SO_scale_type_t>(scale_type),scale_factor)
-    );
-    return *this;
-}
-
-pair<ScaleOperationType,unsigned int> DatasetCreationProperties::getScaleOffsetFilterParameters(
-    optional<unsigned int> const& optional_index
-) const {
-    vector<unsigned int> parameters(2);
-    if(optional_index) {
-        getFilterInformation(*optional_index,parameters);
-    } else {
-        getFilterInformation(ScaleOffsetFilter,parameters);
-    }
-    return make_pair(static_cast<ScaleOperationType>(parameters[0]),parameters[1]);
-}
-//@+node:gcross.20110526194358.1982: *5* Shuffle
-DatasetCreationProperties DatasetCreationProperties::addShuffleFilter() const {
-    assertSuccess(
-        "adding shuffle filter",
-        H5Pset_shuffle(getId())
-    );
-    return *this;
-}
-//@+node:gcross.20110527143225.1983: *5* SZIP
-DatasetCreationProperties DatasetCreationProperties::addSZIPCompressionFilter(
-    SZIPCodingMethod coding_method
-  , unsigned int pixels_per_block
-) const {
-    assertSuccess(
-        "adding SZIP checksum filter",
-        H5Pset_szip(getId(),static_cast<unsigned int>(coding_method),pixels_per_block)
-    );
-    return *this;
-}
-
-pair<SZIPCodingMethod,unsigned int> DatasetCreationProperties::getSZIPFilterParameters(
-    optional<unsigned int> const& optional_index
-) const {
-    vector<unsigned int> parameters(2);
-    if(optional_index) {
-        getFilterInformation(*optional_index,parameters);
-    } else {
-        getFilterInformation(SZIPFilter,parameters);
-    }
-    return make_pair(static_cast<SZIPCodingMethod>(parameters[0]),parameters[1]);
+bool DatasetCreationProperties::allAddedFiltersAreAvailable() const {
+    return assertSuccess(
+        "checking that all added filters are available",
+        H5Pall_filters_avail(getId())
+    ) == 1;
 }
 //@+node:gcross.20110526194358.1955: *4* layout
 DatasetCreationProperties DatasetCreationProperties::setLayout(DatasetLayout layout) const {

@@ -21,6 +21,7 @@
 <v t="gcross.20110526150836.1927"><vh>@file enumerations.hpp</vh></v>
 <v t="gcross.20110520194631.1420"><vh>@file error.hpp</vh></v>
 <v t="gcross.20110520194631.1392"><vh>@file file.hpp</vh></v>
+<v t="gcross.20110527192131.2335"><vh>@file filter.hpp</vh></v>
 <v t="gcross.20110521115623.2893"><vh>@file group.hpp</vh></v>
 <v t="gcross.20110521115623.2983"><vh>@file group_array.hpp</vh></v>
 <v t="gcross.20110520194631.1319"><vh>@file identifiable.hpp</vh></v>
@@ -52,6 +53,7 @@
 <v t="gcross.20110526150836.1935"><vh>@file enumerations.cpp</vh></v>
 <v t="gcross.20110520211700.1400"><vh>@file error.cpp</vh></v>
 <v t="gcross.20110520194631.1429"><vh>@file file.cpp</vh></v>
+<v t="gcross.20110527192131.2347"><vh>@file filter.cpp</vh></v>
 <v t="gcross.20110521115623.2905"><vh>@file group.cpp</vh></v>
 <v t="gcross.20110521115623.3007"><vh>@file group_array.cpp</vh></v>
 <v t="gcross.20110520194631.1330"><vh>@file identifiable.cpp</vh></v>
@@ -78,6 +80,7 @@
 <v t="gcross.20110524225139.1874"><vh>@file datatypes.cpp</vh></v>
 <v t="gcross.20110525201928.3104"><vh>@file properties.cpp</vh></v>
 <v t="gcross.20110524225139.1905"><vh>@file files.cpp</vh></v>
+<v t="gcross.20110528133907.2077"><vh>@file filters.cpp</vh></v>
 <v t="gcross.20110521115623.3227"><vh>file template.cpp</vh>
 <v t="gcross.20110521115623.3228"><vh>&lt;&lt; License &gt;&gt;</vh></v>
 <v t="gcross.20110521115623.3229"><vh>&lt;&lt; Includes &gt;&gt;</vh></v>
