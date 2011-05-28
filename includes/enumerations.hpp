@@ -31,6 +31,13 @@ namespace HDF {
 
 //@+others
 //@+node:gcross.20110526150836.1930: ** Enumerations
+//@+node:gcross.20110528133907.2060: *3* AllocationMode
+enum AllocationMode {
+    DefaultAllocationModeForStorage = H5D_ALLOC_TIME_DEFAULT
+  , AllocateAllSpaceWhenDatasetIsCreated = H5D_ALLOC_TIME_EARLY
+  , AllocateSpaceIncrementallyAsNeeded = H5D_ALLOC_TIME_INCR
+  , AllocateAllSpaceOnFirstWrite = H5D_ALLOC_TIME_LATE
+};
 //@+node:gcross.20110526150836.1952: *3* CharacterEncoding
 enum CharacterEncoding {
     ASCIIEncoding = H5T_CSET_ASCII
@@ -61,6 +68,18 @@ enum FileFlushScope {
 enum FileOpenMode { OpenReadOnly, OpenReadWrite };
 
 unsigned int getFileOpenModeFlag(FileOpenMode mode);
+//@+node:gcross.20110528133907.2057: *3* FillMode
+enum FillMode {
+    AlwaysFillUponAllocation = H5D_FILL_TIME_ALLOC
+  , OnlyFillUponAllocationIfUserDefinedValue = H5D_FILL_TIME_IFSET
+  , NeverFill = H5D_FILL_TIME_NEVER
+};
+//@+node:gcross.20110528133907.2052: *3* FillValueStatus
+enum FillValueStatus {
+    FillValueUndefined = H5D_FILL_VALUE_UNDEFINED
+  , FillValueLibraryDefault = H5D_FILL_VALUE_DEFAULT
+  , FillValueUserDefined = H5D_FILL_VALUE_USER_DEFINED
+};
 //@+node:gcross.20110526194358.2003: *3* ScaleMethod
 enum ScaleMethod {
     ScaleFloatingPointWithVariableBits = H5Z_SO_FLOAT_DSCALE

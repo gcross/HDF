@@ -97,6 +97,29 @@ DatasetCreationProperties::DatasetCreationProperties()
 {}
 
 //@+others
+//@+node:gcross.20110528133907.2064: *4* allocation mode
+DatasetCreationProperties DatasetCreationProperties::setAllocationMode(AllocationMode allocation_mode) {
+    assertSuccess(
+        "setting fill time (mode)",
+        H5Pset_alloc_time(
+            getId(),
+            static_cast<H5D_alloc_time_t>(allocation_mode)
+        )
+    );
+    return *this;
+}
+
+AllocationMode DatasetCreationProperties::getAllocationMode() const {
+    H5D_alloc_time_t allocation_mode;
+    assertSuccess(
+        "getting dataset fill value status",
+        H5Pget_alloc_time(
+            getId(),
+            &allocation_mode
+        )
+    );
+    return static_cast<AllocationMode>(allocation_mode);
+}
 //@+node:gcross.20110526194358.1941: *4* chunk
 DatasetCreationProperties DatasetCreationProperties::setChunkSize(hsize_t const chunk_size) const {
     return setChunkSizes(1,&chunk_size);
@@ -124,6 +147,29 @@ vector<hsize_t> DatasetCreationProperties::getChunkSizes() const {
         );
     return chunk_sizes;
 }
+//@+node:gcross.20110528133907.2056: *4* fill mode
+DatasetCreationProperties DatasetCreationProperties::setFillMode(FillMode fill_mode) {
+    assertSuccess(
+        "setting fill time (mode)",
+        H5Pset_fill_time(
+            getId(),
+            static_cast<H5D_fill_time_t>(fill_mode)
+        )
+    );
+    return *this;
+}
+
+FillMode DatasetCreationProperties::getFillMode() const {
+    H5D_fill_time_t fill_mode;
+    assertSuccess(
+        "getting dataset fill value status",
+        H5Pget_fill_time(
+            getId(),
+            &fill_mode
+        )
+    );
+    return static_cast<FillMode>(fill_mode);
+}
 //@+node:gcross.20110527143225.1992: *4* fill value
 DatasetCreationProperties DatasetCreationProperties::setFillValue(Datatype const& datatype, void const* value) const {
     assertSuccess(
@@ -146,6 +192,18 @@ void DatasetCreationProperties::getFillValue(Datatype const& datatype, void* val
             value
         )
     );
+}
+
+FillValueStatus DatasetCreationProperties::getFillValueStatus() const {
+    H5D_fill_value_t fill_value_status;
+    assertSuccess(
+        "getting dataset fill value status",
+        H5Pfill_value_defined(
+            getId(),
+            &fill_value_status
+        )
+    );
+    return static_cast<FillValueStatus>(fill_value_status);
 }
 //@+node:gcross.20110528133907.2025: *4* filter
 DatasetCreationProperties DatasetCreationProperties::appendFilter(Filter const& filter) const {

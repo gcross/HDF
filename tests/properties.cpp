@@ -65,6 +65,26 @@ TEST_SUITE(Properties) {
 TEST_SUITE(DatasetCreationProperties) {
 
 //@+others
+//@+node:gcross.20110528133907.2066: *4* allocation mode
+TEST_CASE(allocation_mode) {
+    DatasetCreationProperties properties;
+
+    using HDF::DefaultAllocationModeForStorage;
+    EXPECT_TRUE(properties == properties.setAllocationMode(DefaultAllocationModeForStorage));
+    EXPECT_NE(DefaultAllocationModeForStorage,properties.getAllocationMode());
+
+    using HDF::AllocateAllSpaceWhenDatasetIsCreated;
+    EXPECT_TRUE(properties == properties.setAllocationMode(AllocateAllSpaceWhenDatasetIsCreated));
+    EXPECT_EQ(AllocateAllSpaceWhenDatasetIsCreated,properties.getAllocationMode());
+
+    using HDF::AllocateSpaceIncrementallyAsNeeded;
+    EXPECT_TRUE(properties == properties.setAllocationMode(AllocateSpaceIncrementallyAsNeeded));
+    EXPECT_EQ(AllocateSpaceIncrementallyAsNeeded,properties.getAllocationMode());
+
+    using HDF::AllocateAllSpaceOnFirstWrite;
+    EXPECT_TRUE(properties == properties.setAllocationMode(AllocateAllSpaceOnFirstWrite));
+    EXPECT_EQ(AllocateAllSpaceOnFirstWrite,properties.getAllocationMode());
+}
 //@+node:gcross.20110526194358.1951: *4* chunk
 TEST_CASE(chunk) {
     DatasetCreationProperties properties;
@@ -75,6 +95,32 @@ TEST_CASE(chunk) {
     EXPECT_EQ(1u,chunk_sizes[0]);
     EXPECT_EQ(2u,chunk_sizes[1]);
     EXPECT_EQ(3u,chunk_sizes[2]);
+}
+//@+node:gcross.20110528133907.2059: *4* fill mode
+TEST_CASE(fill_mode) {
+    DatasetCreationProperties properties;
+
+    using HDF::AlwaysFillUponAllocation;
+    EXPECT_TRUE(properties == properties.setFillMode(AlwaysFillUponAllocation));
+    EXPECT_EQ(AlwaysFillUponAllocation,properties.getFillMode());
+
+    using HDF::OnlyFillUponAllocationIfUserDefinedValue;
+    EXPECT_TRUE(properties == properties.setFillMode(OnlyFillUponAllocationIfUserDefinedValue));
+    EXPECT_EQ(OnlyFillUponAllocationIfUserDefinedValue,properties.getFillMode());
+
+    using HDF::NeverFill;
+    EXPECT_TRUE(properties == properties.setFillMode(NeverFill));
+    EXPECT_EQ(NeverFill,properties.getFillMode());
+}
+//@+node:gcross.20110527143225.1996: *4* fill value
+TEST_CASE(fill_value) {
+    using HDF::FillValueUserDefined;
+    DatasetCreationProperties properties;
+
+    EXPECT_NE(FillValueUserDefined,properties.getFillValueStatus());
+    EXPECT_TRUE(properties == properties.setFillValue(3.14f));
+    EXPECT_EQ(3.14f,properties.getFillValue<float>());
+    EXPECT_EQ(FillValueUserDefined,properties.getFillValueStatus());
 }
 //@+node:gcross.20110526194358.1978: *4* filter
 TEST_SUITE(filter) {
@@ -134,13 +180,6 @@ TEST_CASE(SZIP) {
 }
 //@-others
 
-}
-//@+node:gcross.20110527143225.1996: *4* fill value
-TEST_CASE(fill_value) {
-    DatasetCreationProperties properties;
-
-    EXPECT_TRUE(properties == properties.setFillValue(3.14f));
-    EXPECT_EQ(3.14f,properties.getFillValue<float>());
 }
 //@+node:gcross.20110526194358.1956: *4* layout
 TEST_CASE(layout) {

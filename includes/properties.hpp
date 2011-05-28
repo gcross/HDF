@@ -100,6 +100,9 @@ struct DatasetCreationProperties
     DatasetCreationProperties();
 
     //@+others
+    //@+node:gcross.20110528133907.2062: *4* allocation mode
+    DatasetCreationProperties setAllocationMode(AllocationMode allocation_mode);
+    AllocationMode getAllocationMode() const;
     //@+node:gcross.20110526194358.1942: *4* chunk
     DatasetCreationProperties setChunkSize(hsize_t const chunk_size) const;
     DatasetCreationProperties setChunkSizes(unsigned int rank, hsize_t const* chunk_sizes) const;
@@ -109,6 +112,9 @@ struct DatasetCreationProperties
     }
 
     std::vector<hsize_t> getChunkSizes() const;
+    //@+node:gcross.20110528133907.2054: *4* fill mode
+    DatasetCreationProperties setFillMode(FillMode fill_mode);
+    FillMode getFillMode() const;
     //@+node:gcross.20110527143225.1994: *4* fill value
     DatasetCreationProperties setFillValue(Datatype const& datatype, void const* value) const;
 
@@ -127,6 +133,8 @@ struct DatasetCreationProperties
         getFillValue(value);
         return value;
     }
+
+    FillValueStatus getFillValueStatus() const;
     //@+node:gcross.20110528133907.2023: *4* filter
     DatasetCreationProperties appendFilter(Filter const& filter) const;
 
