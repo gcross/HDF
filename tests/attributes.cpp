@@ -194,7 +194,7 @@ TEST_SUITE(unsigned_int) {
         H5LTset_attribute_uint(file.getId(),".","x",&data,1);
         data = 0;
         data = file["x"];
-        ASSERT_EQ(42,data);
+        ASSERT_EQ(42u,data);
     }
     //@+node:gcross.20110523113700.1751: *5* encode
     TEST_CASE(encode) {
@@ -202,13 +202,13 @@ TEST_SUITE(unsigned_int) {
         file["x"] = 42;
         unsigned int data;
         H5LTget_attribute_uint(file.getId(),".","x",&data);
-        ASSERT_EQ(42,data);
+        ASSERT_EQ(42u,data);
     }
     //@+node:gcross.20110523113700.1752: *5* encode than decode
     TEST_CASE(encode_than_decode) {
         TemporaryMemoryFile file;
         file["x"] = static_cast<unsigned int>(42);
-        ASSERT_EQ(42,static_cast<unsigned int>(file["x"]));
+        ASSERT_EQ(42u,static_cast<unsigned int>(file["x"]));
     }
     //@-others
 }
@@ -250,7 +250,7 @@ TEST_SUITE(unsigned_long) {
         H5LTset_attribute_ulong(file.getId(),".","x",&data,1);
         data = 0;
         data = file["x"];
-        ASSERT_EQ(42,data);
+        ASSERT_EQ(42u,data);
     }
     //@+node:gcross.20110523113700.1767: *5* encode
     TEST_CASE(encode) {
@@ -258,13 +258,13 @@ TEST_SUITE(unsigned_long) {
         file["x"] = 42;
         unsigned long data;
         H5LTget_attribute_ulong(file.getId(),".","x",&data);
-        ASSERT_EQ(42,data);
+        ASSERT_EQ(42u,data);
     }
     //@+node:gcross.20110523113700.1768: *5* encode than decode
     TEST_CASE(encode_than_decode) {
         TemporaryMemoryFile file;
         file["x"] = static_cast<unsigned long>(42);
-        ASSERT_EQ(42,static_cast<unsigned long>(file["x"]));
+        ASSERT_EQ(42u,static_cast<unsigned long>(file["x"]));
     }
     //@-others
 }
@@ -291,8 +291,8 @@ TEST_SUITE(long_long) {
     //@+node:gcross.20110523113700.1776: *5* encode than decode
     TEST_CASE(encode_than_decode) {
         TemporaryMemoryFile file;
-        file["x"] = static_cast<long long>(42);
-        ASSERT_EQ(42,static_cast<long long>(file["x"]));
+        file["x"] = static_cast<long long>(-42);
+        ASSERT_EQ(-42,static_cast<long long>(file["x"]));
     }
     //@-others
 }
