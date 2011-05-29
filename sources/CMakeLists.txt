@@ -1,8 +1,8 @@
 #@+leo-ver=5-thin
 #@+node:gcross.20110520211700.1444: * @file CMakeLists.txt
 add_library(HDF++
-    attribute
     attributable
+    attribute
     containable
     container
     dataset
