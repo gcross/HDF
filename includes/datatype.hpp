@@ -23,7 +23,7 @@
 //@+<< Includes >>
 //@+node:gcross.20110521115623.3035: ** << Includes >>
 #include "error.hpp"
-#include "identifiable.hpp"
+#include "identified.hpp"
 #include "parameters.hpp"
 
 #include <complex>
@@ -86,7 +86,7 @@ class MutableDatatype: public Datatype {
     //@-others
 };
 //@+node:gcross.20110521115623.3044: *3* TransientDatatype
-class TransientDatatype: public MutableDatatype, public Identifiable {
+class TransientDatatype: public MutableDatatype, public Identified {
     //@+others
     //@+node:gcross.20110521115623.3045: *4* Constructors
     public:

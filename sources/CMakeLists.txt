@@ -3,7 +3,7 @@
 add_library(HDF++
     attributable
     attribute
-    containable
+    contained
     container
     dataset
     dataspace
@@ -15,6 +15,7 @@ add_library(HDF++
     group
     group_array
     identifiable
+    identified
     identity
     location
     location_iterator

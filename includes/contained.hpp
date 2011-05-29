@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110520211700.1449: * @file containable.cpp
+//@+node:gcross.20110520194631.1350: * @file contained.hpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110520211700.1450: ** << License >>
+//@+node:gcross.20110520194631.1352: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -17,39 +17,46 @@
 //@@c
 //@-<< License >>
 
-//@+<< Includes >>
-//@+node:gcross.20110520211700.1451: ** << Includes >>
-#include "containable.hpp"
-#include "file.hpp"
+#ifndef HDFPP_CONTAINED_HPP
+#define HDFPP_CONTAINED_HPP
 
-#include <boost/make_shared.hpp>
+//@+<< Includes >>
+//@+node:gcross.20110520194631.1351: ** << Includes >>
+#include "identified.hpp"
+#include "location.hpp"
 //@-<< Includes >>
 
 namespace HDF {
 
-//@+<< Usings >>
-//@+node:gcross.20110520211700.1452: ** << Usings >>
-using boost::make_shared;
-//@-<< Usings >>
-
 //@+others
-//@+node:gcross.20110520211700.1456: ** class Containable
-//@+node:gcross.20110520211700.1457: *3* Constructors
-Containable::Containable() {}
+//@+node:gcross.20110520194631.1353: ** class Contained
+//@+<< Forward declarations >>
+//@+node:gcross.20110520211700.1488: *3* << Forward declarations >>
+class File;
+//@-<< Forward declarations >>
 
-Containable::Containable(File const& file, hid_t id, Identity::Closer const& closer)
-  : Identifiable(make_shared<Identity>(id,closer))
-  , file(file)
-{}
+class Contained: public Identified, public virtual Locatable {
+    //@+others
+    //@+node:gcross.20110520194631.1357: *3* Constructors
+    protected:
 
-Containable::Containable(File const& file, Identity::Ptr const& identity)
-  : Identifiable(identity)
-  , file(file)
-{}
-//@+node:gcross.20110520211700.1489: *3* Fields
-File const& Containable::getFile() const { return file; }
-Identity::Ptr const& Containable::getIdentity() const { return identity; }
+    Contained();
+    Contained(File const& file, hid_t id, Identity::Closer const& closer);
+    Contained(File const& file, Identity::Ptr const& self_identity);
+    //@+node:gcross.20110520211700.1486: *3* Fields
+    protected:
+
+    File file;
+
+    public:
+
+    virtual File const& getFile() const;
+    virtual Identity::Ptr const& getIdentity() const;
+    //@-others
+};
 //@-others
 
 }
+
+#endif
 //@-leo

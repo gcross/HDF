@@ -52,7 +52,7 @@ NoSuchFilterException::NoSuchFilterException(string const& name)
 NoSuchFilterException::~NoSuchFilterException() throw() {}
 //@+node:gcross.20110520211700.1478: ** class Properties
 //@+node:gcross.20110520211700.1479: *3* Constructors/Destructors
-Properties::Properties(hid_t id) : Identifiable(id,H5Pclose) {}
+Properties::Properties(hid_t id) : Identified(id,H5Pclose) {}
 
 Properties::Properties() {}
 //@+node:gcross.20110526194358.1961: ** Shared properties

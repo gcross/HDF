@@ -40,11 +40,11 @@ namespace HDF {
 //@+node:gcross.20110520194631.1395: ** class File
 //@+<< Forward declarations >>
 //@+node:gcross.20110529102535.2040: *3* << Forward declarations >>
-class Containable;
+class Contained;
 //@-<< Forward declarations >>
 
 class File
-  : public Identifiable
+  : public Identified
   , public Parent
   , public Attributable
 {
@@ -72,16 +72,12 @@ class File
       , boost::optional<FileAccessProperties const&> const& optional_access_properties = boost::none
     );
     //@+node:gcross.20110523113700.1690: *3* Fields
-    protected:
-
-    virtual hid_t getParentId() const;
-
     public:
 
     virtual File const& getFile() const;
     virtual Identity::Ptr const& getIdentity() const;
     //@+node:gcross.20110520211700.1487: *3* Friends
-    friend class Containable;
+    friend class Contained;
     //@+node:gcross.20110521115623.3023: *3* Miscellaneous
     public:
 

@@ -44,12 +44,10 @@ LinkRemoveError::LinkRemoveError(char const* name)
 
 LinkRemoveError::~LinkRemoveError() throw() {}
 //@+node:gcross.20110520211700.1499: ** class Parent
-//@+node:gcross.20110523113700.1701: *3* Destructors
-Parent::~Parent() {}
 //@+node:gcross.20110523113700.1697: *3* Miscellaneous
 void Parent::remove(char const* name, optional<LinkAccessProperties const&> const& optional_properties) const {
     if(H5Ldelete(
-        getParentId(),
+        getId(),
         name,
         getOptionalPropertiesId(optional_properties)
        ) < 0

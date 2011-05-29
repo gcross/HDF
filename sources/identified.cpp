@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110520194631.1343: * @file parent.hpp
+//@+node:gcross.20110520194631.1330: * @file identified.cpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110520194631.1345: ** << License >>
+//@+node:gcross.20110520194631.1331: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -17,43 +17,35 @@
 //@@c
 //@-<< License >>
 
-#ifndef HDFPP_PARENT_HPP
-#define HDFPP_PARENT_HPP
-
 //@+<< Includes >>
-//@+node:gcross.20110520194631.1344: ** << Includes >>
-#include "error.hpp"
-#include "locatable.hpp"
-#include "parent.hpp"
-#include "properties.hpp"
+//@+node:gcross.20110520194631.1332: ** << Includes >>
+#include "identified.hpp"
 
-#include <hdf5.h>
-#include <boost/optional.hpp>
-#include <string>
+#include <boost/make_shared.hpp>
 //@-<< Includes >>
 
 namespace HDF {
 
+//@+<< Usings >>
+//@+node:gcross.20110520194631.1333: ** << Usings >>
+using boost::make_shared;
+//@-<< Usings >>
+
 //@+others
-//@+node:gcross.20110520211700.1505: ** Exceptions
-//@+node:gcross.20110520211700.1506: *3* LinkRemoveError
-struct LinkRemoveError : public Error {
-    std::string name;
-    LinkRemoveError(char const* name);
-    virtual ~LinkRemoveError() throw();
-};
-//@+node:gcross.20110520194631.1346: ** class Parent
-class Parent: public virtual Identifiable {
-    //@+others
-    //@+node:gcross.20110523113700.1681: *3* Miscellaneous
-    public:
-        void remove(char const* name, boost::optional<LinkAccessProperties const&> const& optional_properties = boost::none) const;
-        void remove(std::string const& name, boost::optional<LinkAccessProperties const&> const& optional_properties = boost::none) const;
-    //@-others
-};
+//@+node:gcross.20110520194631.1334: ** class Identified
+//@+node:gcross.20110520194631.1336: *3* Constructors
+Identified::Identified() {}
+
+Identified::Identified(Identity::Ptr const& identity)
+  : identity(identity)
+{}
+
+Identified::Identified(hid_t id, Identity::Closer const& closer)
+  : identity(make_shared<Identity>(id,closer))
+{}
+//@+node:gcross.20110520194631.1338: *3* Fields
+Identity::Ptr const& Identified::getIdentity() const { return identity; }
 //@-others
 
 }
-
-#endif
 //@-leo

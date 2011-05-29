@@ -40,17 +40,17 @@ using std::string;
 Object::Object() {}
 
 Object::Object(File const& file, hid_t id, Identity::Closer const& closer)
-  : Containable(file,id,closer)
+  : Contained(file,id,closer)
 {}
 
 Object::Object(File const& file, Identity::Ptr const& self_identity)
-  : Containable(file,self_identity)
+  : Contained(file,self_identity)
 {}
 
 Object::Object(
     Location const& location
   , optional<LinkAccessProperties> const& optional_properties
-) : Containable(
+) : Contained(
         location.getFile(),
         assertSuccess(
             "opening object",
@@ -91,7 +91,7 @@ void Object::setComment(std::string const& comment) const {
     setComment(comment.c_str());
 }
 //@+node:gcross.20110523113700.1692: *3* Fields
-Containable const& Object::getAttributeContainable() const { return *this; }
+Contained const& Object::getAttributeContained() const { return *this; }
 //@-others
 
 }

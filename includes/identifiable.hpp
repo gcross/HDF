@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110520194631.1319: * @file identifiable.hpp
+//@+node:gcross.20110529102535.2049: * @file identifiable.hpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110520194631.1321: ** << License >>
+//@+node:gcross.20110529102535.2050: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -21,39 +21,28 @@
 #define HDFPP_IDENTIFIABLE_HPP
 
 //@+<< Includes >>
-//@+node:gcross.20110520194631.1320: ** << Includes >>
+//@+node:gcross.20110529102535.2051: ** << Includes >>
 #include "identity.hpp"
 
-#include <boost/function.hpp>
 #include <hdf5.h>
 //@-<< Includes >>
 
 namespace HDF {
 
 //@+others
-//@+node:gcross.20110520194631.1322: ** class Identifiable
+//@+node:gcross.20110529102535.2052: ** class Identifiable
 class Identifiable {
     //@+others
-    //@+node:gcross.20110520194631.1324: *3* Constructors/Destructors
-    protected:
-
-    Identifiable(Identity::Ptr const& identity);
-    Identifiable(hid_t id, Identity::Closer const& closer);
-
+    //@+node:gcross.20110529102535.2053: *3* Destructors
     public:
 
-    Identifiable();
     virtual ~Identifiable();
-    //@+node:gcross.20110520194631.1325: *3* Fields
-    protected:
-
-    Identity::Ptr identity;
-
+    //@+node:gcross.20110529102535.2054: *3* Fields
     public:
 
-    virtual Identity::Ptr const& getIdentity() const;
-    virtual hid_t getId() const;
-    //@+node:gcross.20110521115623.2946: *3* Operators
+    virtual Identity::Ptr const& getIdentity() const = 0;
+    hid_t getId() const;
+    //@+node:gcross.20110529102535.2055: *3* Operators
     public:
 
     bool operator==(Identifiable const& other) const;

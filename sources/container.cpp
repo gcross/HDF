@@ -41,12 +41,12 @@ using std::string;
 //@+others
 //@+node:gcross.20110524225139.1849: ** class Container
 //@+node:gcross.20110524225139.1850: *3* Constructors
-Container::Container(File const& file) : Containable(file,file.getIdentity()) {}
+Container::Container(File const& file) : Contained(file,file.getIdentity()) {}
 
-Container::Container(Group const& group) : Containable(group) {}
+Container::Container(Group const& group) : Contained(group) {}
 
 Container::Container(Location const& location)
-  : Containable(location.getFile(),Identity::Ptr())
+  : Contained(location.getFile(),Identity::Ptr())
 {
     initialize(location);
 }
@@ -56,7 +56,7 @@ Container::Container(
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
   , optional<GroupCreationProperties const&> const& optional_creation_properties
 )
-  : Containable(location->getFile(),Identity::Ptr())
+  : Contained(location->getFile(),Identity::Ptr())
 {
     initialize(*location,make_pair(optional_link_creation_properties,optional_creation_properties));
 }
@@ -87,8 +87,6 @@ void Container::initialize(
         else *this = Group(location);
     }
 }
-//@+node:gcross.20110524225139.1851: *3* Fields
-hid_t Container::getParentId() const { return getId(); }
 //@+node:gcross.20110524225139.1858: *3* Operators
 void Container::operator=(File const& file) {
     this->file = file;

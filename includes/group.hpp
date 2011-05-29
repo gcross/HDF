@@ -47,10 +47,6 @@ class Group: public Object, public Parent {
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
       , boost::optional<GroupCreationProperties const&> const& optional_group_creation_properties = boost::none
     );
-    //@+node:gcross.20110523113700.1704: *3* Fields
-    protected:
-
-    virtual hid_t getParentId() const;
     //@-others
 };
 //@+node:gcross.20110521115623.2977: ** Implementation

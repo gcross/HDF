@@ -22,7 +22,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110521115623.1461: ** << Includes >>
-#include "identity.hpp"
+#include "identifiable.hpp"
 //@-<< Includes >>
 
 namespace HDF {
@@ -35,17 +35,12 @@ class File;
 class Location;
 //@-<< Forward declarations >>
 
-class Locatable {
+class Locatable: public virtual Identifiable {
     //@+others
-    //@+node:gcross.20110528133907.2085: *3* Destructors
-    public:
-
-    virtual ~Locatable();
     //@+node:gcross.20110528133907.2087: *3* Fields
     public:
 
     virtual File const& getFile() const = 0;
-    virtual Identity::Ptr const& getIdentity() const = 0;
     //@+node:gcross.20110523113700.1682: *3* Operators
     public:
         Location getLocation() const;

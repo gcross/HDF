@@ -37,7 +37,7 @@ namespace HDF {
 
 //@+others
 //@+node:gcross.20110524225139.1835: ** class Container
-class Container: public Containable, public Parent {
+class Container: public Contained, public Parent {
     //@+others
     //@+node:gcross.20110524225139.1836: *3* Constructors
     public:
@@ -64,8 +64,6 @@ class Container: public Containable, public Parent {
     protected:
 
     File file;
-
-    virtual hid_t getParentId() const;
 
     public:
 

@@ -68,7 +68,7 @@ void MutableDatatype::insert(char const* name, size_t offset, Datatype const& da
 //@+node:gcross.20110521115623.3089: *3* TransientDatatype
 //@+node:gcross.20110521115623.3090: *4* Constructors
 TransientDatatype::TransientDatatype(CopyOf<Datatype const> other)
-  : Identifiable(
+  : Identified(
         assertSuccess(
             "copying datatype",
             H5Tcopy(other->getDatatypeId())
@@ -78,7 +78,7 @@ TransientDatatype::TransientDatatype(CopyOf<Datatype const> other)
 {}
 
 TransientDatatype::TransientDatatype(H5T_class_t class_id, size_t size)
-  : Identifiable(
+  : Identified(
         assertSuccess(
             "creating datatype",
             H5Tcreate(class_id,size)

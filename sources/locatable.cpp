@@ -32,8 +32,6 @@ namespace HDF {
 
 //@+others
 //@+node:gcross.20110528133907.2106: ** class Locatable
-//@+node:gcross.20110528133907.2108: *3* Destructors
-Locatable::~Locatable() {}
 //@+node:gcross.20110523113700.1686: *3* Operators
 Location Locatable::getLocation() const {
     return Location(getFile(),getIdentity(),Location::dot);

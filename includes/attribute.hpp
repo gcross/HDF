@@ -23,7 +23,7 @@
 //@+<< Includes >>
 //@+node:gcross.20110521115623.1486: ** << Includes >>
 #include "attributable.hpp"
-#include "containable.hpp"
+#include "contained.hpp"
 #include "error.hpp"
 
 #include <boost/optional.hpp>
@@ -64,7 +64,7 @@ DECLARE_HIGH_LEVEL_ACCESSOR(double)
 
 #undef DECLARE_HIGH_LEVEL_ACCESSOR
 //@+node:gcross.20110521115623.1488: ** class Attribute
-class Attribute: public Containable {
+class Attribute: public Contained {
     //@+<< Nested types >>
     //@+node:gcross.20110521115623.3944: *3* << Nested types >>
     public:

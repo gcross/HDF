@@ -49,7 +49,7 @@ UnexpectedTensorRankException::UnexpectedTensorRankException(unsigned int const 
 //@+node:gcross.20110521115623.3144: ** Dataspace
 //@+node:gcross.20110521115623.3146: *3* Constructors
 Dataspace::Dataspace(CopyOf<Dataspace const> other)
-  : Identifiable(
+  : Identified(
         assertSuccess(
             "copying dataspace",
             H5Scopy(other->getId())
@@ -59,7 +59,7 @@ Dataspace::Dataspace(CopyOf<Dataspace const> other)
 {}
 
 Dataspace::Dataspace(Dataset const& dataset)
-  : Identifiable(
+  : Identified(
         assertSuccess(
             "opening dataspace of dataset",
             H5Dget_space(dataset.getId())
@@ -69,7 +69,7 @@ Dataspace::Dataspace(Dataset const& dataset)
 {}
 
 Dataspace::Dataspace(DataspaceClass cls)
-  : Identifiable(
+  : Identified(
         assertSuccess(
             "creating empty dataspace",
             H5Screate(static_cast<H5S_class_t>(cls))

@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110520194631.1330: * @file identifiable.cpp
+//@+node:gcross.20110529102535.2064: * @file identifiable.cpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110520194631.1331: ** << License >>
+//@+node:gcross.20110529102535.2065: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -18,37 +18,23 @@
 //@-<< License >>
 
 //@+<< Includes >>
-//@+node:gcross.20110520194631.1332: ** << Includes >>
+//@+node:gcross.20110529102535.2066: ** << Includes >>
 #include "identifiable.hpp"
-
-#include <boost/make_shared.hpp>
 //@-<< Includes >>
 
 namespace HDF {
 
 //@+<< Usings >>
-//@+node:gcross.20110520194631.1333: ** << Usings >>
-using boost::make_shared;
+//@+node:gcross.20110529102535.2067: ** << Usings >>
 //@-<< Usings >>
 
 //@+others
-//@+node:gcross.20110520194631.1334: ** class Identifiable
-//@+node:gcross.20110520194631.1336: *3* Constructors/Destructors
-Identifiable::Identifiable() {}
-
-Identifiable::Identifiable(Identity::Ptr const& identity)
-  : identity(identity)
-{}
-
-Identifiable::Identifiable(hid_t id, Identity::Closer const& closer)
-  : identity(make_shared<Identity>(id,closer))
-{}
-
+//@+node:gcross.20110529102535.2068: ** class Identifiable
+//@+node:gcross.20110529102535.2069: *3* Destructors
 Identifiable::~Identifiable() {}
-//@+node:gcross.20110520194631.1338: *3* Fields
-Identity::Ptr const& Identifiable::getIdentity() const { return identity; }
-hid_t Identifiable::getId() const { return identity->getId(); }
-//@+node:gcross.20110521115623.2948: *3* Operators
+//@+node:gcross.20110529102535.2070: *3* Fields
+hid_t Identifiable::getId() const { return getIdentity()->getId(); }
+//@+node:gcross.20110529102535.2071: *3* Operators
 bool Identifiable::operator==(Identifiable const& other) const {
     return getId() == other.getId();
 }

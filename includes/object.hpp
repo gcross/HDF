@@ -23,7 +23,7 @@
 //@+<< Includes >>
 //@+node:gcross.20110521115623.2853: ** << Includes >>
 #include "attributable.hpp"
-#include "containable.hpp"
+#include "contained.hpp"
 #include "properties.hpp"
 
 #include <boost/optional.hpp>
@@ -34,7 +34,7 @@ namespace HDF {
 
 //@+others
 //@+node:gcross.20110521115623.2855: ** class Object
-class Object: public Containable, public Attributable {
+class Object: public Contained, public Attributable {
     //@+others
     //@+node:gcross.20110521115623.2856: *3* Constructors
     protected:
@@ -56,7 +56,7 @@ class Object: public Containable, public Attributable {
     //@+node:gcross.20110523113700.1693: *3* Fields
     protected:
 
-    virtual Containable const& getAttributeContainable() const;
+    virtual Contained const& getAttributeContained() const;
     //@-others
 };
 //@-others

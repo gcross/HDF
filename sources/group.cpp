@@ -71,8 +71,6 @@ Group::Group(
         H5Gclose
     )
 {}
-//@+node:gcross.20110523113700.1706: *3* Fields
-hid_t Group::getParentId() const { return getId(); }
 //@-others
 
 }

@@ -25,7 +25,7 @@
 #include "enumerations.hpp"
 #include "error.hpp"
 #include "filter.hpp"
-#include "identifiable.hpp"
+#include "identified.hpp"
 #include "utilities.hpp"
 
 #include <boost/optional.hpp>
@@ -44,7 +44,7 @@ struct NoSuchFilterException: public Exception {
     virtual ~NoSuchFilterException() throw();
 };
 //@+node:gcross.20110520211700.1466: ** class Properties
-class Properties: public Identifiable {
+class Properties: public Identified {
     //@+others
     //@+node:gcross.20110520211700.1467: *3* Constructors/Destructors
     protected:

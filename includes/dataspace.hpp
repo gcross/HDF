@@ -24,7 +24,7 @@
 //@+node:gcross.20110521115623.3029: ** << Includes >>
 #include "enumerations.hpp"
 #include "error.hpp"
-#include "identifiable.hpp"
+#include "identified.hpp"
 #include "parameters.hpp"
 #include "properties.hpp"
 #include "utilities.hpp"
@@ -48,7 +48,7 @@ struct UnexpectedTensorRankException : public Exception {
 class Dataset;
 //@-<< Forward declarations >>
 
-class Dataspace: public Identifiable {
+class Dataspace: public Identified {
 //@+others
 //@+node:gcross.20110521115623.3131: *3* Constructors
 public:
