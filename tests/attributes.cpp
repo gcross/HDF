@@ -19,6 +19,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110521115623.3237: ** << Includes >>
+#include "attribute.hpp"
 #include "temporary_memory_file.hpp"
 
 #include <hdf5_hl.h>

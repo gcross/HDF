@@ -23,7 +23,7 @@
 //@+<< Includes >>
 //@+node:gcross.20110521115623.2853: ** << Includes >>
 #include "attributable.hpp"
-#include "locatable.hpp"
+#include "containable.hpp"
 #include "properties.hpp"
 
 #include <boost/optional.hpp>
@@ -34,7 +34,7 @@ namespace HDF {
 
 //@+others
 //@+node:gcross.20110521115623.2855: ** class Object
-class Object: public Locatable, public Attributable {
+class Object: public Containable, public Attributable {
     //@+others
     //@+node:gcross.20110521115623.2856: *3* Constructors
     protected:
@@ -43,8 +43,8 @@ class Object: public Locatable, public Attributable {
 
     public:
 
-    Object(Identity::Ptr const& file_identity, hid_t id, Identity::Closer const& closer);
-    Object(Identity::Ptr const& file_identity, Identity::Ptr const& self_identity);
+    Object(File const& file, hid_t id, Identity::Closer const& closer);
+    Object(File const& file, Identity::Ptr const& self_identity);
     Object(Location const& location, boost::optional<LinkAccessProperties> const& optional_properties = boost::none);
     //@+node:gcross.20110521115623.2861: *3* Comments
     public:

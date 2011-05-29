@@ -49,8 +49,8 @@ NoSuchAttributeException::NoSuchAttributeException(string const& name)
 NoSuchAttributeException::~NoSuchAttributeException() throw() {}
 //@+node:gcross.20110521115623.2772: ** class Attribute
 //@+node:gcross.20110521115623.2774: *3* Constructors
-Attribute::Attribute(Containable const& parent, char const* name)
-  : Containable(parent)
+Attribute::Attribute(Attributable const& parent, char const* name)
+  : Containable(parent.getFile(),parent.getIdentity())
   , name(name)
 {}
 //@+node:gcross.20110521115623.2785: *3* Fields

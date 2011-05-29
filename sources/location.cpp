@@ -44,16 +44,16 @@ using std::string;
 Location::Location() {}
 
 Location::Location(
-    Identity::Ptr const& file_identity
+    File const& file
   , Identity::Ptr const& parent_identity
   , shared_ptr<string const> const name_ptr
 )
-  : file_identity(file_identity)
+  : file(file)
   , parent_identity(parent_identity)
   , name(name_ptr)
 {}
 //@+node:gcross.20110520194631.1386: *3* Fields
-Identity::Ptr const& Location::getFileIdentity() const { return file_identity; }
+File const& Location::getFile() const { return file; }
 Identity::Ptr const& Location::getParentIdentity() const { return parent_identity; }
 string const& Location::getName() const { return *name; }
 
@@ -76,7 +76,7 @@ bool Location::exists(optional<LinkAccessProperties const&> const& optional_link
 //@+node:gcross.20110520194631.1387: *3* Operators
 Location Location::operator/(char const* subname) const {
     return Location(
-        file_identity,
+        file,
         parent_identity,
         make_shared<string>((format("%1%/%2%") % getName() % subname).str())
     );
@@ -84,7 +84,7 @@ Location Location::operator/(char const* subname) const {
 
 Location Location::operator/(string const& subname) const {
     return Location(
-        file_identity,
+        file,
         parent_identity,
         make_shared<string>((format("%1%/%2%") % getName() % subname).str())
     );
@@ -102,7 +102,7 @@ Location& Location::operator/=(string const& subname) {
 
 Location Location::operator%(char const* subname) const {
     return Location(
-        file_identity,
+        file,
         parent_identity,
         make_shared<string>(subname)
     );
@@ -110,7 +110,7 @@ Location Location::operator%(char const* subname) const {
 
 Location Location::operator%(string const& subname) const {
     return Location(
-        file_identity,
+        file,
         parent_identity,
         make_shared<string>(subname)
     );

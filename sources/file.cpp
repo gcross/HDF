@@ -41,7 +41,7 @@ using std::string;
 File::File() {}
 
 File::File(Identity::Ptr const& identity)
-  : Locatable(identity)
+  : Identifiable(identity)
 {}
 
 //@+others
@@ -52,7 +52,7 @@ File::File(
   , optional<FileCreationProperties const&> const& optional_creation_properties
   , optional<FileAccessProperties const&> const& optional_access_properties
 ) 
-  : Locatable(
+  : Identifiable(
         assertSuccess(
             "creating file",
             H5Fcreate(
@@ -71,7 +71,7 @@ File::File(
   , FileOpenMode mode
   , optional<FileAccessProperties const&> const& optional_properties
 )
-  : Locatable(
+  : Identifiable(
         assertSuccess(
             "opening file",
             H5Fopen(
@@ -85,7 +85,8 @@ File::File(
 {}
 //@-others
 //@+node:gcross.20110523113700.1688: *3* Fields
-Containable const& File::getAttributeContainable() const { return *this; }
+File const& File::getFile() const { return *this; }
+Identity::Ptr const& File::getIdentity() const { return identity; }
 hid_t File::getParentId() const { return getId(); }
 //@+node:gcross.20110521115623.3024: *3* Miscellaneous
 void File::flush(FileFlushScope scope) const {

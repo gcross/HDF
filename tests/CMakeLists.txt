@@ -10,6 +10,7 @@ set(test-SOURCES
     dataspace
     datatypes
     files
+    filters
     properties
 )
 

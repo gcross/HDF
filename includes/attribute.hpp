@@ -22,6 +22,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110521115623.1486: ** << Includes >>
+#include "attributable.hpp"
 #include "containable.hpp"
 #include "error.hpp"
 
@@ -76,11 +77,13 @@ class Attribute: public Containable {
     //@+node:gcross.20110521115623.1489: *3* Constructors
     public:
 
-    Attribute(Containable const& parent, char const* name);
+    Attribute(Attributable const& parent, char const* name);
     //@+node:gcross.20110521115623.1490: *3* Fields
     protected:
 
     std::string name;
+
+    Identity::Ptr parent_identity;
 
     public:
 

@@ -69,7 +69,7 @@ Filter::Filter(
     unsigned int number_of_parameters
   , bool optional_flag
 )
-  : parameter_data(number_of_parameters)
+  : parameters(number_of_parameters)
   , optional_flag(optional_flag)
 {}
 
@@ -77,28 +77,28 @@ Filter::Filter(
     vector<unsigned int> const& parameters
   , bool optional_flag
 )
-  : parameter_data(parameters)
+  : parameters(parameters)
   , optional_flag(optional_flag)
 {}
 
 Filter::~Filter() {}
 //@+node:gcross.20110527192131.2357: *4* Fields
-size_t Filter::numberOfParameters() const { return parameter_data.size(); }
+size_t Filter::getNumberOfParameters() const { return parameters.size(); }
 
-unsigned int* Filter::parameters() {
-    return &parameter_data.front();
+vector<unsigned int> const& Filter::getParameters() const {
+    return parameters;
 }
 
-unsigned int const* Filter::parameters() const {
-    return &parameter_data.front();
+unsigned int const* Filter::getParameterData() const {
+    return &parameters.front();
 }
 
 unsigned int& Filter::operator[](unsigned int index) {
-    return parameter_data[index];
+    return parameters[index];
 }
 
 unsigned int const& Filter::operator[](unsigned int index) const {
-    return parameter_data[index];
+    return parameters[index];
 }
 
 bool Filter::getOptionalFlag() const {
@@ -108,14 +108,18 @@ bool Filter::getOptionalFlag() const {
 void Filter::setOptionalFlag(bool optional_flag) {
     this->optional_flag = optional_flag;
 }
+
+unsigned int Filter::getFlags() const {
+    return optional_flag ? H5Z_FLAG_OPTIONAL : H5Z_FLAG_MANDATORY;
+}
 //@+node:gcross.20110527192131.2371: *4* Miscellaneous
 void Filter::assertNumberOfParametersIs(unsigned int expected_number_of_parameters) {
-    if(expected_number_of_parameters != numberOfParameters())
+    if(expected_number_of_parameters != getNumberOfParameters())
         throw 
             WrongNumberOfParametersForFilterException(
                 typeid(this).name(),
                 expected_number_of_parameters,
-                numberOfParameters()
+                getNumberOfParameters()
             );
 }
 

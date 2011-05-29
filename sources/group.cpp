@@ -38,7 +38,7 @@ Group::Group(
     Location const& location
 )
   : Object(
-        location.getFileIdentity(),
+        location.getFile(),
         assertSuccess(
             "opening group",
             H5Gopen(
@@ -57,7 +57,7 @@ Group::Group(
   , optional<GroupCreationProperties const&> const& optional_group_creation_properties
 )
   : Object(
-        location->getFileIdentity(),
+        location->getFile(),
         assertSuccess(
             "opening group",
             H5Gcreate(

@@ -20,6 +20,9 @@
 //@+<< Includes >>
 //@+node:gcross.20110521115623.2840: ** << Includes >>
 #include "attributable.hpp"
+#include "attribute.hpp"
+
+#include <string>
 //@-<< Includes >>
 
 namespace HDF {
@@ -31,11 +34,9 @@ using std::string;
 
 //@+others
 //@+node:gcross.20110521115623.2846: ** class Attributable
-//@+node:gcross.20110523113700.1696: *3* Destructors
-Attributable::~Attributable() {}
 //@+node:gcross.20110521115623.2848: *3* Operators
 Attribute Attributable::operator[] (char const* name) const {
-    return Attribute(getAttributeContainable(),name);
+    return Attribute(*this,name);
 }
 //@-others
 

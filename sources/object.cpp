@@ -39,19 +39,19 @@ using std::string;
 //@+node:gcross.20110521115623.2874: *3* Constructors
 Object::Object() {}
 
-Object::Object(Identity::Ptr const& file_identity, hid_t id, Identity::Closer const& closer)
-  : Locatable(file_identity,id,closer)
+Object::Object(File const& file, hid_t id, Identity::Closer const& closer)
+  : Containable(file,id,closer)
 {}
 
-Object::Object(Identity::Ptr const& file_identity, Identity::Ptr const& self_identity)
-  : Locatable(file_identity,self_identity)
+Object::Object(File const& file, Identity::Ptr const& self_identity)
+  : Containable(file,self_identity)
 {}
 
 Object::Object(
     Location const& location
   , optional<LinkAccessProperties> const& optional_properties
-) : Locatable(
-        location.getFileIdentity(),
+) : Containable(
+        location.getFile(),
         assertSuccess(
             "opening object",
             H5Oopen(

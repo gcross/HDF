@@ -22,6 +22,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110520194631.1363: ** << Includes >>
+#include "file.hpp"
 #include "identity.hpp"
 #include "properties.hpp"
 
@@ -42,20 +43,20 @@ class Location {
     Location();
 
     Location(
-        Identity::Ptr const& file_identity
+        File const& file
       , Identity::Ptr const& parent_identity
       , boost::shared_ptr<std::string const> const name_ptr
     );
     //@+node:gcross.20110520194631.1368: *3* Fields
     protected:
 
-    Identity::Ptr file_identity;
+    File file;
     Identity::Ptr parent_identity;
     boost::shared_ptr<std::string const> name;
 
     public:
 
-    Identity::Ptr const& getFileIdentity() const;
+    File const& getFile() const;
     Identity::Ptr const& getParentIdentity() const;
     std::string const& getName() const;
 

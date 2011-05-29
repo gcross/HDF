@@ -40,7 +40,7 @@ using std::string;
 LocationIterator::LocationIterator() {}
 
 LocationIterator::LocationIterator(Locatable const& parent, int index, int direction)
-  : parent(parent)
+  : location(parent.getLocation())
   , index(index)
   , direction(direction)
 {
@@ -50,8 +50,10 @@ LocationIterator::LocationIterator(Locatable const& parent, int index, int direc
 Location const& LocationIterator::dereference() const { return location; }
 
 bool LocationIterator::equal(LocationIterator const& other) const {
-    return parent == other.parent
-        && index == other.index;
+    return index == other.index
+        && location.getParentId() == other.location.getParentId()
+        && location.getFile() == other.location.getFile()
+           ;
 }
 
 void LocationIterator::increment() { advance(1); }
@@ -63,7 +65,7 @@ int LocationIterator::distance_to(LocationIterator const& other) const {
 }
 //@+node:gcross.20110521115623.2967: *3* Miscellaneous
 void LocationIterator::updateMyLocation() {
-    location = parent / lexical_cast<string>(index);
+    location %= lexical_cast<string>(index);
 }
 //@-others
 

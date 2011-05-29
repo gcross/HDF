@@ -69,20 +69,22 @@ class Filter {
     //@+node:gcross.20110527192131.2341: *4* Fields
     private:
 
-    std::vector<unsigned int> parameter_data;
+    std::vector<unsigned int> parameters;
 
     bool optional_flag;
 
     public:
 
-    size_t numberOfParameters() const;
-    unsigned int* parameters();
-    unsigned int const* parameters() const;
+    size_t getNumberOfParameters() const;
+    std::vector<unsigned int> const& getParameters() const;
+    unsigned int const* getParameterData() const;
     unsigned int& operator[](unsigned int index);
     unsigned int const& operator[](unsigned int index) const;
 
     bool getOptionalFlag() const;
     void setOptionalFlag(bool optional_flag);
+
+    unsigned int getFlags() const;
 
     virtual H5Z_filter_t getFilterId() const = 0;
     //@+node:gcross.20110527192131.2368: *4* Miscellaneous

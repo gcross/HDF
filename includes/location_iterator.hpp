@@ -53,7 +53,6 @@ class LocationIterator
     //@+node:gcross.20110521115623.2942: *3* Fields
     protected:
 
-    Locatable parent;
     Location location;
     int index, direction;
     //@+node:gcross.20110521115623.2943: *3* Facade requirements

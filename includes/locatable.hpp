@@ -22,29 +22,31 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110521115623.1461: ** << Includes >>
-#include "containable.hpp"
 #include "identity.hpp"
-#include "location.hpp"
 //@-<< Includes >>
 
 namespace HDF {
 
 //@+others
 //@+node:gcross.20110521115623.1463: ** class Locatable
-class Locatable: public Containable {
+//@+<< Forward declarations >>
+//@+node:gcross.20110528133907.2088: *3* << Forward declarations >>
+class File;
+class Location;
+//@-<< Forward declarations >>
+
+class Locatable {
     //@+others
-    //@+node:gcross.20110523113700.1683: *3* Constructors
-    protected:
-
-    Locatable(hid_t id, Identity::Closer const& closer);
-    Locatable(Identity::Ptr const& file_and_self_identity);
-    Locatable(Identity::Ptr const& file_identity, hid_t id, Identity::Closer const& closer);
-    Locatable(Identity::Ptr const& file_identity, Identity::Ptr const& self_identity);
-
+    //@+node:gcross.20110528133907.2085: *3* Destructors
     public:
 
-    Locatable();
-    //@+node:gcross.20110523113700.1682: *3* Location
+    virtual ~Locatable();
+    //@+node:gcross.20110528133907.2087: *3* Fields
+    public:
+
+    virtual File const& getFile() const = 0;
+    virtual Identity::Ptr const& getIdentity() const = 0;
+    //@+node:gcross.20110523113700.1682: *3* Operators
     public:
         Location getLocation() const;
         Location operator/(char const* subname) const;

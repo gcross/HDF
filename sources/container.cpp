@@ -41,12 +41,12 @@ using std::string;
 //@+others
 //@+node:gcross.20110524225139.1849: ** class Container
 //@+node:gcross.20110524225139.1850: *3* Constructors
-Container::Container(File const& file) : Locatable(file) {}
+Container::Container(File const& file) : Containable(file,file.getIdentity()) {}
 
-Container::Container(Group const& group) : Locatable(group) {}
+Container::Container(Group const& group) : Containable(group) {}
 
 Container::Container(Location const& location)
-  : Locatable(location.getFileIdentity(),Identity::Ptr())
+  : Containable(location.getFile(),Identity::Ptr())
 {
     initialize(location);
 }
@@ -56,7 +56,7 @@ Container::Container(
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
   , optional<GroupCreationProperties const&> const& optional_creation_properties
 )
-  : Locatable(location->getFileIdentity(),Identity::Ptr())
+  : Containable(location->getFile(),Identity::Ptr())
 {
     initialize(*location,make_pair(optional_link_creation_properties,optional_creation_properties));
 }
@@ -72,10 +72,10 @@ void Container::initialize(
     string trimmed_name = name;
     trim_left_if(trimmed_name,isSlashOrDot);
     if(trimmed_name.empty()
-    && (file_identity == location.getParentIdentity()
+    && (file.getIdentity() == location.getParentIdentity()
         || (!name.empty() && name[0] == '/')
        )
-    ) identity = file_identity;
+    ) identity = file.getIdentity();
     else {
         if(creation_properties)
              *this =
@@ -91,12 +91,12 @@ void Container::initialize(
 hid_t Container::getParentId() const { return getId(); }
 //@+node:gcross.20110524225139.1858: *3* Operators
 void Container::operator=(File const& file) {
-    file_identity = file.getFileIdentity();
+    this->file = file;
     identity = file.getIdentity();
 }
 
 void Container::operator=(Group const& group) {
-    file_identity = group.getFileIdentity();
+    file = group.getFile();
     identity = group.getIdentity();
 }
 //@-others

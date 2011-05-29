@@ -19,6 +19,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110521115623.3009: ** << Includes >>
+#include "attribute.hpp"
 #include "group_array.hpp"
 //@-<< Includes >>
 

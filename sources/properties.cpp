@@ -206,19 +206,34 @@ FillValueStatus DatasetCreationProperties::getFillValueStatus() const {
     return static_cast<FillValueStatus>(fill_value_status);
 }
 //@+node:gcross.20110528133907.2025: *4* filter
+
+
+
+
+
+
+//@+node:gcross.20110528133907.2070: *5* allAddedFiltersAreAvailable
+bool DatasetCreationProperties::allAddedFiltersAreAvailable() const {
+    return assertSuccess(
+        "checking that all added filters are available",
+        H5Pall_filters_avail(getId())
+    ) == 1;
+}
+//@+node:gcross.20110528133907.2067: *5* appendFilter
 DatasetCreationProperties DatasetCreationProperties::appendFilter(Filter const& filter) const {
     assertSuccess(
         "adding filter",
         H5Pset_filter(
             getId(),
             filter.getFilterId(),
-            filter.getOptionalFlag() ? H5Z_FLAG_OPTIONAL : H5Z_FLAG_MANDATORY,
-            filter.numberOfParameters(), filter.parameters()
+            filter.getFlags(),
+            filter.getNumberOfParameters(),
+            filter.getParameterData()
         )
     );
     return *this;
 }
-
+//@+node:gcross.20110528133907.2068: *5* getFilterAtIndex
 std::auto_ptr<Filter> DatasetCreationProperties::getFilterAtIndex(unsigned int index) const {
     size_t number_of_parameters = 0;
     unsigned int flags, filter_config;
@@ -247,7 +262,7 @@ std::auto_ptr<Filter> DatasetCreationProperties::getFilterAtIndex(unsigned int i
     );
     return Filter::construct(filter_id,parameters,flags & H5Z_FLAG_OPTIONAL);
 }
-
+//@+node:gcross.20110528133907.2069: *5* getFilterWithId
 std::auto_ptr<Filter> DatasetCreationProperties::getFilterWithId(H5Z_filter_t filter_id) const {
     size_t number_of_parameters = 0;
     unsigned int flags, filter_config;
@@ -276,12 +291,28 @@ std::auto_ptr<Filter> DatasetCreationProperties::getFilterWithId(H5Z_filter_t fi
     );
     return Filter::construct(filter_id,parameters,flags & H5Z_FLAG_OPTIONAL);
 }
-
-bool DatasetCreationProperties::allAddedFiltersAreAvailable() const {
-    return assertSuccess(
-        "checking that all added filters are available",
-        H5Pall_filters_avail(getId())
-    ) == 1;
+//@+node:gcross.20110528133907.2072: *5* modifyFilter
+void DatasetCreationProperties::modifyFilter(Filter const& filter) const {
+    assertSuccess(
+        "modifying filter",
+        H5Pmodify_filter(
+            getId(),
+            filter.getFilterId(),
+            filter.getFlags(),
+            filter.getNumberOfParameters(),
+            filter.getParameterData()
+        )
+    );
+}
+//@+node:gcross.20110528133907.2071: *5* removeFilterWithId
+void DatasetCreationProperties::removeFilterWithId(H5Z_filter_t filter_id) const {
+    assertSuccess(
+        "removing filter",
+        H5Premove_filter(
+            getId(),
+            filter_id
+        )
+    );
 }
 //@+node:gcross.20110526194358.1955: *4* layout
 DatasetCreationProperties DatasetCreationProperties::setLayout(DatasetLayout layout) const {

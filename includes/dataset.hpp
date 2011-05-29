@@ -88,7 +88,7 @@ class Dataset: public Object {
       , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
     )
-      : Object(location->getFileIdentity(),Identity::Ptr())
+      : Object(location->getFile(),Identity::Ptr())
     {
         createAndInitialize(
             *location,
@@ -111,7 +111,7 @@ class Dataset: public Object {
       , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
     )
-      : Object(location->getFileIdentity(),Identity::Ptr())
+      : Object(location->getFile(),Identity::Ptr())
     {
         createAndInitialize(
             *location,
@@ -133,7 +133,7 @@ class Dataset: public Object {
       , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
     )
-      : Object(location->getFileIdentity(),Identity::Ptr())
+      : Object(location->getFile(),Identity::Ptr())
     {
         createAndInitialize(
             *location,
@@ -155,7 +155,7 @@ class Dataset: public Object {
       , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
     )
-      : Object(location->getFileIdentity(),Identity::Ptr())
+      : Object(location->getFile(),Identity::Ptr())
     {
         createAndInitialize(
             *location,
@@ -176,7 +176,7 @@ class Dataset: public Object {
       , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
     )
-      : Object(location->getFileIdentity(),Identity::Ptr())
+      : Object(location->getFile(),Identity::Ptr())
     {
         typedef typename boost::range_value<DataRange>::type T;
         TemporaryArray<T> array(*data);

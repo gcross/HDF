@@ -35,25 +35,23 @@ namespace HDF {
 class File;
 //@-<< Forward declarations >>
 
-class Containable: public Identifiable {
+class Containable: public Identifiable, public virtual Locatable {
     //@+others
     //@+node:gcross.20110520194631.1357: *3* Constructors
     protected:
 
     Containable();
-    Containable(hid_t id, Identity::Closer const& closer);
-    Containable(Identity::Ptr const& file_and_self_identity);
-    Containable(Identity::Ptr const& file_identity, hid_t id, Identity::Closer const& closer);
-    Containable(Identity::Ptr const& file_identity, Identity::Ptr const& self_identity);
+    Containable(File const& file, hid_t id, Identity::Closer const& closer);
+    Containable(File const& file, Identity::Ptr const& self_identity);
     //@+node:gcross.20110520211700.1486: *3* Fields
     protected:
 
-    Identity::Ptr file_identity;
+    File file;
 
     public:
 
-    virtual Identity::Ptr const& getFileIdentity() const;
-    File getFile() const;
+    virtual File const& getFile() const;
+    virtual Identity::Ptr const& getIdentity() const;
     //@-others
 };
 //@-others

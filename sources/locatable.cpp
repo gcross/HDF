@@ -19,7 +19,9 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110521115623.1472: ** << Includes >>
+#include "file.hpp"
 #include "locatable.hpp"
+#include "location.hpp"
 //@-<< Includes >>
 
 namespace HDF {
@@ -29,28 +31,12 @@ namespace HDF {
 //@-<< Usings >>
 
 //@+others
-//@+node:gcross.20110521115623.1474: ** class Locatable
-//@+node:gcross.20110523113700.1685: *3* Constructors
-Locatable::Locatable() {}
-
-Locatable::Locatable(hid_t id, Identity::Closer const& closer)
-  : Containable(id,closer)
-{}
-
-Locatable::Locatable(Identity::Ptr const& file_and_self_identity)
-  : Containable(file_and_self_identity)
-{}
-
-Locatable::Locatable(Identity::Ptr const& file_identity, hid_t id, Identity::Closer const& closer)
-  : Containable(file_identity,id,closer)
-{}
-
-Locatable::Locatable(Identity::Ptr const& file_identity, Identity::Ptr const& self_identity)
-  : Containable(file_identity,self_identity)
-{}
-//@+node:gcross.20110523113700.1686: *3* Location
+//@+node:gcross.20110528133907.2106: ** class Locatable
+//@+node:gcross.20110528133907.2108: *3* Destructors
+Locatable::~Locatable() {}
+//@+node:gcross.20110523113700.1686: *3* Operators
 Location Locatable::getLocation() const {
-    return Location(file_identity,identity,Location::dot);
+    return Location(getFile(),getIdentity(),Location::dot);
 }
 
 

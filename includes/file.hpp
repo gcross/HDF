@@ -23,7 +23,6 @@
 //@+<< Includes >>
 //@+node:gcross.20110520194631.1393: ** << Includes >>
 #include "attributable.hpp"
-#include "containable.hpp"
 #include "error.hpp"
 #include "locatable.hpp"
 #include "parameters.hpp"
@@ -39,7 +38,16 @@ namespace HDF {
 
 //@+others
 //@+node:gcross.20110520194631.1395: ** class File
-class File: public Locatable, public Parent, public Attributable {
+//@+<< Forward declarations >>
+//@+node:gcross.20110529102535.2040: *3* << Forward declarations >>
+class Containable;
+//@-<< Forward declarations >>
+
+class File
+  : public Identifiable
+  , public Parent
+  , public Attributable
+{
     //@+others
     //@+node:gcross.20110520194631.1424: *3* Constructors
     protected:
@@ -66,8 +74,12 @@ class File: public Locatable, public Parent, public Attributable {
     //@+node:gcross.20110523113700.1690: *3* Fields
     protected:
 
-    virtual Containable const& getAttributeContainable() const;
     virtual hid_t getParentId() const;
+
+    public:
+
+    virtual File const& getFile() const;
+    virtual Identity::Ptr const& getIdentity() const;
     //@+node:gcross.20110520211700.1487: *3* Friends
     friend class Containable;
     //@+node:gcross.20110521115623.3023: *3* Miscellaneous

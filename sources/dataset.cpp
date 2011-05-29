@@ -42,7 +42,7 @@ Dataset::Dataset(
   , optional<DatasetAccessProperties const&> const& optional_access_properties
 )
   : Object(
-        location.getFileIdentity(),
+        location.getFile(),
         assertSuccess(
             "opening dataset",
             H5Dopen(
@@ -65,7 +65,7 @@ Dataset::Dataset(
   , optional<DatasetAccessProperties const&> const& optional_access_properties
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
 )
-  : Object(location->getFileIdentity(),Identity::Ptr())
+  : Object(location->getFile(),Identity::Ptr())
 {
     createAndInitialize(
         *location,
@@ -88,7 +88,7 @@ Dataset::Dataset(
   , optional<DatasetAccessProperties const&> const& optional_access_properties
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
 )
-  : Object(location->getFileIdentity(),Identity::Ptr())
+  : Object(location->getFile(),Identity::Ptr())
 {
     createAndInitialize(
         *location,
@@ -110,7 +110,7 @@ Dataset::Dataset(
   , optional<DatasetAccessProperties const&> const& optional_access_properties
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
 )
-  : Object(location->getFileIdentity(),Identity::Ptr())
+  : Object(location->getFile(),Identity::Ptr())
 {
     createAndInitialize(
         *location,

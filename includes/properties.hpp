@@ -136,17 +136,25 @@ struct DatasetCreationProperties
 
     FillValueStatus getFillValueStatus() const;
     //@+node:gcross.20110528133907.2023: *4* filter
+    bool allAddedFiltersAreAvailable() const;
+
     DatasetCreationProperties appendFilter(Filter const& filter) const;
 
     std::auto_ptr<Filter> getFilterAtIndex(unsigned int index) const;
 
     std::auto_ptr<Filter> getFilterWithId(H5Z_filter_t filter_id) const;
 
-    template<typename FilterType> FilterType getFilterOfType() {
+    void modifyFilter(Filter const& filter) const;
+
+    template<typename FilterType> FilterType getFilterOfType() const {
         return FilterType(dynamic_cast<FilterType&>(*getFilterWithId(FilterType::filter_id)));
     }
 
-    bool allAddedFiltersAreAvailable() const;
+    void removeFilterWithId(H5Z_filter_t filter_id) const;
+
+    template<typename FilterType> void removeFilterOfType() const{
+        removeFilterWithId(FilterType::filter_id);
+    }
     //@+node:gcross.20110526194358.1953: *4* layout
     DatasetCreationProperties setLayout(DatasetLayout layout) const;
 

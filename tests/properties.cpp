@@ -45,18 +45,6 @@ using std::vector;
 //@-<< Usings >>
 
 //@+others
-//@+node:gcross.20110528133907.2032: ** Functions
-//@+node:gcross.20110528133907.2033: *3* checkCorrectFilterClass
-template<typename FilterClass> void checkCorrectFilterClass(auto_ptr<Filter> filter_ptr) {
-    EXPECT_EQ(
-        FilterClass::filter_id,
-        filter_ptr->getFilterId()
-    );
-    EXPECT_EQ(
-        string(typeid(FilterClass).name()),
-        string(typeid(*filter_ptr).name())
-    );
-}
 //@+node:gcross.20110525201928.3108: ** Tests
 TEST_SUITE(Properties) {
 
@@ -112,6 +100,21 @@ TEST_CASE(fill_mode) {
     EXPECT_TRUE(properties == properties.setFillMode(NeverFill));
     EXPECT_EQ(NeverFill,properties.getFillMode());
 }
+//@+node:gcross.20110528133907.2082: *4* filters
+TEST_SUITE(filters) {
+
+//@+others
+//@+node:gcross.20110528133907.2083: *5* modifyFilter
+TEST_CASE(modifyFilter) {
+    using HDF::DeflateCompressionFilter;
+    DatasetCreationProperties properties;
+    EXPECT_TRUE(properties == properties.appendFilter(DeflateCompressionFilter(5)));
+    properties.modifyFilter(DeflateCompressionFilter(3));
+    EXPECT_EQ(3u,properties.getFilterOfType<DeflateCompressionFilter>().getCompressionLevel());
+}
+//@-others
+
+}
 //@+node:gcross.20110527143225.1996: *4* fill value
 TEST_CASE(fill_value) {
     using HDF::FillValueUserDefined;
@@ -121,65 +124,6 @@ TEST_CASE(fill_value) {
     EXPECT_TRUE(properties == properties.setFillValue(3.14f));
     EXPECT_EQ(3.14f,properties.getFillValue<float>());
     EXPECT_EQ(FillValueUserDefined,properties.getFillValueStatus());
-}
-//@+node:gcross.20110526194358.1978: *4* filter
-TEST_SUITE(filter) {
-
-//@+others
-//@+node:gcross.20110528133907.2051: *5* Deflate
-TEST_CASE(Deflate) {
-    using HDF::DeflateCompressionFilter;
-    DatasetCreationProperties properties;
-    EXPECT_TRUE(properties == properties.appendFilter(DeflateCompressionFilter(5)));
-    checkCorrectFilterClass<DeflateCompressionFilter>(properties.getFilterAtIndex(0));
-    DeflateCompressionFilter const filter = properties.getFilterOfType<DeflateCompressionFilter>();
-    EXPECT_EQ(5u,filter.getCompressionLevel());
-}
-//@+node:gcross.20110526194358.1990: *5* Fletcher32
-TEST_CASE(Fletcher32) {
-    using HDF::Fletcher32ChecksumFilter;
-    DatasetCreationProperties properties;
-    EXPECT_TRUE(properties == properties.appendFilter(Fletcher32ChecksumFilter()));
-    checkCorrectFilterClass<Fletcher32ChecksumFilter>(properties.getFilterAtIndex(0));
-}
-//@+node:gcross.20110528133907.2037: *5* NBit
-TEST_CASE(NBit) {
-    using HDF::NBitCompressionFilter;
-    DatasetCreationProperties properties;
-    EXPECT_TRUE(properties == properties.appendFilter(NBitCompressionFilter()));
-    checkCorrectFilterClass<NBitCompressionFilter>(properties.getFilterAtIndex(0));
-}
-//@+node:gcross.20110528133907.2045: *5* ScaleOffset
-TEST_CASE(ScaleOffset) {
-    using HDF::ScaleOffsetCompressionFilter;
-    using HDF::ScaleInteger;
-    DatasetCreationProperties properties;
-    EXPECT_TRUE(properties == properties.appendFilter(ScaleOffsetCompressionFilter(ScaleInteger,42)));
-    checkCorrectFilterClass<ScaleOffsetCompressionFilter>(properties.getFilterAtIndex(0));
-    ScaleOffsetCompressionFilter const filter = properties.getFilterOfType<ScaleOffsetCompressionFilter>();
-    EXPECT_EQ(ScaleInteger,filter.getScaleMethod());
-    EXPECT_EQ(42u,filter.getScaleFactor());
-}
-//@+node:gcross.20110528133907.2035: *5* Shuffle
-TEST_CASE(Shuffle) {
-    using HDF::ShuffleFilter;
-    DatasetCreationProperties properties;
-    EXPECT_TRUE(properties == properties.appendFilter(ShuffleFilter()));
-    checkCorrectFilterClass<ShuffleFilter>(properties.getFilterAtIndex(0));
-}
-//@+node:gcross.20110528133907.2049: *5* SZIP
-TEST_CASE(SZIP) {
-    using HDF::SZIPCompressionFilter;
-    using HDF::SZIPNearestNeighborCodingMethod;
-    DatasetCreationProperties properties;
-    EXPECT_TRUE(properties == properties.appendFilter(SZIPCompressionFilter(SZIPNearestNeighborCodingMethod,42)));
-    checkCorrectFilterClass<SZIPCompressionFilter>(properties.getFilterAtIndex(0));
-    SZIPCompressionFilter const filter = properties.getFilterOfType<SZIPCompressionFilter>();
-    EXPECT_EQ(SZIPNearestNeighborCodingMethod,filter.getCodingMethod());
-    EXPECT_EQ(42u,filter.getPixelsPerBlock());
-}
-//@-others
-
 }
 //@+node:gcross.20110526194358.1956: *4* layout
 TEST_CASE(layout) {

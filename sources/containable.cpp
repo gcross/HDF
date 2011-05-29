@@ -37,28 +37,18 @@ using boost::make_shared;
 //@+node:gcross.20110520211700.1457: *3* Constructors
 Containable::Containable() {}
 
-Containable::Containable(hid_t id, Identity::Closer const& closer)
+Containable::Containable(File const& file, hid_t id, Identity::Closer const& closer)
   : Identifiable(make_shared<Identity>(id,closer))
-  , file_identity(identity)
+  , file(file)
 {}
 
-Containable::Containable(Identity::Ptr const& file_and_self_identity)
-  : Identifiable(file_and_self_identity)
-  , file_identity(identity)
-{}
-
-Containable::Containable(Identity::Ptr const& file_identity, hid_t id, Identity::Closer const& closer)
-  : Identifiable(make_shared<Identity>(id,closer))
-  , file_identity(file_identity)
-{}
-
-Containable::Containable(Identity::Ptr const& file_identity, Identity::Ptr const& self_identity)
-  : Identifiable(self_identity)
-  , file_identity(file_identity)
+Containable::Containable(File const& file, Identity::Ptr const& identity)
+  : Identifiable(identity)
+  , file(file)
 {}
 //@+node:gcross.20110520211700.1489: *3* Fields
-Identity::Ptr const& Containable::getFileIdentity() const { return file_identity; }
-File Containable::getFile() const { return File(file_identity); }
+File const& Containable::getFile() const { return file; }
+Identity::Ptr const& Containable::getIdentity() const { return identity; }
 //@-others
 
 }

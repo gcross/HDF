@@ -22,24 +22,20 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110521115623.2829: ** << Includes >>
-#include "attribute.hpp"
-#include "containable.hpp"
+#include "locatable.hpp"
 //@-<< Includes >>
 
 namespace HDF {
 
 //@+others
 //@+node:gcross.20110521115623.2831: ** class Attributable
-class Attributable {
+//@+<< Forward declarations >>
+//@+node:gcross.20110528133907.2112: *3* << Forward declarations >>
+class Attribute;
+//@-<< Forward declarations >>
+
+class Attributable: public virtual Locatable {
     //@+others
-    //@+node:gcross.20110523113700.1694: *3* Destructors
-    public:
-
-    virtual ~Attributable();
-    //@+node:gcross.20110523113700.1691: *3* Fields
-    protected:
-
-    virtual Containable const& getAttributeContainable() const = 0;
     //@+node:gcross.20110521115623.2832: *3* Operators
     public:
 
