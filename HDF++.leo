@@ -6,8 +6,8 @@
 <v t="gcross.20110520211700.1428"><vh>@file CMakeLists.txt</vh></v>
 <v t="gcross.20110524225139.1919"><vh>@path package</vh>
 <v t="gcross.20110524225139.1921"><vh>@file CMakeLists.txt</vh></v>
-<v t="gcross.20110524225139.1917"><vh>@file HDF++-config-version.cmake.in</vh></v>
-<v t="gcross.20110524225139.1926"><vh>@file HDF++-config.cmake.in</vh></v>
+<v t="gcross.20110524225139.1917"><vh>@file HDF++Config-version.cmake.in</vh></v>
+<v t="gcross.20110524225139.1926"><vh>@file HDF++Config.cmake.in</vh></v>
 </v>
 <v t="gcross.20110520194631.1274"><vh>@path includes</vh>
 <v t="gcross.20110524225139.1924"><vh>@file CMakeLists.txt</vh></v>
