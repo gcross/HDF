@@ -43,6 +43,10 @@ class Properties: public Identified {
 
     Properties(hid_t id);
     Properties();
+    //@+node:gcross.20110602121059.2131: *3* Informational
+    public:
+
+    hid_t getClassId() const;
     //@-others
 };
 //@+node:gcross.20110521115623.2914: ** Functions
