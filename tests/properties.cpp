@@ -164,6 +164,22 @@ TEST_SUITE(GroupCreationProperties) {
 using HDF::GroupCreationProperties;
 
 //@+others
+//@+node:gcross.20110602092541.2055: *4* link creation order
+TEST_CASE(link_creation_order) {
+    GroupCreationProperties properties;
+
+    using HDF::DontTrackLinkCreationOrder;
+    EXPECT_TRUE(properties == properties.setLinkCreationOrderTracking(DontTrackLinkCreationOrder));
+    EXPECT_EQ_VAL(properties.getLinkCreationOrderTracking(),DontTrackLinkCreationOrder);
+
+    using HDF::TrackLinkCreationOrder;
+    EXPECT_TRUE(properties == properties.setLinkCreationOrderTracking(TrackLinkCreationOrder));
+    EXPECT_EQ_VAL(properties.getLinkCreationOrderTracking(),TrackLinkCreationOrder);
+
+    using HDF::TrackAndIndexLinksBasedOnCreationOrder;
+    EXPECT_TRUE(properties == properties.setLinkCreationOrderTracking(TrackAndIndexLinksBasedOnCreationOrder));
+    EXPECT_EQ_VAL(properties.getLinkCreationOrderTracking(),TrackAndIndexLinksBasedOnCreationOrder);
+}
 //@+node:gcross.20110602092541.2054: *4* local heap size hint
 TEST_CASE(local_heap_size_hint) {
     GroupCreationProperties properties;

@@ -374,6 +374,29 @@ FileCreationProperties::FileCreationProperties()
 GroupCreationProperties::GroupCreationProperties()
   : Properties(assertSuccess("creating group creation properties",H5Pcreate(H5P_GROUP_CREATE)))
 {}
+//@+node:gcross.20110602092541.2059: *4* link creation order flags
+GroupCreationProperties GroupCreationProperties::setLinkCreationOrderTracking(LinkCreationOrderTracking creation_order_tracking) {
+    assertSuccess(
+        "setting link creation order flags",
+        H5Pset_link_creation_order(
+            getId(),
+            static_cast<unsigned int>(creation_order_tracking)
+        )
+    );
+    return *this;
+}
+
+LinkCreationOrderTracking GroupCreationProperties::getLinkCreationOrderTracking() const {
+    unsigned int creation_order_flags;
+    assertSuccess(
+        "getting link creation order flags",
+        H5Pget_link_creation_order(
+            getId(),
+            &creation_order_flags
+        )
+    );
+    return static_cast<LinkCreationOrderTracking>(creation_order_flags);
+}
 //@+node:gcross.20110602092541.2052: *4* local heap size hint
 GroupCreationProperties GroupCreationProperties::setLocalHeapSizeHint(size_t size_hint) {
     assertSuccess(

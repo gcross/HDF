@@ -80,6 +80,12 @@ enum FillValueStatus {
   , FillValueLibraryDefault = H5D_FILL_VALUE_DEFAULT
   , FillValueUserDefined = H5D_FILL_VALUE_USER_DEFINED
 };
+//@+node:gcross.20110602092541.2060: *3* LinkCreationOrderTracking
+enum LinkCreationOrderTracking {
+    DontTrackLinkCreationOrder = 0u
+  , TrackLinkCreationOrder = H5P_CRT_ORDER_TRACKED
+  , TrackAndIndexLinksBasedOnCreationOrder = H5P_CRT_ORDER_TRACKED | H5P_CRT_ORDER_INDEXED
+};
 //@+node:gcross.20110526194358.2003: *3* ScaleMethod
 enum ScaleMethod {
     ScaleFloatingPointWithVariableBits = H5Z_SO_FLOAT_DSCALE

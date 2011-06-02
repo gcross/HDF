@@ -189,6 +189,9 @@ struct GroupCreationProperties
     GroupCreationProperties();
 
     //@+others
+    //@+node:gcross.20110602092541.2057: *4* link creation order
+    GroupCreationProperties setLinkCreationOrderTracking(LinkCreationOrderTracking creation_order_tracking);
+    LinkCreationOrderTracking getLinkCreationOrderTracking() const;
     //@+node:gcross.20110602092541.2048: *4* local heap size hint
     GroupCreationProperties setLocalHeapSizeHint(size_t size_hint);
     size_t getLocalHeapSizeHint() const;
