@@ -370,6 +370,33 @@ pair<size_t,bool> FileAccessProperties::getCoreDriverSettings() const {
 FileCreationProperties::FileCreationProperties()
   : Properties(assertSuccess("creating file creation properties",H5Pcreate(H5P_FILE_CREATE)))
 {}
+//@+node:gcross.20110602092541.2049: *3* GroupCreationProperties
+GroupCreationProperties::GroupCreationProperties()
+  : Properties(assertSuccess("creating group creation properties",H5Pcreate(H5P_GROUP_CREATE)))
+{}
+//@+node:gcross.20110602092541.2052: *4* local heap size hint
+GroupCreationProperties GroupCreationProperties::setLocalHeapSizeHint(size_t size_hint) {
+    assertSuccess(
+        "setting local heap size hint",
+        H5Pset_local_heap_size_hint(
+            getId(),
+            size_hint
+        )
+    );
+    return *this;
+}
+
+size_t GroupCreationProperties::getLocalHeapSizeHint() const {
+    size_t size_hint;
+    assertSuccess(
+        "getting local heap size hint",
+        H5Pget_local_heap_size_hint(
+            getId(),
+            &size_hint
+        )
+    );
+    return size_hint;
+}
 //@+node:gcross.20110525201928.3099: *3* LinkCreationProperties
 LinkCreationProperties::LinkCreationProperties()
   : Properties(assertSuccess("creating link creation properties",H5Pcreate(H5P_LINK_CREATE)))

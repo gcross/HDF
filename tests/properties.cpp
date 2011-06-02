@@ -30,11 +30,6 @@
 
 //@+<< Usings >>
 //@+node:gcross.20110525201928.3107: ** << Usings >>
-using HDF::DatasetCreationProperties;
-using HDF::LinkCreationProperties;
-using HDF::Filter;
-using HDF::FileAccessProperties;
-
 using boost::assign::list_of;
 using boost::irange;
 
@@ -51,6 +46,9 @@ TEST_SUITE(Properties) {
 //@+others
 //@+node:gcross.20110526194358.1950: *3* DatasetCreationProperties
 TEST_SUITE(DatasetCreationProperties) {
+using HDF::DatasetCreationProperties;
+
+using HDF::Filter;
 
 //@+others
 //@+node:gcross.20110528133907.2066: *4* allocation mode
@@ -146,6 +144,7 @@ TEST_CASE(layout) {
 }
 //@+node:gcross.20110526194358.1939: *3* FileAccessProperties
 TEST_SUITE(FileAccessProperties) {
+using HDF::FileAccessProperties;
 
 //@+others
 //@+node:gcross.20110526194358.1940: *4* core driver
@@ -160,8 +159,24 @@ TEST_CASE(core_driver) {
 //@-others
 
 }
+//@+node:gcross.20110602092541.2053: *3* GroupCreationProperties
+TEST_SUITE(GroupCreationProperties) {
+using HDF::GroupCreationProperties;
+
+//@+others
+//@+node:gcross.20110602092541.2054: *4* local heap size hint
+TEST_CASE(local_heap_size_hint) {
+    GroupCreationProperties properties;
+
+    EXPECT_TRUE(properties == properties.setLocalHeapSizeHint(42u));
+    EXPECT_EQ_VAL(properties.getLocalHeapSizeHint(),42u);
+}
+//@-others
+
+}
 //@+node:gcross.20110525201928.3109: *3* LinkCreationProperties
 TEST_SUITE(LinkCreationProperties) {
+using HDF::LinkCreationProperties;
 
 //@+others
 //@+node:gcross.20110525201928.3110: *4* character encoding

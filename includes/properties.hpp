@@ -187,6 +187,12 @@ struct GroupCreationProperties
   , public CreateMissingIntermediateGroupsProperty<GroupCreationProperties>
 {
     GroupCreationProperties();
+
+    //@+others
+    //@+node:gcross.20110602092541.2048: *4* local heap size hint
+    GroupCreationProperties setLocalHeapSizeHint(size_t size_hint);
+    size_t getLocalHeapSizeHint() const;
+    //@-others
 };
 //@+node:gcross.20110525201928.3097: *3* LinkAccessProperties
 struct LinkAccessProperties: public Properties {
