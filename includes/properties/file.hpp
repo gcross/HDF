@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110521115623.2893: * @file group.hpp
+//@+node:gcross.20110602092541.2106: * @file file.hpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110521115623.2895: ** << License >>
+//@+node:gcross.20110602092541.2108: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -17,50 +17,34 @@
 //@@c
 //@-<< License >>
 
-#ifndef HDFPP_GROUP_HPP
-#define HDFPP_GROUP_HPP
+#ifndef HDFPP_PROPERTIES_FILE_ACCESS_HPP
+#define HDFPP_PROPERTIES_FILE_ACCESS_HPP
 
 //@+<< Includes >>
-//@+node:gcross.20110521115623.2894: ** << Includes >>
-#include "object.hpp"
-#include "parameters.hpp"
-#include "parent.hpp"
-#include "properties/group.hpp"
-
-#include <boost/optional.hpp>
+//@+node:gcross.20110602092541.2107: ** << Includes >>
+#include "../properties.hpp"
 //@-<< Includes >>
 
 namespace HDF {
 
 //@+others
-//@+node:gcross.20110521115623.2896: ** class Group
-class Group: public Object, public Parent {
+//@+node:gcross.20110602092541.2152: ** Properties
+//@+node:gcross.20110526150836.1974: *3* FileAccessProperties
+struct FileAccessProperties: public Properties {
+    FileAccessProperties();
+
     //@+others
-    //@+node:gcross.20110521115623.2897: *3* Constructors
-    public:
+    //@+node:gcross.20110526194358.1949: *4* core driver
+    FileAccessProperties useCoreDriver(size_t increment_size_in_bytes, bool write_to_backing_store) const;
 
-    Group();
-
-    Group(Location const& location);
-
-    Group(
-        CreateAt<Location const> location
-      , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
-      , boost::optional<GroupCreationProperties const&> const& optional_group_creation_properties = boost::none
-    );
+    void getCoreDriverSettings(size_t &increment_size_in_bytes, bool &write_to_backing_store) const;
+    std::pair<size_t,bool> getCoreDriverSettings() const;
     //@-others
 };
-//@+node:gcross.20110521115623.2977: ** Implementation
-namespace Implementation {
-
-hid_t createGroup(
-    CreateAt<Location const> location
-  , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties
-  , boost::optional<GroupCreationProperties const&> const& optional_group_creation_properties
-);
-hid_t openGroup(Location const& location);
-
-}
+//@+node:gcross.20110526150836.1973: *3* FileCreationProperties
+struct FileCreationProperties: public Properties {
+    FileCreationProperties();
+};
 //@-others
 
 }

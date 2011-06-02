@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110521115623.2893: * @file group.hpp
+//@+node:gcross.20110602092541.2124: * @file group.hpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110521115623.2895: ** << License >>
+//@+node:gcross.20110602092541.2126: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -17,50 +17,34 @@
 //@@c
 //@-<< License >>
 
-#ifndef HDFPP_GROUP_HPP
-#define HDFPP_GROUP_HPP
+#ifndef HDFPP_PROPERTIES_GROUP_CREATION_HPP
+#define HDFPP_PROPERTIES_GROUP_CREATION_HPP
 
 //@+<< Includes >>
-//@+node:gcross.20110521115623.2894: ** << Includes >>
-#include "object.hpp"
-#include "parameters.hpp"
-#include "parent.hpp"
-#include "properties/group.hpp"
-
-#include <boost/optional.hpp>
+//@+node:gcross.20110602092541.2125: ** << Includes >>
+#include "../properties.hpp"
+#include "shared/create_missing_intermediate_groups.hpp"
 //@-<< Includes >>
 
 namespace HDF {
 
 //@+others
-//@+node:gcross.20110521115623.2896: ** class Group
-class Group: public Object, public Parent {
+//@+node:gcross.20110526150836.1960: ** class GroupCreationProperties
+struct GroupCreationProperties
+  : public virtual Properties
+  , public CreateMissingIntermediateGroupsProperty<GroupCreationProperties>
+{
+    GroupCreationProperties();
+ 
     //@+others
-    //@+node:gcross.20110521115623.2897: *3* Constructors
-    public:
-
-    Group();
-
-    Group(Location const& location);
-
-    Group(
-        CreateAt<Location const> location
-      , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
-      , boost::optional<GroupCreationProperties const&> const& optional_group_creation_properties = boost::none
-    );
+    //@+node:gcross.20110602092541.2057: *3* link creation order
+    GroupCreationProperties setLinkCreationOrderTracking(LinkCreationOrderTracking creation_order_tracking);
+    LinkCreationOrderTracking getLinkCreationOrderTracking() const;
+    //@+node:gcross.20110602092541.2048: *3* local heap size hint
+    GroupCreationProperties setLocalHeapSizeHint(size_t size_hint);
+    size_t getLocalHeapSizeHint() const;
     //@-others
 };
-//@+node:gcross.20110521115623.2977: ** Implementation
-namespace Implementation {
-
-hid_t createGroup(
-    CreateAt<Location const> location
-  , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties
-  , boost::optional<GroupCreationProperties const&> const& optional_group_creation_properties
-);
-hid_t openGroup(Location const& location);
-
-}
 //@-others
 
 }

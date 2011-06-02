@@ -19,7 +19,10 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110525201928.3106: ** << Includes >>
-#include "properties.hpp"
+#include "properties/dataset.hpp"
+#include "properties/file.hpp"
+#include "properties/group.hpp"
+#include "properties/link.hpp"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>

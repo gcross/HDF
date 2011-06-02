@@ -23,8 +23,13 @@ add_library(HDF++
     memory_file
     object
     parent
-    properties
+    properties.cpp
     temporary_memory_file
+    properties/dataset
+    properties/file
+    properties/group
+    properties/link
+    properties/shared/create_missing_intermediate_groups
 )
 target_link_libraries(HDF++
     ${HDF5_LIBRARIES}

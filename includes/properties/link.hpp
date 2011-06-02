@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110521115623.2893: * @file group.hpp
+//@+node:gcross.20110602092541.2130: * @file link.hpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110521115623.2895: ** << License >>
+//@+node:gcross.20110602092541.2132: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -17,50 +17,33 @@
 //@@c
 //@-<< License >>
 
-#ifndef HDFPP_GROUP_HPP
-#define HDFPP_GROUP_HPP
+#ifndef HDFPP_PROPERTIES_LINK_ACCESS_HPP
+#define HDFPP_PROPERTIES_LINK_ACCESS_HPP
 
 //@+<< Includes >>
-//@+node:gcross.20110521115623.2894: ** << Includes >>
-#include "object.hpp"
-#include "parameters.hpp"
-#include "parent.hpp"
-#include "properties/group.hpp"
-
-#include <boost/optional.hpp>
+//@+node:gcross.20110602092541.2131: ** << Includes >>
+#include "../properties.hpp"
+#include "shared/create_missing_intermediate_groups.hpp"
 //@-<< Includes >>
 
 namespace HDF {
 
 //@+others
-//@+node:gcross.20110521115623.2896: ** class Group
-class Group: public Object, public Parent {
-    //@+others
-    //@+node:gcross.20110521115623.2897: *3* Constructors
-    public:
-
-    Group();
-
-    Group(Location const& location);
-
-    Group(
-        CreateAt<Location const> location
-      , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
-      , boost::optional<GroupCreationProperties const&> const& optional_group_creation_properties = boost::none
-    );
-    //@-others
+//@+node:gcross.20110602092541.2153: ** Properties
+//@+node:gcross.20110525201928.3097: *3* LinkAccessProperties
+struct LinkAccessProperties: public Properties {
+    LinkAccessProperties();
 };
-//@+node:gcross.20110521115623.2977: ** Implementation
-namespace Implementation {
+//@+node:gcross.20110525201928.3098: *3* LinkCreationProperties
+struct LinkCreationProperties
+  : public virtual Properties
+  , public CreateMissingIntermediateGroupsProperty<LinkCreationProperties>
+{
+    LinkCreationProperties();
 
-hid_t createGroup(
-    CreateAt<Location const> location
-  , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties
-  , boost::optional<GroupCreationProperties const&> const& optional_group_creation_properties
-);
-hid_t openGroup(Location const& location);
-
-}
+    LinkCreationProperties setCharacterEncoding(CharacterEncoding encoding) const;
+    CharacterEncoding getCharacterEncoding() const;
+};
 //@-others
 
 }

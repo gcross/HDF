@@ -19,7 +19,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110528133907.2079: ** << Includes >>
-#include "properties.hpp"
+#include "properties/dataset.hpp"
 
 #include <illuminate.hpp>
 //@-<< Includes >>

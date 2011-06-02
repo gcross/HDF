@@ -26,7 +26,8 @@
 #include "datatype.hpp"
 #include "object.hpp"
 #include "parameters.hpp"
-#include "properties.hpp"
+#include "properties/dataset.hpp"
+#include "properties/link.hpp"
 
 #include <boost/optional.hpp>
 #include <boost/range/value_type.hpp>

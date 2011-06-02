@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110521115623.2893: * @file group.hpp
+//@+node:gcross.20110602092541.2245: * @file create_missing_intermediate_groups.cpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110521115623.2895: ** << License >>
+//@+node:gcross.20110602092541.2246: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -17,53 +17,43 @@
 //@@c
 //@-<< License >>
 
-#ifndef HDFPP_GROUP_HPP
-#define HDFPP_GROUP_HPP
-
 //@+<< Includes >>
-//@+node:gcross.20110521115623.2894: ** << Includes >>
-#include "object.hpp"
-#include "parameters.hpp"
-#include "parent.hpp"
-#include "properties/group.hpp"
-
-#include <boost/optional.hpp>
+//@+node:gcross.20110602092541.2247: ** << Includes >>
+#include "properties/shared/create_missing_intermediate_groups.hpp"
 //@-<< Includes >>
 
 namespace HDF {
 
+//@+<< Usings >>
+//@+node:gcross.20110602092541.2248: ** << Usings >>
+//@-<< Usings >>
+
 //@+others
-//@+node:gcross.20110521115623.2896: ** class Group
-class Group: public Object, public Parent {
-    //@+others
-    //@+node:gcross.20110521115623.2897: *3* Constructors
-    public:
+//@+node:gcross.20110525201928.3116: ** class CreateMissingIntermediateGroupsProperty
+CreateMissingIntermediateGroupsPropertyBase::CreateMissingIntermediateGroupsPropertyBase() {}
 
-    Group();
-
-    Group(Location const& location);
-
-    Group(
-        CreateAt<Location const> location
-      , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
-      , boost::optional<GroupCreationProperties const&> const& optional_group_creation_properties = boost::none
+void CreateMissingIntermediateGroupsPropertyBase::setCreateMissingIntermediateGroups(bool create_missing_intermediate_groups) const {
+    assertSuccess(
+        "setting create intermediate groups property",
+        H5Pset_create_intermediate_group(
+            getId(),
+            create_missing_intermediate_groups
+        )
     );
-    //@-others
-};
-//@+node:gcross.20110521115623.2977: ** Implementation
-namespace Implementation {
+}
 
-hid_t createGroup(
-    CreateAt<Location const> location
-  , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties
-  , boost::optional<GroupCreationProperties const&> const& optional_group_creation_properties
-);
-hid_t openGroup(Location const& location);
-
+bool CreateMissingIntermediateGroupsPropertyBase::getCreateMissingIntermediateGroups() const {
+    unsigned int create_missing_intermediate_groups;
+    assertSuccess(
+        "getting create intermediate groups property",
+        H5Pget_create_intermediate_group(
+            getId(),
+            &create_missing_intermediate_groups
+        )
+    );
+    return create_missing_intermediate_groups==1;
 }
 //@-others
 
 }
-
-#endif
 //@-leo

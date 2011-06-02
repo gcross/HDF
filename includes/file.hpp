@@ -27,7 +27,8 @@
 #include "locatable.hpp"
 #include "parameters.hpp"
 #include "parent.hpp"
-#include "properties.hpp"
+#include "properties/file.hpp"
+#include "properties/link.hpp"
 
 #include <boost/optional.hpp>
 #include <hdf5.h>

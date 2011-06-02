@@ -25,7 +25,7 @@
 #include "error.hpp"
 #include "locatable.hpp"
 #include "parent.hpp"
-#include "properties.hpp"
+#include "properties/link.hpp"
 
 #include <hdf5.h>
 #include <boost/optional.hpp>

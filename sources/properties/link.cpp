@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110521115623.2893: * @file group.hpp
+//@+node:gcross.20110602092541.2231: * @file link.cpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110521115623.2895: ** << License >>
+//@+node:gcross.20110602092541.2232: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -17,53 +17,51 @@
 //@@c
 //@-<< License >>
 
-#ifndef HDFPP_GROUP_HPP
-#define HDFPP_GROUP_HPP
-
 //@+<< Includes >>
-//@+node:gcross.20110521115623.2894: ** << Includes >>
-#include "object.hpp"
-#include "parameters.hpp"
-#include "parent.hpp"
-#include "properties/group.hpp"
-
-#include <boost/optional.hpp>
+//@+node:gcross.20110602092541.2233: ** << Includes >>
+#include "properties/link.hpp"
 //@-<< Includes >>
 
 namespace HDF {
 
+//@+<< Usings >>
+//@+node:gcross.20110602092541.2234: ** << Usings >>
+//@-<< Usings >>
+
 //@+others
-//@+node:gcross.20110521115623.2896: ** class Group
-class Group: public Object, public Parent {
-    //@+others
-    //@+node:gcross.20110521115623.2897: *3* Constructors
-    public:
+//@+node:gcross.20110602092541.2235: ** Properties
+//@+node:gcross.20110602092541.2239: *3* LinkAccessProperties
+LinkAccessProperties::LinkAccessProperties()
+  : Properties(assertSuccess("creating link access properties",H5Pcreate(H5P_LINK_ACCESS)))
+{}
+//@+node:gcross.20110525201928.3099: *3* LinkCreationProperties
+LinkCreationProperties::LinkCreationProperties()
+  : Properties(assertSuccess("creating link creation properties",H5Pcreate(H5P_LINK_CREATE)))
+{}
 
-    Group();
-
-    Group(Location const& location);
-
-    Group(
-        CreateAt<Location const> location
-      , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
-      , boost::optional<GroupCreationProperties const&> const& optional_group_creation_properties = boost::none
+LinkCreationProperties LinkCreationProperties::setCharacterEncoding(CharacterEncoding encoding) const {
+    assertSuccess(
+        "setting character encoding property",
+        H5Pset_char_encoding(
+            getId(),
+            static_cast<H5T_cset_t>(encoding)
+        )
     );
-    //@-others
-};
-//@+node:gcross.20110521115623.2977: ** Implementation
-namespace Implementation {
+    return *this;
+}
 
-hid_t createGroup(
-    CreateAt<Location const> location
-  , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties
-  , boost::optional<GroupCreationProperties const&> const& optional_group_creation_properties
-);
-hid_t openGroup(Location const& location);
-
+CharacterEncoding LinkCreationProperties::getCharacterEncoding() const {
+    H5T_cset_t id;
+    assertSuccess(
+        "getting character encoding property",
+        H5Pget_char_encoding(
+            getId(),
+            &id
+        )
+    );
+    return static_cast<CharacterEncoding>(id);
 }
 //@-others
 
 }
-
-#endif
 //@-leo
