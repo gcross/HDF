@@ -37,6 +37,18 @@ struct GroupCreationProperties
     GroupCreationProperties();
  
     //@+others
+    //@+node:gcross.20110602121059.2114: *3* estimated link information
+    GroupCreationProperties setEstimatedLinkInformation(
+        unsigned int estimated_number_of_links,
+        unsigned int estimated_average_link_name_lengths
+    );
+
+    void getEstimatedLinkInformation(
+        unsigned int& estimated_number_of_links,
+        unsigned int& estimated_average_link_name_lengths
+    ) const;
+
+    std::pair<unsigned int,unsigned int> getEstimatedLinkInformation() const;
     //@+node:gcross.20110602092541.2057: *3* link creation order
     GroupCreationProperties setLinkCreationOrderTracking(LinkCreationOrderTracking creation_order_tracking);
     LinkCreationOrderTracking getLinkCreationOrderTracking() const;

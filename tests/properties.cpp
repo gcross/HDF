@@ -167,6 +167,14 @@ TEST_SUITE(GroupCreationProperties) {
 using HDF::GroupCreationProperties;
 
 //@+others
+//@+node:gcross.20110602121059.2118: *4* estimated link information
+TEST_CASE(estimated_link_information) {
+    GroupCreationProperties properties;
+
+    EXPECT_TRUE(properties == properties.setEstimatedLinkInformation(42u,17u));
+    EXPECT_EQ_VAL(properties.getEstimatedLinkInformation().first,42u);
+    EXPECT_EQ_VAL(properties.getEstimatedLinkInformation().second,17u);
+}
 //@+node:gcross.20110602092541.2055: *4* link creation order
 TEST_CASE(link_creation_order) {
     GroupCreationProperties properties;
