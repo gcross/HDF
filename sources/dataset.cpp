@@ -191,14 +191,47 @@ void Dataset::write(
     );
 }
 //@+node:gcross.20110523113700.2385: *3* Informational
+//@+node:gcross.20110602121059.2135: *4* dimensions
 vector<hsize_t> Dataset::dimensions() const {
     return Dataspace(*this).dimensions();
 }
+//@+node:gcross.20110602121059.2136: *4* dimensionsWithAssertedRank
 vector<hsize_t> Dataset::dimensionsWithAssertedRank(unsigned int expected_rank) const {
     return Dataspace(*this).dimensionsWithAssertedRank(expected_rank);
 }
-
+//@+node:gcross.20110602121059.2140: *4* getCopyOfAccessProperties
+DatasetAccessProperties Dataset::getCopyOfAccessProperties() const {
+    return DatasetAccessProperties(assertSuccess(
+        "getting dataset access properties",
+        H5Dget_access_plist(getId())
+    ));
+}
+//@+node:gcross.20110602121059.2141: *4* getCopyOfCreationProperties
+DatasetCreationProperties Dataset::getCopyOfCreationProperties() const {
+    return DatasetCreationProperties(assertSuccess(
+        "getting dataset creation properties",
+        H5Dget_create_plist(getId())
+    ));
+}
+//@+node:gcross.20110602121059.2139: *4* getSpaceAllocationStatus
+SpaceAllocationStatus Dataset::getSpaceAllocationStatus() const {
+    H5D_space_status_t status;
+    assertSuccess(
+        "getting dataset space allocation status",
+        H5Dget_space_status(getId(),&status)
+    );
+    return static_cast<SpaceAllocationStatus>(status);
+}
+//@+node:gcross.20110602121059.2142: *4* getStorageSize
+size_t Dataset::getStorageSize() const {
+    return assertSuccess(
+        "getting dataset storage size",
+        H5Dget_storage_size(getId())
+    );
+}
+//@+node:gcross.20110602121059.2137: *4* rank
 unsigned int Dataset::rank() const { return Dataspace(*this).rank(); }
+//@+node:gcross.20110602121059.2138: *4* size
 unsigned int Dataset::size() const { return Dataspace(*this).size(); }
 //@+node:gcross.20110523113700.2371: *3* Resizing
 void Dataset::resize(hsize_t const* dimensions) const {

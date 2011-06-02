@@ -259,6 +259,13 @@ class Dataset: public Object {
     std::vector<hsize_t> dimensionsWithAssertedRank(unsigned int expected_rank) const;
     unsigned int rank() const;
     unsigned int size() const;
+
+    SpaceAllocationStatus getSpaceAllocationStatus() const;
+
+    DatasetAccessProperties getCopyOfAccessProperties() const;
+    DatasetCreationProperties getCopyOfCreationProperties() const;
+
+    size_t getStorageSize() const;
     //@+node:gcross.20110523113700.2370: *3* Resizing
     public:
 

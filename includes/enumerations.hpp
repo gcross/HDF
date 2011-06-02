@@ -92,6 +92,12 @@ enum ScaleMethod {
   , ScaleFloatingPointWithFixedBits = H5Z_SO_FLOAT_ESCALE
   , ScaleInteger = H5Z_SO_INT
 };
+//@+node:gcross.20110602121059.2134: *3* SpaceAllocationStatus
+enum SpaceAllocationStatus {
+    SpaceNotAllocated = H5D_SPACE_STATUS_NOT_ALLOCATED
+  , SpaceFullyAllocated = H5D_SPACE_STATUS_ALLOCATED
+  , SpacePartiallyAllocated = H5D_SPACE_STATUS_PART_ALLOCATED
+};
 //@+node:gcross.20110527143225.1984: *3* SZIPCodingMethod
 enum SZIPCodingMethod {
     SZIPEntropyCodingMethod = H5_SZIP_EC_OPTION_MASK
