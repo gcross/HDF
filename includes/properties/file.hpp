@@ -31,14 +31,9 @@ namespace HDF {
 //@+node:gcross.20110602092541.2152: ** Properties
 //@+node:gcross.20110526150836.1974: *3* FileAccessProperties
 struct FileAccessProperties: public Properties {
-    FileAccessProperties();
-
-    protected:
-
     friend class File;
-    FileAccessProperties(hid_t id);
 
-    public:
+    DECLARE_PROPERTIES_BOILERPLATE(FileAccess)
 
     //@+others
     //@+node:gcross.20110526194358.1949: *4* core driver
@@ -50,12 +45,9 @@ struct FileAccessProperties: public Properties {
 };
 //@+node:gcross.20110526150836.1973: *3* FileCreationProperties
 struct FileCreationProperties: public Properties {
-    FileCreationProperties();
-
-    protected:
-
     friend class File;
-    FileCreationProperties(hid_t id);
+
+    DECLARE_PROPERTIES_BOILERPLATE(FileCreation)
 
     //@+others
     //@-others

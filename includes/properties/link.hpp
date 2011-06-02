@@ -32,17 +32,21 @@ namespace HDF {
 //@+node:gcross.20110602092541.2153: ** Properties
 //@+node:gcross.20110525201928.3097: *3* LinkAccessProperties
 struct LinkAccessProperties: public Properties {
-    LinkAccessProperties();
+    DECLARE_PROPERTIES_BOILERPLATE(LinkAccess)
 };
 //@+node:gcross.20110525201928.3098: *3* LinkCreationProperties
 struct LinkCreationProperties
   : public virtual Properties
   , public CreateMissingIntermediateGroupsProperty<LinkCreationProperties>
 {
-    LinkCreationProperties();
+    DECLARE_PROPERTIES_BOILERPLATE(LinkCreation)
 
+    //@+others
+    //@+node:gcross.20110602121059.2126: *4* character encoding
     LinkCreationProperties setCharacterEncoding(CharacterEncoding encoding) const;
+
     CharacterEncoding getCharacterEncoding() const;
+    //@-others
 };
 //@-others
 

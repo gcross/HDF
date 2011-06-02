@@ -32,13 +32,7 @@ using std::pair;
 //@+others
 //@+node:gcross.20110602092541.2204: ** Properties
 //@+node:gcross.20110526150836.1977: *3* FileAccessProperties
-FileAccessProperties::FileAccessProperties()
-  : Properties(assertSuccess("creating file access properties",H5Pcreate(H5P_FILE_ACCESS)))
-{}
-
-FileAccessProperties::FileAccessProperties(hid_t id)
-  : Properties(id)
-{}
+DEFINE_PROPERTIES_BOILERPLATE(FileAccess,file access,FILE_ACCESS)
 
 //@+others
 //@+node:gcross.20110526194358.1938: *4* CoreDriver
@@ -66,13 +60,7 @@ pair<size_t,bool> FileAccessProperties::getCoreDriverSettings() const {
 }
 //@-others
 //@+node:gcross.20110526150836.1979: *3* FileCreationProperties
-FileCreationProperties::FileCreationProperties()
-  : Properties(assertSuccess("creating file creation properties",H5Pcreate(H5P_FILE_CREATE)))
-{}
-
-FileCreationProperties::FileCreationProperties(hid_t id)
-  : Properties(id)
-{}
+DEFINE_PROPERTIES_BOILERPLATE(FileCreation,file creation,FILE_CREATE)
 
 //@+others
 //@-others

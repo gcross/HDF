@@ -45,16 +45,12 @@ NoSuchFilterException::NoSuchFilterException(string const& name)
 NoSuchFilterException::~NoSuchFilterException() throw() {}
 //@+node:gcross.20110602092541.2163: ** Properties
 //@+node:gcross.20110526150836.1970: *3* DatasetAccessProperties
-DatasetAccessProperties::DatasetAccessProperties()
-  : Properties(assertSuccess("creating dataset access properties",H5Pcreate(H5P_DATASET_ACCESS)))
-{}
+DEFINE_PROPERTIES_BOILERPLATE(DatasetAccess,dataset access,DATASET_ACCESS)
 
 //@+others
 //@-others
 //@+node:gcross.20110526150836.1966: *3* DatasetCreationProperties
-DatasetCreationProperties::DatasetCreationProperties()
-  : Properties(assertSuccess("creating dataset creation properties",H5Pcreate(H5P_DATASET_CREATE)))
-{}
+DEFINE_PROPERTIES_BOILERPLATE(DatasetCreation,dataset creation,DATASET_CREATE)
 
 //@+others
 //@+node:gcross.20110528133907.2064: *4* allocation mode
@@ -293,9 +289,10 @@ DatasetLayout DatasetCreationProperties::getLayout() const {
 }
 //@-others
 //@+node:gcross.20110526150836.1971: *3* DatasetTransferProperties
-DatasetTransferProperties::DatasetTransferProperties()
-  : Properties(assertSuccess("creating dataset transfer properties",H5Pcreate(H5P_DATASET_XFER)))
-{}
+DEFINE_PROPERTIES_BOILERPLATE(DatasetTransfer,dataset transfer,DATASET_XFER)
+
+//@+others
+//@-others
 //@-others
 
 }

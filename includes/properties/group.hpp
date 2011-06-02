@@ -34,7 +34,7 @@ struct GroupCreationProperties
   : public virtual Properties
   , public CreateMissingIntermediateGroupsProperty<GroupCreationProperties>
 {
-    GroupCreationProperties();
+    DECLARE_PROPERTIES_BOILERPLATE(GroupCreation)
  
     //@+others
     //@+node:gcross.20110602121059.2114: *3* estimated link information

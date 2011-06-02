@@ -39,7 +39,7 @@ struct NoSuchFilterException: public Exception {
 //@+node:gcross.20110602092541.2151: ** Properties
 //@+node:gcross.20110526150836.1961: *3* DatasetAccessProperties
 struct DatasetAccessProperties: public Properties {
-    DatasetAccessProperties();
+    DECLARE_PROPERTIES_BOILERPLATE(DatasetAccess)
 };
 //@+node:gcross.20110526150836.1972: *3* DatasetCreationProperties
 //@+<< Forward declarations >>
@@ -51,7 +51,7 @@ class Datatype;
 struct DatasetCreationProperties
   : public virtual Properties
 {
-    DatasetCreationProperties();
+    DECLARE_PROPERTIES_BOILERPLATE(DatasetCreation)
 
     //@+others
     //@+node:gcross.20110528133907.2062: *4* allocation mode
@@ -117,7 +117,7 @@ struct DatasetCreationProperties
 };
 //@+node:gcross.20110526150836.1962: *3* DatasetTransferProperties
 struct DatasetTransferProperties: public Properties {
-    DatasetTransferProperties();
+    DECLARE_PROPERTIES_BOILERPLATE(DatasetTransfer)
 };
 //@-others
 

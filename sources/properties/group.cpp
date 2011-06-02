@@ -32,9 +32,9 @@ using std::pair;
 //@+others
 //@+node:gcross.20110602092541.2221: ** Properties
 //@+node:gcross.20110602092541.2049: *3* GroupCreationProperties
-GroupCreationProperties::GroupCreationProperties()
-  : Properties(assertSuccess("creating group creation properties",H5Pcreate(H5P_GROUP_CREATE)))
-{}
+DEFINE_PROPERTIES_BOILERPLATE(GroupCreation,group creation,GROUP_CREATE)
+
+//@+others
 //@+node:gcross.20110602121059.2116: *4* estimated link information
 GroupCreationProperties GroupCreationProperties::setEstimatedLinkInformation(
     unsigned int estimated_number_of_links,
@@ -119,6 +119,7 @@ size_t GroupCreationProperties::getLocalHeapSizeHint() const {
     );
     return size_hint;
 }
+//@-others
 //@-others
 
 }

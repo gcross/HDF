@@ -31,14 +31,12 @@ namespace HDF {
 //@+others
 //@+node:gcross.20110602092541.2235: ** Properties
 //@+node:gcross.20110602092541.2239: *3* LinkAccessProperties
-LinkAccessProperties::LinkAccessProperties()
-  : Properties(assertSuccess("creating link access properties",H5Pcreate(H5P_LINK_ACCESS)))
-{}
+DEFINE_PROPERTIES_BOILERPLATE(LinkAccess,link access,LINK_ACCESS)
 //@+node:gcross.20110525201928.3099: *3* LinkCreationProperties
-LinkCreationProperties::LinkCreationProperties()
-  : Properties(assertSuccess("creating link creation properties",H5Pcreate(H5P_LINK_CREATE)))
-{}
+DEFINE_PROPERTIES_BOILERPLATE(LinkCreation,link creation,LINK_CREATE)
 
+//@+others
+//@+node:gcross.20110602121059.2127: *4* character encoding
 LinkCreationProperties LinkCreationProperties::setCharacterEncoding(CharacterEncoding encoding) const {
     assertSuccess(
         "setting character encoding property",
@@ -61,6 +59,7 @@ CharacterEncoding LinkCreationProperties::getCharacterEncoding() const {
     );
     return static_cast<CharacterEncoding>(id);
 }
+//@-others
 //@-others
 
 }
