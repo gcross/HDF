@@ -48,6 +48,8 @@ class Group: public Object, public Parent {
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
       , boost::optional<GroupCreationProperties const&> const& optional_group_creation_properties = boost::none
     );
+    //@+node:gcross.20110602121059.2128: *3* Informational
+    GroupCreationProperties getCopyOfCreationProperties() const;
     //@-others
 };
 //@+node:gcross.20110521115623.2977: ** Implementation

@@ -34,6 +34,8 @@ struct GroupCreationProperties
   : public virtual Properties
   , public CreateMissingIntermediateGroupsProperty<GroupCreationProperties>
 {
+    friend class Group;
+
     DECLARE_PROPERTIES_BOILERPLATE(GroupCreation)
  
     //@+others

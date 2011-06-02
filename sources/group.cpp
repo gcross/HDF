@@ -71,6 +71,13 @@ Group::Group(
         H5Gclose
     )
 {}
+//@+node:gcross.20110602121059.2130: *3* Informational
+GroupCreationProperties Group::getCopyOfCreationProperties() const {
+    return GroupCreationProperties(assertSuccess(
+        "getting group creation properties",
+        H5Gget_create_plist(getId())
+    ));
+}
 //@-others
 
 }
