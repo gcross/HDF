@@ -36,6 +36,10 @@ FileAccessProperties::FileAccessProperties()
   : Properties(assertSuccess("creating file access properties",H5Pcreate(H5P_FILE_ACCESS)))
 {}
 
+FileAccessProperties::FileAccessProperties(hid_t id)
+  : Properties(id)
+{}
+
 //@+others
 //@+node:gcross.20110526194358.1938: *4* CoreDriver
 FileAccessProperties FileAccessProperties::useCoreDriver(size_t increment_size_in_bytes, bool write_to_backing_store) const {
@@ -65,6 +69,13 @@ pair<size_t,bool> FileAccessProperties::getCoreDriverSettings() const {
 FileCreationProperties::FileCreationProperties()
   : Properties(assertSuccess("creating file creation properties",H5Pcreate(H5P_FILE_CREATE)))
 {}
+
+FileCreationProperties::FileCreationProperties(hid_t id)
+  : Properties(id)
+{}
+
+//@+others
+//@-others
 //@-others
 
 }

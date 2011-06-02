@@ -88,10 +88,32 @@ File::File(
 File const& File::getFile() const { return *this; }
 Identity::Ptr const& File::getIdentity() const { return identity; }
 //@+node:gcross.20110521115623.3024: *3* Miscellaneous
+//@+node:gcross.20110602121059.2119: *4* flush
 void File::flush(FileFlushScope scope) const {
     assertSuccess(
         "flushing file",
         H5Fflush(getId(),static_cast<H5F_scope_t>(scope))
+    );
+}
+//@+node:gcross.20110602121059.2121: *4* getCopyOfAccessProperties
+FileAccessProperties File::getCopyOfAccessProperties() const {
+    return FileAccessProperties(assertSuccess(
+        "getting file access properties",
+        H5Fget_access_plist(getId())
+    ));
+}
+//@+node:gcross.20110602121059.2123: *4* getCopyOfCreationProperties
+FileCreationProperties File::getCopyOfCreationProperties() const {
+    return FileCreationProperties(assertSuccess(
+        "getting file creation properties",
+        H5Fget_create_plist(getId())
+    ));
+}
+//@+node:gcross.20110602121059.2120: *4* getFreeSpace
+size_t File::getFreeSpace() const {
+    return assertSuccess(
+        "getting file free space",
+        H5Fget_freespace(getId())
     );
 }
 //@-others

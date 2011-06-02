@@ -83,6 +83,10 @@ class File
     public:
 
     void flush(FileFlushScope scope=GlobalFileScope) const;
+
+    FileAccessProperties getCopyOfAccessProperties() const;
+    FileCreationProperties getCopyOfCreationProperties() const;
+    size_t getFreeSpace() const;
     //@-others
 };
 //@-others
