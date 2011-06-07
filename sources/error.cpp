@@ -49,7 +49,7 @@ Error::Error(string const& description) {
     ostringstream buffer;
     buffer << "Error occurred while " << description << ":\n";
 
-    unsigned int n;
+    unsigned int n = 0;
     BOOST_FOREACH(ErrorStackFrame const& frame, error_stack) {
         buffer << "    " << setw(3) << (++n) << ": " << frame.source_filename << " line " << frame.source_line << " in " << frame.source_function << "()" << endl;
         buffer << "    " << " - class:  " << frame.class_name << endl;
