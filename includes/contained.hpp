@@ -30,11 +30,6 @@ namespace HDF {
 
 //@+others
 //@+node:gcross.20110520194631.1353: ** class Contained
-//@+<< Forward declarations >>
-//@+node:gcross.20110520211700.1488: *3* << Forward declarations >>
-class File;
-//@-<< Forward declarations >>
-
 class Contained: public Identified, public virtual Locatable {
     //@+others
     //@+node:gcross.20110520194631.1357: *3* Constructors
