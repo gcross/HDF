@@ -87,6 +87,10 @@ void Container::initialize(
         else *this = Group(location);
     }
 }
+//@+node:gcross.20110623234825.1974: *3* Fields
+File const& Container::getFile() const { return file; }
+
+Identity::Ptr const& Container::getIdentity() const { return identity; }
 //@+node:gcross.20110524225139.1858: *3* Operators
 void Container::operator=(File const& file) {
     this->file = file;
