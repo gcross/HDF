@@ -20,7 +20,6 @@
 //@+<< Includes >>
 //@+node:gcross.20110525201928.3074: ** << Includes >>
 #include "dataspace.hpp"
-#include "enumerations.hpp"
 
 #include <boost/assign/list_of.hpp>
 #include <boost/range/algorithm/equal.hpp>

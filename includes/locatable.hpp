@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110521115623.1460: * @file locatable.hpp
+//@+node:gcross.20110623232505.1963: * @file locatable.hpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110521115623.1462: ** << License >>
+//@+node:gcross.20110623232505.1964: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -20,37 +20,7 @@
 #ifndef HDFPP_LOCATABLE_HPP
 #define HDFPP_LOCATABLE_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110521115623.1461: ** << Includes >>
-#include "identifiable.hpp"
-//@-<< Includes >>
-
-namespace HDF {
-
-//@+others
-//@+node:gcross.20110521115623.1463: ** class Locatable
-//@+<< Forward declarations >>
-//@+node:gcross.20110528133907.2088: *3* << Forward declarations >>
-class File;
-class Location;
-//@-<< Forward declarations >>
-
-class Locatable: public virtual Identifiable {
-    //@+others
-    //@+node:gcross.20110528133907.2087: *3* Fields
-    public:
-
-    virtual File const& getFile() const = 0;
-    //@+node:gcross.20110523113700.1682: *3* Operators
-    public:
-        Location getLocation() const;
-        Location operator/(char const* subname) const;
-        Location operator/(std::string const& subname) const;
-    //@-others
-};
-//@-others
-
-}
+#include "implementation/locatable.hpp"
 
 #endif
 //@-leo

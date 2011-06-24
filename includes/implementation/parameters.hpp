@@ -17,8 +17,8 @@
 //@@c
 //@-<< License >>
 
-#ifndef HDFPP_PARAMETERS_HPP
-#define HDFPP_PARAMETERS_HPP
+#ifndef HDFPP_IMPLEMENTATION_PARAMETERS_HPP
+#define HDFPP_IMPLEMENTATION_PARAMETERS_HPP
 
 //@+<< Includes >>
 //@+node:gcross.20110521115623.2881: ** << Includes >>

@@ -19,7 +19,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110521115623.2955: ** << Includes >>
-#include "location_iterator.hpp"
+#include "implementation/location_iterator.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <string>

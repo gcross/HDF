@@ -19,7 +19,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110520211700.1402: ** << Includes >>
-#include "error.hpp"
+#include "implementation/error.hpp"
 
 #include <boost/foreach.hpp>
 #include <boost/scoped_array.hpp>

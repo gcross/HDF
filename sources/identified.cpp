@@ -19,7 +19,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110520194631.1332: ** << Includes >>
-#include "identified.hpp"
+#include "implementation/identified.hpp"
 
 #include <boost/make_shared.hpp>
 //@-<< Includes >>
