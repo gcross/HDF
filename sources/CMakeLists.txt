@@ -17,9 +17,9 @@ add_library(HDF++
     identifiable
     identified
     identity
+    locatable
     location
     location_iterator
-    locatable
     memory_file
     object
     parent
