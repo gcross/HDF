@@ -19,7 +19,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110527192131.2349: ** << Includes >>
-#include "filter.hpp"
+#include "implementation/filter.hpp"
 
 #include <boost/format.hpp>
 #include <stdexcept>

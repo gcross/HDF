@@ -19,9 +19,9 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110521115623.1472: ** << Includes >>
-#include "file.hpp"
-#include "locatable.hpp"
-#include "location.hpp"
+#include "implementation/file.hpp"
+#include "implementation/locatable.hpp"
+#include "implementation/location.hpp"
 //@-<< Includes >>
 
 namespace HDF {

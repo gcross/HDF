@@ -19,7 +19,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110520194631.1305: ** << Includes >>
-#include "identity.hpp"
+#include "implementation/identity.hpp"
 //@-<< Includes >>
 
 namespace HDF {

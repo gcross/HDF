@@ -19,7 +19,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110521115623.2907: ** << Includes >>
-#include "group.hpp"
+#include "implementation/group.hpp"
 //@-<< Includes >>
 
 namespace HDF {

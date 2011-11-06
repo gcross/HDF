@@ -20,7 +20,6 @@
 //@+<< Includes >>
 //@+node:gcross.20110520211700.1451: ** << Includes >>
 #include "contained.hpp"
-#include "file.hpp"
 
 #include <boost/make_shared.hpp>
 //@-<< Includes >>

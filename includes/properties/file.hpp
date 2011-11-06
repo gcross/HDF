@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110602092541.2106: * @file file.hpp
+//@+node:gcross.20111106135914.2152: * @file file.hpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110602092541.2108: ** << License >>
+//@+node:gcross.20111106135914.2153: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -17,44 +17,10 @@
 //@@c
 //@-<< License >>
 
-#ifndef HDFPP_PROPERTIES_FILE_ACCESS_HPP
-#define HDFPP_PROPERTIES_FILE_ACCESS_HPP
+#ifndef HDFPP_PROPERTIES_FILE_HPP
+#define HDFPP_PROPERTIES_FILE_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110602092541.2107: ** << Includes >>
-#include "../properties.hpp"
-//@-<< Includes >>
-
-namespace HDF {
-
-//@+others
-//@+node:gcross.20110602092541.2152: ** Properties
-//@+node:gcross.20110526150836.1974: *3* FileAccessProperties
-struct FileAccessProperties: public Properties {
-    friend class File;
-
-    DECLARE_PROPERTIES_BOILERPLATE(FileAccess)
-
-    //@+others
-    //@+node:gcross.20110526194358.1949: *4* core driver
-    FileAccessProperties useCoreDriver(size_t increment_size_in_bytes, bool write_to_backing_store) const;
-
-    void getCoreDriverSettings(size_t &increment_size_in_bytes, bool &write_to_backing_store) const;
-    std::pair<size_t,bool> getCoreDriverSettings() const;
-    //@-others
-};
-//@+node:gcross.20110526150836.1973: *3* FileCreationProperties
-struct FileCreationProperties: public Properties {
-    friend class File;
-
-    DECLARE_PROPERTIES_BOILERPLATE(FileCreation)
-
-    //@+others
-    //@-others
-};
-//@-others
-
-}
+#include "implementation/properties/file.hpp"
 
 #endif
 //@-leo

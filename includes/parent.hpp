@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110520194631.1343: * @file parent.hpp
+//@+node:gcross.20111106135914.2094: * @file parent.hpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110520194631.1345: ** << License >>
+//@+node:gcross.20110623232505.1980: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -20,40 +20,8 @@
 #ifndef HDFPP_PARENT_HPP
 #define HDFPP_PARENT_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110520194631.1344: ** << Includes >>
-#include "error.hpp"
-#include "locatable.hpp"
-#include "parent.hpp"
-#include "properties/link.hpp"
-
-#include <hdf5.h>
-#include <boost/optional.hpp>
-#include <string>
-//@-<< Includes >>
-
-namespace HDF {
-
-//@+others
-//@+node:gcross.20110520211700.1505: ** Exceptions
-//@+node:gcross.20110520211700.1506: *3* LinkRemoveError
-struct LinkRemoveError : public Error {
-    std::string name;
-    LinkRemoveError(char const* name);
-    virtual ~LinkRemoveError() throw();
-};
-//@+node:gcross.20110520194631.1346: ** class Parent
-class Parent: public virtual Identifiable {
-    //@+others
-    //@+node:gcross.20110523113700.1681: *3* Miscellaneous
-    public:
-        void remove(char const* name, boost::optional<LinkAccessProperties const&> const& optional_properties = boost::none) const;
-        void remove(std::string const& name, boost::optional<LinkAccessProperties const&> const& optional_properties = boost::none) const;
-    //@-others
-};
-//@-others
-
-}
+#include "implementation/parent.hpp"
+#include "implementation/attribute.hpp"
 
 #endif
 //@-leo

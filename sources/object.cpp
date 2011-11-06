@@ -19,7 +19,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110521115623.2868: ** << Includes >>
-#include "object.hpp"
+#include "implementation/object.hpp"
 
 #include <boost/scoped_array.hpp>
 //@-<< Includes >>

@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110520194631.1319: * @file identified.hpp
+//@+node:gcross.20111106135914.2075: * @file identified.hpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110520194631.1321: ** << License >>
+//@+node:gcross.20110623232505.1956: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -20,41 +20,7 @@
 #ifndef HDFPP_IDENTIFIED_HPP
 #define HDFPP_IDENTIFIED_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110520194631.1320: ** << Includes >>
-#include "identifiable.hpp"
-
-#include <hdf5.h>
-//@-<< Includes >>
-
-namespace HDF {
-
-//@+others
-//@+node:gcross.20110520194631.1322: ** class Identified
-class Identified: public virtual Identifiable {
-    //@+others
-    //@+node:gcross.20110520194631.1324: *3* Constructors
-    protected:
-
-    Identified(Identity::Ptr const& identity);
-    Identified(hid_t id, Identity::Closer const& closer);
-
-    public:
-
-    Identified();
-    //@+node:gcross.20110520194631.1325: *3* Fields
-    protected:
-
-    Identity::Ptr identity;
-
-    public:
-
-    virtual Identity::Ptr const& getIdentity() const;
-    //@-others
-};
-//@-others
-
-}
+#include "implementation/identified.hpp"
 
 #endif
 //@-leo

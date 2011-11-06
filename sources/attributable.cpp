@@ -20,7 +20,6 @@
 //@+<< Includes >>
 //@+node:gcross.20110521115623.2840: ** << Includes >>
 #include "attributable.hpp"
-#include "attribute.hpp"
 
 #include <string>
 //@-<< Includes >>

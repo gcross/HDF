@@ -19,7 +19,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110520194631.1404: ** << Includes >>
-#include "parent.hpp"
+#include "implementation/parent.hpp"
 
 #include <boost/format.hpp>
 //@-<< Includes >>

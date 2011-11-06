@@ -19,7 +19,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110526150836.1937: ** << Includes >>
-#include "enumerations.hpp"
+#include "implementation/enumerations.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <stdexcept>

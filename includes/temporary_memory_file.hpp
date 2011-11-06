@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110521115623.3198: * @file temporary_memory_file.hpp
+//@+node:gcross.20111106135914.2098: * @file temporary_memory_file.hpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110521115623.3200: ** << License >>
+//@+node:gcross.20110623223648.1932: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -20,34 +20,8 @@
 #ifndef HDFPP_TEMPORARY_MEMORY_FILE_HPP
 #define HDFPP_TEMPORARY_MEMORY_FILE_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110521115623.3199: ** << Includes >>
-#include "memory_file.hpp"
-//@-<< Includes >>
-
-namespace HDF {
-
-//@+others
-//@+node:gcross.20110521115623.3201: ** class TemporaryMemoryFile
-class TemporaryMemoryFile: public MemoryFile {
-    //@+others
-    //@+node:gcross.20110521115623.3203: *3* Constructors
-    public:
-
-    TemporaryMemoryFile(
-        size_t increment_size_in_bytes = 4096
-      , boost::optional<FileCreationProperties const&> const& optional_creation_properties = boost::none
-      , boost::optional<FileAccessProperties const&> const& optional_access_properties = boost::none
-    );
-    //@+node:gcross.20110521115623.3219: *3* Miscellaneous
-    protected:
-
-    static char const* getTemporaryFileName();
-    //@-others
-};
-//@-others
-
-}
+#include "implementation/temporary_memory_file.hpp"
+#include "implementation/attribute.hpp"
 
 #endif
 //@-leo

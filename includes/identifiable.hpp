@@ -1,9 +1,9 @@
 //@+leo-ver=5-thin
-//@+node:gcross.20110529102535.2049: * @file identifiable.hpp
+//@+node:gcross.20111106135914.2073: * @file identifiable.hpp
 //@@language cplusplus
 
 //@+<< License >>
-//@+node:gcross.20110529102535.2050: ** << License >>
+//@+node:gcross.20110623232505.1952: ** << License >>
 //@+at
 // Copyright (c) 2011, Gregory Crosswhite
 // All rights reserved.
@@ -20,37 +20,7 @@
 #ifndef HDFPP_IDENTIFIABLE_HPP
 #define HDFPP_IDENTIFIABLE_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110529102535.2051: ** << Includes >>
-#include "identity.hpp"
-
-#include <hdf5.h>
-//@-<< Includes >>
-
-namespace HDF {
-
-//@+others
-//@+node:gcross.20110529102535.2052: ** class Identifiable
-class Identifiable {
-    //@+others
-    //@+node:gcross.20110529102535.2053: *3* Destructors
-    public:
-
-    virtual ~Identifiable();
-    //@+node:gcross.20110529102535.2054: *3* Fields
-    public:
-
-    virtual Identity::Ptr const& getIdentity() const = 0;
-    hid_t getId() const;
-    //@+node:gcross.20110529102535.2055: *3* Operators
-    public:
-
-    bool operator==(Identifiable const& other) const;
-    //@-others
-};
-//@-others
-
-}
+#include "implementation/identifiable.hpp"
 
 #endif
 //@-leo

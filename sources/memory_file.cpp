@@ -19,7 +19,7 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110521115623.3168: ** << Includes >>
-#include "memory_file.hpp"
+#include "implementation/memory_file.hpp"
 //@-<< Includes >>
 
 namespace HDF {

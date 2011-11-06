@@ -19,8 +19,8 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110520194631.1377: ** << Includes >>
-#include "error.hpp"
-#include "location.hpp"
+#include "implementation/error.hpp"
+#include "implementation/location.hpp"
 
 #include <boost/format.hpp>
 #include <boost/make_shared.hpp>

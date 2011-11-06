@@ -19,8 +19,8 @@
 
 //@+<< Includes >>
 //@+node:gcross.20110521115623.3059: ** << Includes >>
-#include "datatype.hpp"
-#include "error.hpp"
+#include "implementation/datatype.hpp"
+#include "implementation/error.hpp"
 //@-<< Includes >>
 
 namespace HDF {
