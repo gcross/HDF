@@ -62,7 +62,7 @@ struct Error : public Exception {
 
 protected:
 
-    static H5E_auto_t hdf_func;
+    static H5E_auto2_t hdf_func;
     static void* hdf_client_data;
 
     static struct AutomaticDisabler {

@@ -195,7 +195,7 @@ std::auto_ptr<Filter> DatasetCreationProperties::getFilterAtIndex(unsigned int i
     unsigned int flags, filter_config;
     assertSuccess(
         "getting filter (by index)",
-        H5Pget_filter(
+        H5Pget_filter2(
             getId(),
             index,
             &flags,
@@ -207,7 +207,7 @@ std::auto_ptr<Filter> DatasetCreationProperties::getFilterAtIndex(unsigned int i
     vector<unsigned int> parameters(number_of_parameters);
     H5Z_filter_t filter_id = assertSuccess(
         "getting filter (by index)",
-        H5Pget_filter(
+        H5Pget_filter2(
             getId(),
             index,
             &flags,
@@ -224,7 +224,7 @@ std::auto_ptr<Filter> DatasetCreationProperties::getFilterWithId(H5Z_filter_t fi
     unsigned int flags, filter_config;
     assertSuccess(
         "getting filter (by index)",
-        H5Pget_filter_by_id(
+        H5Pget_filter_by_id2(
             getId(),
             filter_id,
             &flags,
@@ -236,7 +236,7 @@ std::auto_ptr<Filter> DatasetCreationProperties::getFilterWithId(H5Z_filter_t fi
     vector<unsigned int> parameters(number_of_parameters);
     assertSuccess(
         "getting filter (by index)",
-        H5Pget_filter_by_id(
+        H5Pget_filter_by_id2(
             getId(),
             filter_id,
             &flags,

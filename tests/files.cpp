@@ -41,7 +41,7 @@ using boost::assign::list_of;
 //@+node:gcross.20110524225139.1914: *3* fileIdIsInvalid
 bool fileIdIsInvalid(hid_t id) {
     bool result = H5Fclose(id) < 0;
-    H5Eclear(H5Eget_current_stack());
+    H5Eclear2(H5Eget_current_stack());
     return result;
 }
 //@+node:gcross.20110524225139.1909: ** Tests

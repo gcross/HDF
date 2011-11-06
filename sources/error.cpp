@@ -44,7 +44,7 @@ using std::vector;
 //@+node:gcross.20110520211700.1407: ** Classes
 //@+node:gcross.20110520211700.1409: *3* Error
 Error::Error(string const& description) {
-    H5Ewalk(H5E_DEFAULT,H5E_WALK_UPWARD,&ErrorStackFrame::constructAndPush,&error_stack);
+    H5Ewalk2(H5E_DEFAULT,H5E_WALK_UPWARD,&ErrorStackFrame::constructAndPush,&error_stack);
 
     ostringstream buffer;
     buffer << "Error occurred while " << description << ":\n";
@@ -62,19 +62,19 @@ Error::Error(string const& description) {
 
 Error::~Error() throw() {}
 
-H5E_auto_t Error::hdf_func = NULL;
+H5E_auto2_t Error::hdf_func = NULL;
 void* Error::hdf_client_data = NULL;
 
 void Error::disableHDFErrorReporting() {
-    H5Eset_auto(H5E_DEFAULT,NULL,NULL);
+    H5Eset_auto2(H5E_DEFAULT,NULL,NULL);
 }
 
 void Error::enableHDFErrorReporting() {
-    H5Eset_auto(H5E_DEFAULT,hdf_func,hdf_client_data);
+    H5Eset_auto2(H5E_DEFAULT,hdf_func,hdf_client_data);
 }
 
 Error::AutomaticDisabler::AutomaticDisabler() {
-    H5Eget_auto(H5E_DEFAULT,&hdf_func,&hdf_client_data);
+    H5Eget_auto2(H5E_DEFAULT,&hdf_func,&hdf_client_data);
     disableHDFErrorReporting();
 }
 

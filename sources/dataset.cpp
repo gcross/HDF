@@ -45,7 +45,7 @@ Dataset::Dataset(
         location.getFile(),
         assertSuccess(
             "opening dataset",
-            H5Dopen(
+            H5Dopen2(
                 location.getParentId(),
                 location.getNameAsCStr(),
                 getOptionalPropertiesId(optional_access_properties)
@@ -136,7 +136,7 @@ void Dataset::createAndInitialize(
         make_shared<Identity>(
             assertSuccess(
                 "creating dataset",
-                H5Dcreate(
+                H5Dcreate2(
                     location.getParentId(),
                     location.getNameAsCStr(),
                     datatype.getDatatypeId(),

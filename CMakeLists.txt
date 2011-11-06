@@ -49,7 +49,11 @@ find_package( Boost 1.46 COMPONENTS REQUIRED )
 link_directories ( ${Boost_LIBRARY_DIRS} )
 include_directories ( ${Boost_INCLUDE_DIRS} )
 #@+node:gcross.20110520211700.1435: *3* HDF5
-find_package( HDF5 COMPONENTS C HL REQUIRED )
+if(${CMAKE_PATCH_VERSION} LESS 5)
+  find_package( HDF5 REQUIRED )
+else()
+  find_package( HDF5 COMPONENTS C HL REQUIRED )
+endif()
 include_directories ( ${HDF5_INCLUDE_DIRS} )
 link_directories ( ${HDF5_LIBRARY_DIRS} )
 #@-others

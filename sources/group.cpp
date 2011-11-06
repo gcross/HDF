@@ -41,7 +41,7 @@ Group::Group(
         location.getFile(),
         assertSuccess(
             "opening group",
-            H5Gopen(
+            H5Gopen2(
                 location.getParentId(),
                 location.getNameAsCStr(),
                 H5P_DEFAULT
@@ -60,7 +60,7 @@ Group::Group(
         location->getFile(),
         assertSuccess(
             "opening group",
-            H5Gcreate(
+            H5Gcreate2(
                 location->getParentId(),
                 location->getNameAsCStr(),
                 getOptionalPropertiesId(optional_link_creation_properties),

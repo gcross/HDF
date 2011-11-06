@@ -43,7 +43,7 @@ using std::vector;
 //@+node:gcross.20110525201928.3081: *3* dataspaceIsClosed
 bool dataspaceIsClosed(hid_t id) {
     bool result = H5Sclose(id) < 0;
-    H5Eclear(H5Eget_current_stack());
+    H5Eclear2(H5Eget_current_stack());
     return result;
 }
 //@+node:gcross.20110525201928.3076: ** Tests
