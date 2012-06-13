@@ -131,6 +131,6 @@ struct DatasetTransferProperties: public Properties {
 
 //@+<< Trailing includes >>
 //@+node:gcross.20110527143225.1998: ** << Trailing includes >>
-#include "datatype.hpp"
+#include "../datatype.hpp"
 //@-<< Trailing includes >>
 //@-leo
