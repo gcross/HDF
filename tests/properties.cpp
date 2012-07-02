@@ -1,24 +1,19 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110525201928.3104: * @file properties.cpp
-//@@language cplusplus
 
-//@+<< License >>
-//@+node:gcross.20110525201928.3105: ** << License >>
-//@+at
-// Copyright (c) 2011, Gregory Crosswhite
-// All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-// 
-//     * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//@@c
-//@-<< License >>
+// License {{{
+/*
+Copyright (c) 2011, Gregory Crosswhite
+All rights reserved.
 
-//@+<< Includes >>
-//@+node:gcross.20110525201928.3106: ** << Includes >>
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+    * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+// License }}}
+
+// Includes {{{
 #include "properties/dataset.hpp"
 #include "properties/file.hpp"
 #include "properties/group.hpp"
@@ -29,10 +24,9 @@
 #include <boost/range/irange.hpp>
 #include <illuminate.hpp>
 #include <vector>
-//@-<< Includes >>
+// Includes }}}
 
-//@+<< Usings >>
-//@+node:gcross.20110525201928.3107: ** << Usings >>
+// Usings {{{
 using boost::assign::list_of;
 using boost::irange;
 
@@ -40,22 +34,15 @@ using std::auto_ptr;
 using std::pair;
 using std::string;
 using std::vector;
-//@-<< Usings >>
+// Usings }}}
 
-//@+others
-//@+node:gcross.20110525201928.3108: ** Tests
-TEST_SUITE(Properties) {
+TEST_SUITE(Properties) { // {{{
+TEST_SUITE(DatasetCreationProperties) { // {{{
 
-//@+others
-//@+node:gcross.20110526194358.1950: *3* DatasetCreationProperties
-TEST_SUITE(DatasetCreationProperties) {
 using HDF::DatasetCreationProperties;
-
 using HDF::Filter;
 
-//@+others
-//@+node:gcross.20110528133907.2066: *4* allocation mode
-TEST_CASE(allocation_mode) {
+TEST_CASE(allocation_mode) { // {{{
     DatasetCreationProperties properties;
 
     using HDF::DefaultAllocationModeForStorage;
@@ -73,9 +60,8 @@ TEST_CASE(allocation_mode) {
     using HDF::AllocateAllSpaceOnFirstWrite;
     EXPECT_TRUE(properties == properties.setAllocationMode(AllocateAllSpaceOnFirstWrite));
     EXPECT_EQ(AllocateAllSpaceOnFirstWrite,properties.getAllocationMode());
-}
-//@+node:gcross.20110526194358.1951: *4* chunk
-TEST_CASE(chunk) {
+} // }}}
+TEST_CASE(chunk) { // {{{
     DatasetCreationProperties properties;
 
     EXPECT_TRUE(properties == properties.setChunkSizes(list_of(1)(2)(3)));
@@ -84,9 +70,8 @@ TEST_CASE(chunk) {
     EXPECT_EQ(1u,chunk_sizes[0]);
     EXPECT_EQ(2u,chunk_sizes[1]);
     EXPECT_EQ(3u,chunk_sizes[2]);
-}
-//@+node:gcross.20110528133907.2059: *4* fill mode
-TEST_CASE(fill_mode) {
+} // }}}
+TEST_CASE(fill_mode) { // {{{
     DatasetCreationProperties properties;
 
     using HDF::AlwaysFillUponAllocation;
@@ -100,24 +85,19 @@ TEST_CASE(fill_mode) {
     using HDF::NeverFill;
     EXPECT_TRUE(properties == properties.setFillMode(NeverFill));
     EXPECT_EQ(NeverFill,properties.getFillMode());
-}
-//@+node:gcross.20110528133907.2082: *4* filters
-TEST_SUITE(filters) {
+} // }}}
+TEST_SUITE(filters) { // {{{
 
-//@+others
-//@+node:gcross.20110528133907.2083: *5* modifyFilter
-TEST_CASE(modifyFilter) {
+TEST_CASE(modifyFilter) { // {{{
     using HDF::DeflateCompressionFilter;
     DatasetCreationProperties properties;
     EXPECT_TRUE(properties == properties.appendFilter(DeflateCompressionFilter(5)));
     properties.modifyFilter(DeflateCompressionFilter(3));
     EXPECT_EQ(3u,properties.getFilterOfType<DeflateCompressionFilter>().getCompressionLevel());
-}
-//@-others
+} // }}}
 
-}
-//@+node:gcross.20110527143225.1996: *4* fill value
-TEST_CASE(fill_value) {
+} // }}}
+TEST_CASE(fill_value) { // {{{
     using HDF::FillValueUserDefined;
     DatasetCreationProperties properties;
 
@@ -125,9 +105,8 @@ TEST_CASE(fill_value) {
     EXPECT_TRUE(properties == properties.setFillValue(3.14f));
     EXPECT_EQ(3.14f,properties.getFillValue<float>());
     EXPECT_EQ(FillValueUserDefined,properties.getFillValueStatus());
-}
-//@+node:gcross.20110526194358.1956: *4* layout
-TEST_CASE(layout) {
+} // }}}
+TEST_CASE(layout) { // {{{
     DatasetCreationProperties properties;
 
     using HDF::CompactDatasetLayout;
@@ -141,42 +120,35 @@ TEST_CASE(layout) {
     using HDF::ChunkedDatasetLayout;
     EXPECT_TRUE(properties == properties.setLayout(ChunkedDatasetLayout));
     EXPECT_EQ(ChunkedDatasetLayout,properties.getLayout());
-}
-//@-others
+} // }}}
 
-}
-//@+node:gcross.20110526194358.1939: *3* FileAccessProperties
-TEST_SUITE(FileAccessProperties) {
+} // }}}
+TEST_SUITE(FileAccessProperties) { // {{{
+
 using HDF::FileAccessProperties;
 
-//@+others
-//@+node:gcross.20110526194358.1940: *4* core driver
-TEST_CASE(core_driver) {
+TEST_CASE(core_driver) { // {{{
     FileAccessProperties properties;
 
     EXPECT_TRUE(properties == properties.useCoreDriver(16,true));
     pair<size_t,bool> result = properties.getCoreDriverSettings();
     EXPECT_EQ(16u,result.first);
     EXPECT_EQ(true,result.second);
-}
-//@-others
+} // }}}
 
-}
-//@+node:gcross.20110602092541.2053: *3* GroupCreationProperties
-TEST_SUITE(GroupCreationProperties) {
+} // }}}
+TEST_SUITE(GroupCreationProperties) { // {{{
+
 using HDF::GroupCreationProperties;
 
-//@+others
-//@+node:gcross.20110602121059.2118: *4* estimated link information
-TEST_CASE(estimated_link_information) {
+TEST_CASE(estimated_link_information) { // {{{
     GroupCreationProperties properties;
 
     EXPECT_TRUE(properties == properties.setEstimatedLinkInformation(42u,17u));
     EXPECT_EQ_VAL(properties.getEstimatedLinkInformation().first,42u);
     EXPECT_EQ_VAL(properties.getEstimatedLinkInformation().second,17u);
-}
-//@+node:gcross.20110602092541.2055: *4* link creation order
-TEST_CASE(link_creation_order) {
+} // }}}
+TEST_CASE(link_creation_order) { // {{{
     GroupCreationProperties properties;
 
     using HDF::DontTrackLinkCreationOrder;
@@ -190,24 +162,20 @@ TEST_CASE(link_creation_order) {
     using HDF::TrackAndIndexLinksBasedOnCreationOrder;
     EXPECT_TRUE(properties == properties.setLinkCreationOrderTracking(TrackAndIndexLinksBasedOnCreationOrder));
     EXPECT_EQ_VAL(properties.getLinkCreationOrderTracking(),TrackAndIndexLinksBasedOnCreationOrder);
-}
-//@+node:gcross.20110602092541.2054: *4* local heap size hint
-TEST_CASE(local_heap_size_hint) {
+} // }}}
+TEST_CASE(local_heap_size_hint) { // {{{
     GroupCreationProperties properties;
 
     EXPECT_TRUE(properties == properties.setLocalHeapSizeHint(42u));
     EXPECT_EQ_VAL(properties.getLocalHeapSizeHint(),42u);
-}
-//@-others
+} // }}}
 
-}
-//@+node:gcross.20110525201928.3109: *3* LinkCreationProperties
-TEST_SUITE(LinkCreationProperties) {
+} // }}}
+TEST_SUITE(LinkCreationProperties) { // {{{
+
 using HDF::LinkCreationProperties;
 
-//@+others
-//@+node:gcross.20110525201928.3110: *4* character encoding
-TEST_CASE(character_encoding) {
+TEST_CASE(character_encoding) { // {{{
     LinkCreationProperties properties;
 
     using HDF::ASCIIEncoding;
@@ -217,9 +185,8 @@ TEST_CASE(character_encoding) {
     using HDF::UTF8Encoding;
     EXPECT_TRUE(properties == properties.setCharacterEncoding(UTF8Encoding));
     EXPECT_EQ(UTF8Encoding,properties.getCharacterEncoding());
-}
-//@+node:gcross.20110525201928.3112: *4* create intermediate groups
-TEST_CASE(create_intermediate_groups) {
+} // }}}
+TEST_CASE(create_intermediate_groups) { // {{{
     LinkCreationProperties properties;
 
     EXPECT_TRUE(properties == properties.setCreateMissingIntermediateGroups());
@@ -233,12 +200,7 @@ TEST_CASE(create_intermediate_groups) {
 
     EXPECT_TRUE(properties == properties.dontCreateMissingIntermediateGroups());
     EXPECT_EQ(false,properties.getCreateMissingIntermediateGroups());
-}
-//@-others
+} // }}}
 
-}
-//@-others
-
-}
-//@-others
-//@-leo
+} // }}}
+} // }}}
