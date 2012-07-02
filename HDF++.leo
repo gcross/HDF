@@ -3,12 +3,6 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="0" clone_windows="0"/>
 <vnodes>
-<v t="gcross.20110520211700.1428"><vh>@file CMakeLists.txt</vh></v>
-<v t="gcross.20110524225139.1919"><vh>@path package</vh>
-<v t="gcross.20110524225139.1921"><vh>@file CMakeLists.txt</vh></v>
-<v t="gcross.20110524225139.1917"><vh>@file HDF++Config-version.cmake.in</vh></v>
-<v t="gcross.20110524225139.1926"><vh>@file HDF++Config.cmake.in</vh></v>
-</v>
 <v t="gcross.20110520194631.1274"><vh>@path includes</vh>
 <v t="gcross.20110524225139.1924"><vh>@file CMakeLists.txt</vh></v>
 <v t="gcross.20111106135914.2046"><vh>interface</vh>
@@ -231,7 +225,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 </t>
 <t tx="gcross.20110521115623.3229"></t>
 <t tx="gcross.20110521115623.3230"></t>
-<t tx="gcross.20110524225139.1919"></t>
 <t tx="gcross.20110602092541.2061"></t>
 <t tx="gcross.20110602092541.2068"></t>
 <t tx="gcross.20110602092541.2154"></t>

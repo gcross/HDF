@@ -1,5 +1,3 @@
-#@+leo-ver=5-thin
-#@+node:gcross.20110524225139.1917: * @file HDF++Config-version.cmake.in
 set(PACKAGE_VERSION "@version@")
 if(NOT ${PACKAGE_FIND_VERSION} VERSION_GREATER ${PACKAGE_VERSION})
   set(PACKAGE_VERSION_COMPATIBLE 1)
@@ -7,4 +5,3 @@ if(NOT ${PACKAGE_FIND_VERSION} VERSION_GREATER ${PACKAGE_VERSION})
     set(PACKAGE_VERSION_EXACT 1)
   endif()
 endif()
-#@-leo

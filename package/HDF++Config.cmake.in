@@ -1,9 +1,6 @@
-#@+leo-ver=5-thin
-#@+node:gcross.20110524225139.1926: * @file HDF++Config.cmake.in
 get_filename_component(_dir "${CMAKE_CURRENT_LIST_FILE}" PATH)
 get_filename_component(_prefix "${_dir}/../.." ABSOLUTE)
 
 include("${_prefix}/lib/HDF++-@version@/HDF++-targets.cmake")
 
 set (HDF++_INCLUDE_DIRS "${_prefix}/include/hdf++-@version@" @BOOST_INCLUDE_DIRS@ @HDF5_INCLUDE_DIRS@)
-#@-leo
