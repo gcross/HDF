@@ -1,45 +1,42 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110521115623.2768: * @file attribute.cpp
-//@@language cplusplus
-//@+<< Includes >>
-//@+node:gcross.20110521115623.2770: ** << Includes >>
+// Includes {{{
 #include "attribute.hpp"
 
 #include <boost/format.hpp>
 #include <boost/scoped_array.hpp>
 #include <hdf5_hl.h>
-//@-<< Includes >>
+// Includes }}}
 
-namespace HDF {
-
-//@+<< Usings >>
-//@+node:gcross.20110521115623.2771: ** << Usings >>
+// Usings {{{
 using boost::format;
 using boost::none;
 using boost::optional;
 using boost::scoped_array;
 
 using std::string;
-//@-<< Usings >>
+// Usings }}}
 
-//@+others
-//@+node:gcross.20110521115623.2779: ** Exceptions
-//@+node:gcross.20110521115623.2783: *3* NoSuchAttributeException
+namespace HDF {
+
+// Exceptions {{{
 NoSuchAttributeException::NoSuchAttributeException(string const& name)
   : Exception((format("No such attribute named %1%") % name).str())
   , name(name)
 {}
 
 NoSuchAttributeException::~NoSuchAttributeException() throw() {}
-//@+node:gcross.20110521115623.2772: ** class Attribute
-//@+node:gcross.20110521115623.2774: *3* Constructors
+// Exceptions }}}
+
+// class Attribute {{{
+//     Constructors {{{
 Attribute::Attribute(Attributable const& parent, char const* name)
   : Contained(parent.getFile(),parent.getIdentity())
   , name(name)
 {}
-//@+node:gcross.20110521115623.2785: *3* Fields
+//     Constructors }}}
+//     Fields {{{
 string const& Attribute::getName() const { return name; }
-//@+node:gcross.20110521115623.3961: *3* Getters
+//     Fields }}}
+//     Getters {{{
 template<typename T> T getAttributeValueUsingHighLevelAccessor(Attribute const& attribute, bool bypass_existence_check) {
     if(!bypass_existence_check) attribute.assertExistence();
     T value;
@@ -129,7 +126,8 @@ Attribute::operator optional<long long>() const { return get<optional<long long>
 Attribute::operator optional<float>() const { return get<optional<float> >(); }
 Attribute::operator optional<double>() const { return get<optional<double> >(); }
 Attribute::operator optional<string>() const { return get<optional<string> >(); }
-//@+node:gcross.20110521115623.2778: *3* Informational
+//     Getters }}}
+//      Informational {{{
 bool Attribute::exists() const {
     return 
         assertSuccess(
@@ -141,7 +139,8 @@ bool Attribute::exists() const {
 void Attribute::assertExistence() const {
     if(!exists()) throw NoSuchAttributeException(name);
 }
-//@+node:gcross.20110521115623.3943: *3* Setters
+//     Informational }}}}
+// Setters {{{
 template<typename T> void setAttributeValueUsingHighLevelAccessor(Attribute const& attribute, T value) {
     assertSuccess(
         "storing attribute value",
@@ -215,8 +214,11 @@ void Attribute::operator=(optional<double> const& value) const { set(value); }
 void Attribute::operator=(optional<char const*> const& value) const { set(value); }
 void Attribute::operator=(optional<string> const& value) const { if(value) set<string const&>(*value); }
 void Attribute::operator=(optional<string const&> const& value) const { set(value); }
-//@+node:gcross.20110521115623.3941: ** Attribute traits
-//@+node:gcross.20110521115623.3942: *3* highlevelAttributeAccessorsOf
+//     Setters }}}
+// class Attribute }}}
+
+// Attribute traits {{{
+//     highlevelAttributeAccessorsOf {{{
 #define DEFINE_HIGH_LEVEL_ACCESSOR(T,name) \
     herr_t highlevelAttributeAccessorsOf<T>::get(hid_t loc_id, char const* obj_name, char const* attr_name, T* data) { return H5LTget_attribute_##name(loc_id,obj_name,attr_name,data); } \
     herr_t highlevelAttributeAccessorsOf<T>::set(hid_t loc_id, char const* obj_name, char const* attr_name, T const* data, size_t size) { return H5LTset_attribute_##name(loc_id,obj_name,attr_name,data,size); }
@@ -234,7 +236,7 @@ DEFINE_HIGH_LEVEL_ACCESSOR(float,float)
 DEFINE_HIGH_LEVEL_ACCESSOR(double,double)
 
 #undef DEFINE_HIGH_LEVEL_ACCESSOR
-//@-others
+//     highlevelAttributeAccessorsOf }}}
+// Attribute traits }}}
 
 }
-//@-leo

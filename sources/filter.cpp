@@ -1,18 +1,11 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110527192131.2347: * @file filter.cpp
-//@@language cplusplus
-//@+<< Includes >>
-//@+node:gcross.20110527192131.2349: ** << Includes >>
+// Includes {{{
 #include "implementation/filter.hpp"
 
 #include <boost/format.hpp>
 #include <stdexcept>
-//@-<< Includes >>
+// Includes }}}
 
-namespace HDF {
-
-//@+<< Usings >>
-//@+node:gcross.20110527192131.2350: ** << Usings >>
+// Usings {{{
 using boost::format;
 using boost::function;
 using boost::none;
@@ -23,11 +16,12 @@ using std::invalid_argument;
 using std::make_pair;
 using std::map;
 using std::vector;
-//@-<< Usings >>
+// Usings }}}
 
-//@+others
-//@+node:gcross.20110527192131.2375: ** Exceptions
-//@+node:gcross.20110527192131.2376: *3* WrongNumberOfParametersForFilterException
+namespace HDF {
+
+// Exceptions {{{
+// WrongNumberOfParametersForFilterException {{{
 WrongNumberOfParametersForFilterException::WrongNumberOfParametersForFilterException(
     char const* filter_name
   , unsigned int expected_number_of_parameters
@@ -46,9 +40,12 @@ WrongNumberOfParametersForFilterException::WrongNumberOfParametersForFilterExcep
 {}
 
 WrongNumberOfParametersForFilterException::~WrongNumberOfParametersForFilterException() throw() {}
-//@+node:gcross.20110528133907.2029: ** Classes
-//@+node:gcross.20110527192131.2355: *3* Filter
-//@+node:gcross.20110527192131.2356: *4* Constructors / Destructors
+// WrongNumberOfParametersForFilterException }}}
+// Exceptions }}}
+
+// Classes {{{
+// Filter {{{
+// Constructors/Destructors {{{
 Filter::Filter(
     unsigned int number_of_parameters
   , bool optional_flag
@@ -66,7 +63,8 @@ Filter::Filter(
 {}
 
 Filter::~Filter() {}
-//@+node:gcross.20110527192131.2357: *4* Fields
+// Constructors/Destructors }}}
+// Fields {{{
 size_t Filter::getNumberOfParameters() const { return parameters.size(); }
 
 vector<unsigned int> const& Filter::getParameters() const {
@@ -96,7 +94,8 @@ void Filter::setOptionalFlag(bool optional_flag) {
 unsigned int Filter::getFlags() const {
     return optional_flag ? H5Z_FLAG_OPTIONAL : H5Z_FLAG_MANDATORY;
 }
-//@+node:gcross.20110527192131.2371: *4* Miscellaneous
+// Fields }}}
+// Miscellaneous {{{
 void Filter::assertNumberOfParametersIs(unsigned int expected_number_of_parameters) {
     if(expected_number_of_parameters != getNumberOfParameters())
         throw 
@@ -113,7 +112,8 @@ bool Filter::checkAvailabilityOf(H5Z_filter_t filter_id) {
         H5Zfilter_avail(filter_id)
     ) == 1;
 }
-//@+node:gcross.20110527192131.2358: *4* Registry
+// Miscellaneous }}}
+// Registry {{{
 map<H5Z_filter_t,Filter::Factory> Filter::registry;
 
 void Filter::registerFactory(H5Z_filter_t filter_id, Factory const& factory) {
@@ -139,7 +139,9 @@ auto_ptr<Filter> Filter::construct(
     else
         return auto_ptr<Filter>(new UnknownFilter(filter_id,parameters,optional_flag));
 }
-//@+node:gcross.20110528133907.2031: *3* UnknownFilter
+// Registry }}}
+// Filter }}}
+// UnknownFilter {{{
 UnknownFilter::UnknownFilter(
     H5Z_filter_t filter_id
   , std::vector<unsigned int> const& parameters
@@ -150,8 +152,11 @@ UnknownFilter::UnknownFilter(
 {}
 
 H5Z_filter_t UnknownFilter::getFilterId() const { return filter_id; }
-//@+node:gcross.20110527192131.2364: ** Filters
-//@+node:gcross.20110527192131.2386: *3* DeflateCompressionFilter
+// UnknownFilter }}}
+// Classes }}}
+
+// Filters {{{
+// DeflateCompressionFilter {{{
 DeflateCompressionFilter::DeflateCompressionFilter(
     unsigned int compression_level
   , bool optional_flag
@@ -176,7 +181,8 @@ void DeflateCompressionFilter::setCompressionLevel(unsigned int compression_leve
 }
 
 FILTER_DEFINITION_BOILERPLATE(DeflateCompressionFilter,H5Z_FILTER_DEFLATE);
-//@+node:gcross.20110527192131.2365: *3* Fletcher32ChecksumFilter
+// DeflateCompressionFilter }}}
+// Fletcher32ChecksumFilter {{{
 Fletcher32ChecksumFilter::Fletcher32ChecksumFilter()
   : Filter(0,false)
 {}
@@ -189,7 +195,8 @@ Fletcher32ChecksumFilter::Fletcher32ChecksumFilter(
 { assertNumberOfParametersIs(0); }
 
 FILTER_DEFINITION_BOILERPLATE(Fletcher32ChecksumFilter,H5Z_FILTER_FLETCHER32);
-//@+node:gcross.20110528133907.2043: *3* NBitCompressionFilter
+// Fletcher32ChecksumFilter }}}
+// NBitCompressionFilter {{{
 NBitCompressionFilter::NBitCompressionFilter()
   : Filter(0,true)
 {}
@@ -202,7 +209,8 @@ NBitCompressionFilter::NBitCompressionFilter(
 { assertNumberOfParametersIs(0); }
 
 FILTER_DEFINITION_BOILERPLATE(NBitCompressionFilter,H5Z_FILTER_NBIT);
-//@+node:gcross.20110528133907.2022: *3* ScaleOffsetCompressionFilter
+// NBitCompressionFilter }}}
+// ScaleOffsetCompressionFilter {{{
 ScaleOffsetCompressionFilter::ScaleOffsetCompressionFilter(
     ScaleMethod scale_method
   , unsigned int scale_factor
@@ -238,7 +246,8 @@ void ScaleOffsetCompressionFilter::setScaleFactor(unsigned int scale_factor) {
 }
 
 FILTER_DEFINITION_BOILERPLATE(ScaleOffsetCompressionFilter,H5Z_FILTER_SCALEOFFSET);
-//@+node:gcross.20110527192131.2382: *3* ShuffleFilter
+// ScaleOffsetCompressionFilter }}}
+// ShuffleFilter {{{
 ShuffleFilter::ShuffleFilter()
   : Filter(0,false)
 {}
@@ -251,7 +260,8 @@ ShuffleFilter::ShuffleFilter(
 { assertNumberOfParametersIs(0); }
 
 FILTER_DEFINITION_BOILERPLATE(ShuffleFilter,H5Z_FILTER_SHUFFLE);
-//@+node:gcross.20110527192131.2394: *3* SZIPCompressionFilter
+// ShuffleFilter }}}
+// SZIPCompressionFilter {{{
 SZIPCompressionFilter::SZIPCompressionFilter(
     SZIPCodingMethod coding_method
   , unsigned int pixels_per_block
@@ -287,7 +297,7 @@ void SZIPCompressionFilter::setPixelsPerBlock(unsigned int pixels_per_block) {
 }
 
 FILTER_DEFINITION_BOILERPLATE(SZIPCompressionFilter,H5Z_FILTER_SZIP);
-//@-others
+// SZIPCompressionFilter }}}
+// Filters }}}
 
 }
-//@-leo

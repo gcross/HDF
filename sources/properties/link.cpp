@@ -1,27 +1,18 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110602092541.2231: * @file link.cpp
-//@@language cplusplus
-//@+<< Includes >>
-//@+node:gcross.20110602092541.2233: ** << Includes >>
+// Includes {{{
 #include "properties/link.hpp"
-//@-<< Includes >>
+// Includes }}}
 
 namespace HDF {
 
-//@+<< Usings >>
-//@+node:gcross.20110602092541.2234: ** << Usings >>
-//@-<< Usings >>
-
-//@+others
-//@+node:gcross.20110602092541.2235: ** Properties
-//@+node:gcross.20110602092541.2239: *3* LinkAccessProperties
+// Properties {{{
+//     link access {{{
 DEFINE_PROPERTIES_BOILERPLATE(LinkAccess,link access,LINK_ACCESS)
-//@+node:gcross.20110525201928.3099: *3* LinkCreationProperties
+//     link access }}}
+//         link creation {{{
 DEFINE_PROPERTIES_BOILERPLATE(LinkCreation,link creation,LINK_CREATE)
 
-//@+others
-//@+node:gcross.20110602121059.2127: *4* character encoding
-LinkCreationProperties LinkCreationProperties::setCharacterEncoding(CharacterEncoding encoding) const {
+//         character encoding {{{
+LinkCreationProperties LinkCreationProperties::setCharacterEncoding(CharacterEncoding encoding) const { // {{{
     assertSuccess(
         "setting character encoding property",
         H5Pset_char_encoding(
@@ -30,9 +21,9 @@ LinkCreationProperties LinkCreationProperties::setCharacterEncoding(CharacterEnc
         )
     );
     return *this;
-}
+} // }}}
 
-CharacterEncoding LinkCreationProperties::getCharacterEncoding() const {
+CharacterEncoding LinkCreationProperties::getCharacterEncoding() const { // {{{
     H5T_cset_t id;
     assertSuccess(
         "getting character encoding property",
@@ -42,9 +33,10 @@ CharacterEncoding LinkCreationProperties::getCharacterEncoding() const {
         )
     );
     return static_cast<CharacterEncoding>(id);
-}
-//@-others
-//@-others
+} // }}}
+//         character encoding }}}
+
+//         link creation }}}
+// Properties }}}
 
 }
-//@-leo

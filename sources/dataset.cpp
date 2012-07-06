@@ -1,30 +1,24 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110523113700.1813: * @file dataset.cpp
-//@@language cplusplus
-//@+<< Includes >>
-//@+node:gcross.20110523113700.1815: ** << Includes >>
+// Includes {{{
 #include "dataset.hpp"
 
 #include <boost/make_shared.hpp>
-//@-<< Includes >>
+// Includes }}}
 
-namespace HDF {
-
-//@+<< Usings >>
-//@+node:gcross.20110523113700.1816: ** << Usings >>
+// Usings {{{
 using boost::optional;
 using boost::make_shared;
 
 using std::vector;
-//@-<< Usings >>
+// Usings }}}
 
-//@+others
-//@+node:gcross.20110523113700.1819: ** class Dataset
-//@+node:gcross.20110523113700.1820: *3* Constructors
+namespace HDF {
+
+// class Dataset {{{
+//      Constructors {{{
 Dataset::Dataset(
     Location const& location
   , optional<DatasetAccessProperties const&> const& optional_access_properties
-)
+) // {{{
   : Object(
         location.getFile(),
         assertSuccess(
@@ -37,8 +31,7 @@ Dataset::Dataset(
         ),
         H5Dclose
     )
-{}
-
+{}  // }}}
 
 Dataset::Dataset(
     CreateAt<Location const> location
@@ -48,7 +41,7 @@ Dataset::Dataset(
   , optional<DatasetCreationProperties const&> const& optional_creation_properties
   , optional<DatasetAccessProperties const&> const& optional_access_properties
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
-)
+) // {{{
   : Object(location->getFile(),Identity::Ptr())
 {
     createAndInitialize(
@@ -60,7 +53,7 @@ Dataset::Dataset(
         optional_access_properties,
         optional_link_creation_properties
     );
-}
+} // }}}
 
 Dataset::Dataset(
     CreateAt<Location const> location
@@ -71,7 +64,7 @@ Dataset::Dataset(
   , optional<DatasetCreationProperties const&> const& optional_creation_properties
   , optional<DatasetAccessProperties const&> const& optional_access_properties
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
-)
+) // {{{
   : Object(location->getFile(),Identity::Ptr())
 {
     createAndInitialize(
@@ -83,7 +76,7 @@ Dataset::Dataset(
         optional_access_properties,
         optional_link_creation_properties
     );
-}
+} // }}}
 
 Dataset::Dataset(
     CreateAt<Location const> location
@@ -93,7 +86,7 @@ Dataset::Dataset(
   , optional<DatasetCreationProperties const&> const& optional_creation_properties
   , optional<DatasetAccessProperties const&> const& optional_access_properties
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
-)
+) // {{{
   : Object(location->getFile(),Identity::Ptr())
 {
     createAndInitialize(
@@ -105,7 +98,7 @@ Dataset::Dataset(
         optional_access_properties,
         optional_link_creation_properties
     );
-}
+} // }}}
 
 void Dataset::createAndInitialize(
     Location const& location
@@ -115,7 +108,7 @@ void Dataset::createAndInitialize(
   , optional<DatasetCreationProperties const&> const& optional_creation_properties
   , optional<DatasetAccessProperties const&> const& optional_access_properties
   , optional<LinkCreationProperties const&> const& optional_link_creation_properties
-) {
+) { // {{{
     identity =
         make_shared<Identity>(
             assertSuccess(
@@ -133,8 +126,9 @@ void Dataset::createAndInitialize(
             H5Dclose
         );
     if(optional_data) write(*optional_data,datatype);
-}
-//@+node:gcross.20110523113700.1822: *3* Data access
+} // }}}
+//      Constructors }}}
+//      Data access {{{
 void Dataset::read(
     void* data
   , Datatype const& datatype
@@ -174,50 +168,44 @@ void Dataset::write(
         )
     );
 }
-//@+node:gcross.20110523113700.2385: *3* Informational
-//@+node:gcross.20110602121059.2135: *4* dimensions
-vector<hsize_t> Dataset::dimensions() const {
+//      Data access }}}
+//      Informational {{{
+vector<hsize_t> Dataset::dimensions() const { // {{{
     return Dataspace(*this).dimensions();
-}
-//@+node:gcross.20110602121059.2136: *4* dimensionsWithAssertedRank
-vector<hsize_t> Dataset::dimensionsWithAssertedRank(unsigned int expected_rank) const {
+} // }}}
+vector<hsize_t> Dataset::dimensionsWithAssertedRank(unsigned int expected_rank) const { // {{{
     return Dataspace(*this).dimensionsWithAssertedRank(expected_rank);
-}
-//@+node:gcross.20110602121059.2140: *4* getCopyOfAccessProperties
-DatasetAccessProperties Dataset::getCopyOfAccessProperties() const {
+} // }}}
+DatasetAccessProperties Dataset::getCopyOfAccessProperties() const { // {{{
     return DatasetAccessProperties(assertSuccess(
         "getting dataset access properties",
         H5Dget_access_plist(getId())
     ));
-}
-//@+node:gcross.20110602121059.2141: *4* getCopyOfCreationProperties
-DatasetCreationProperties Dataset::getCopyOfCreationProperties() const {
+} // }}}
+DatasetCreationProperties Dataset::getCopyOfCreationProperties() const { // {{{
     return DatasetCreationProperties(assertSuccess(
         "getting dataset creation properties",
         H5Dget_create_plist(getId())
     ));
-}
-//@+node:gcross.20110602121059.2139: *4* getSpaceAllocationStatus
-SpaceAllocationStatus Dataset::getSpaceAllocationStatus() const {
+} // }}}
+SpaceAllocationStatus Dataset::getSpaceAllocationStatus() const { // {{{
     H5D_space_status_t status;
     assertSuccess(
         "getting dataset space allocation status",
         H5Dget_space_status(getId(),&status)
     );
     return static_cast<SpaceAllocationStatus>(status);
-}
-//@+node:gcross.20110602121059.2142: *4* getStorageSize
-size_t Dataset::getStorageSize() const {
+} // }}}
+size_t Dataset::getStorageSize() const { // {{{
     return assertSuccess(
         "getting dataset storage size",
         H5Dget_storage_size(getId())
     );
-}
-//@+node:gcross.20110602121059.2137: *4* rank
-unsigned int Dataset::rank() const { return Dataspace(*this).rank(); }
-//@+node:gcross.20110602121059.2138: *4* size
+} // }}}
+unsigned int Dataset::rank() const { return Dataspace(*this).rank(); } 
 unsigned int Dataset::size() const { return Dataspace(*this).size(); }
-//@+node:gcross.20110523113700.2371: *3* Resizing
+//      Informational }}}
+//      Resizing {{{
 void Dataset::resize(hsize_t const* dimensions) const {
     assertSuccess(
         "resizing dataset",
@@ -227,7 +215,7 @@ void Dataset::resize(hsize_t const* dimensions) const {
 void Dataset::resize(hsize_t const dimension) const {
     resize(&dimension);
 }
-//@-others
+//      Resizing }}}
+// class Dataset }}}
 
 }
-//@-leo

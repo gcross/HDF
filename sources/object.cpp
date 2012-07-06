@@ -1,40 +1,35 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110521115623.2866: * @file object.cpp
-//@@language cplusplus
-//@+<< Includes >>
-//@+node:gcross.20110521115623.2868: ** << Includes >>
+// Includes {{{
 #include "implementation/object.hpp"
 
 #include <boost/scoped_array.hpp>
-//@-<< Includes >>
+// Includes }}}
 
-namespace HDF {
-
-//@+<< Usings >>
-//@+node:gcross.20110521115623.2869: ** << Usings >>
+// Usings {{{
 using boost::optional;
 using boost::scoped_array;
 
 using std::string;
-//@-<< Usings >>
+// Usings }}}
 
-//@+others
-//@+node:gcross.20110521115623.2873: ** class Object
-//@+node:gcross.20110521115623.2874: *3* Constructors
+namespace HDF {
+
+// class Object {{{
+// Constructors {{{
 Object::Object() {}
 
-Object::Object(File const& file, hid_t id, Identity::Closer const& closer)
+Object::Object(File const& file, hid_t id, Identity::Closer const& closer) // {{{
   : Contained(file,id,closer)
-{}
+{} // }}}
 
-Object::Object(File const& file, Identity::Ptr const& self_identity)
+Object::Object(File const& file, Identity::Ptr const& self_identity) // {{{
   : Contained(file,self_identity)
-{}
+{} // }}}
 
 Object::Object(
     Location const& location
   , optional<LinkAccessProperties> const& optional_properties
-) : Contained(
+) // {{{
+  : Contained(
         location.getFile(),
         assertSuccess(
             "opening object",
@@ -46,9 +41,10 @@ Object::Object(
         ),
         H5Oclose
     )
-{}
-//@+node:gcross.20110521115623.2875: *3* Comments
-string Object::getComment() const {
+{} // }}}
+// Constructors }}}
+// Comments {{{
+string Object::getComment() const { // {{{
     size_t comment_size =
         assertSuccess(
             "getting object comment length",
@@ -62,21 +58,22 @@ string Object::getComment() const {
         H5Oget_comment(getId(),buffer.get(),comment_size+1)
     );
     return string(buffer.get());
-}
+} // }}}
 
-void Object::setComment(char const* comment) const {
+void Object::setComment(char const* comment) const { // {{{
     assertSuccess(
         "setting object comment",
         H5Oset_comment(getId(),comment)
     );
-}
+} // }}}
 
-void Object::setComment(std::string const& comment) const {
+void Object::setComment(std::string const& comment) const { // {{{
     setComment(comment.c_str());
-}
-//@+node:gcross.20110523113700.1692: *3* Fields
+} // }}}
+// Comments }}}
+// Fields {{{
 Contained const& Object::getAttributeContained() const { return *this; }
-//@-others
+// Fields }}}
+// class Object }}}
 
 }
-//@-leo

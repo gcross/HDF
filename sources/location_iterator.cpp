@@ -1,26 +1,20 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110521115623.2953: * @file location_iterator.cpp
-//@@language cplusplus
-//@+<< Includes >>
-//@+node:gcross.20110521115623.2955: ** << Includes >>
+// Includes {{{
 #include "implementation/location_iterator.hpp"
 
 #include <boost/lexical_cast.hpp>
 #include <string>
-//@-<< Includes >>
+// Includes }}}
 
-namespace HDF {
-
-//@+<< Usings >>
-//@+node:gcross.20110521115623.2956: ** << Usings >>
+// Usings {{{
 using boost::lexical_cast;
 
 using std::string;
-//@-<< Usings >>
+// Usings }}}
 
-//@+others
-//@+node:gcross.20110521115623.2963: ** class LocationIterator
-//@+node:gcross.20110521115623.2964: *3* Constructors
+namespace HDF {
+
+// class LocationIterator {{{
+// Constructors {{{
 LocationIterator::LocationIterator() {}
 
 LocationIterator::LocationIterator(Locatable const& parent, int index, int direction)
@@ -30,7 +24,8 @@ LocationIterator::LocationIterator(Locatable const& parent, int index, int direc
 {
     updateMyLocation();
 }
-//@+node:gcross.20110521115623.2966: *3* Facade requirements
+// Constructors }}}
+// Facade requirements {{{
 Location const& LocationIterator::dereference() const { return location; }
 
 bool LocationIterator::equal(LocationIterator const& other) const {
@@ -47,11 +42,12 @@ void LocationIterator::advance(int n) { index += n*direction; updateMyLocation()
 int LocationIterator::distance_to(LocationIterator const& other) const {
     return (other.index - index)*direction;
 }
-//@+node:gcross.20110521115623.2967: *3* Miscellaneous
+// Facade requirements }}}
+// Miscellaneous {{{
 void LocationIterator::updateMyLocation() {
     location %= lexical_cast<string>(index);
 }
-//@-others
+// Miscellaneous }}}
+// class LocationIterator }}}
 
 }
-//@-leo

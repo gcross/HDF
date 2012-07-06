@@ -1,20 +1,13 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110520211700.1400: * @file error.cpp
-//@@language cplusplus
-//@+<< Includes >>
-//@+node:gcross.20110520211700.1402: ** << Includes >>
+// Includes {{{
 #include "implementation/error.hpp"
 
 #include <boost/foreach.hpp>
 #include <boost/scoped_array.hpp>
 #include <iomanip>
 #include <sstream>
-//@-<< Includes >>
+// Includes }}}
 
-namespace HDF {
-
-//@+<< Usings >>
-//@+node:gcross.20110520211700.1403: ** << Usings >>
+// Usings {{{
 using boost::scoped_array;
 
 using std::endl;
@@ -22,11 +15,12 @@ using std::ostringstream;
 using std::setw;
 using std::string;
 using std::vector;
-//@-<< Usings >>
+// Usings }}}
 
-//@+others
-//@+node:gcross.20110520211700.1407: ** Classes
-//@+node:gcross.20110520211700.1409: *3* Error
+namespace HDF {
+
+// Classes {{{
+// Error {{{
 Error::Error(string const& description) {
     H5Ewalk2(H5E_DEFAULT,H5E_WALK_UPWARD,&ErrorStackFrame::constructAndPush,&error_stack);
 
@@ -63,7 +57,8 @@ Error::AutomaticDisabler::AutomaticDisabler() {
 }
 
 Error::AutomaticDisabler Error::automatic_disabler;
-//@+node:gcross.20110520211700.1408: *3* ErrorStackFrame
+// Error }}}
+// ErrorStackFrame {{{
 ErrorStackFrame::ErrorStackFrame(H5E_error2_t const& error_descriptor)
   : source_filename(error_descriptor.file_name)
   , source_line(error_descriptor.line)
@@ -97,7 +92,8 @@ herr_t ErrorStackFrame::constructAndPush(unsigned int n, H5E_error2_t const *err
 herr_t ErrorStackFrame::constructAndPush(unsigned int n, H5E_error2_t const *err_desc, void* stack) {
     return constructAndPush(n,err_desc,static_cast<vector<ErrorStackFrame>*>(stack));
 }
-//@+node:gcross.20110521115623.2762: *3* Exception
+// ErrorStackFrame }}}
+// Exception {{{
 Exception::Exception() {}
 
 Exception::Exception(string const& message) : message(message) { }
@@ -105,7 +101,7 @@ Exception::Exception(string const& message) : message(message) { }
 const char* Exception::what() const throw() { return message.c_str(); }
 
 Exception::~Exception() throw() { }
-//@-others
+// Exception }}}
+// Classes }}}
 
 }
-//@-leo

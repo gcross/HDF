@@ -1,21 +1,15 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110521115623.2905: * @file group.cpp
-//@@language cplusplus
-//@+<< Includes >>
-//@+node:gcross.20110521115623.2907: ** << Includes >>
+// Includes {{{
 #include "implementation/group.hpp"
-//@-<< Includes >>
+// Includes }}}
+
+// Usings {{{
+using boost::optional;
+// Usings }}}
 
 namespace HDF {
 
-//@+<< Usings >>
-//@+node:gcross.20110521115623.2908: ** << Usings >>
-using boost::optional;
-//@-<< Usings >>
-
-//@+others
-//@+node:gcross.20110521115623.2909: ** class Group
-//@+node:gcross.20110521115623.2910: *3* Constructors
+// class Group {{{
+// Constructors {{{
 Group::Group() {}
 
 Group::Group(
@@ -55,14 +49,15 @@ Group::Group(
         H5Gclose
     )
 {}
-//@+node:gcross.20110602121059.2130: *3* Informational
+// Constructors }}}
+// Informational {{{
 GroupCreationProperties Group::getCopyOfCreationProperties() const {
     return GroupCreationProperties(assertSuccess(
         "getting group creation properties",
         H5Gget_create_plist(getId())
     ));
 }
-//@-others
+// Informational }}}
+// class Group }}}
 
 }
-//@-leo

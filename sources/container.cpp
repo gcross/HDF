@@ -1,30 +1,24 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110524225139.1842: * @file container.cpp
-//@@language cplusplus
-//@+<< Includes >>
-//@+node:gcross.20110524225139.1844: ** << Includes >>
+// Includes {{{
 #include "container.hpp"
 #include "utilities.hpp"
 
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/foreach.hpp>
-//@-<< Includes >>
+// Includes }}}
 
-namespace HDF {
-
-//@+<< Usings >>
-//@+node:gcross.20110524225139.1845: ** << Usings >>
+// Usings {{{
 using boost::algorithm::trim_left_if;
 using boost::optional;
 
 using std::make_pair;
 using std::pair;
 using std::string;
-//@-<< Usings >>
+// Usings }}}
 
-//@+others
-//@+node:gcross.20110524225139.1849: ** class Container
-//@+node:gcross.20110524225139.1850: *3* Constructors
+namespace HDF {
+
+// class Container {{{
+//     Constructors {{{
 Container::Container(File const& file) : Contained(file,file.getIdentity()) {}
 
 Container::Container(Group const& group) : Contained(group) {}
@@ -71,11 +65,13 @@ void Container::initialize(
         else *this = Group(location);
     }
 }
-//@+node:gcross.20110623234825.1974: *3* Fields
+//     Constructors }}}
+//     Fields {{{
 File const& Container::getFile() const { return file; }
 
 Identity::Ptr const& Container::getIdentity() const { return identity; }
-//@+node:gcross.20110524225139.1858: *3* Operators
+//     Fields }}}
+//     Operators {{{
 void Container::operator=(File const& file) {
     this->file = file;
     identity = file.getIdentity();
@@ -85,7 +81,7 @@ void Container::operator=(Group const& group) {
     file = group.getFile();
     identity = group.getIdentity();
 }
-//@-others
+//     Operators }}}
+// class Container }}}
 
 }
-//@-leo
