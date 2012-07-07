@@ -1,5 +1,3 @@
-#@+leo-ver=5-thin
-#@+node:gcross.20110524225139.1924: * @file CMakeLists.txt
 FILE(GLOB HEADERS "*.hpp")
 FILE(GLOB HEADERS-properties "properties/*.hpp")
 FILE(GLOB HEADERS-properties-shared "properties/shared/*.hpp")
@@ -16,4 +14,3 @@ install(FILES ${HEADERS-properties-shared} DESTINATION ${HEADER_DESTINATION}/pro
 install(FILES ${HEADERS-implementation} DESTINATION ${HEADER_DESTINATION}/implementation)
 install(FILES ${HEADERS-implementation-properties} DESTINATION ${HEADER_DESTINATION}/implementation/properties)
 install(FILES ${HEADERS-implementation-properties-shared} DESTINATION ${HEADER_DESTINATION}/implementation/properties/shared)
-#@-leo

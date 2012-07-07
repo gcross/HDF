@@ -1,38 +1,30 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110602092541.2072: * @file dataset.hpp
-//@@language cplusplus
 #ifndef HDFPP_IMPLEMENTATION_PROPERTIES_DATASET_CREATION_HPP
 #define HDFPP_IMPLEMENTATION_PROPERTIES_DATASET_CREATION_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110602092541.2073: ** << Includes >>
+// Includes {{{
 #include "../filter.hpp"
 #include "../properties.hpp"
-//@-<< Includes >>
+// Includes }}}
 
 namespace HDF {
 
-//@+others
-//@+node:gcross.20110526194358.1968: ** Exception
-//@+node:gcross.20110526194358.1969: *3* NoSuchFilterException
-struct NoSuchFilterException: public Exception {
+// Exceptions {{{
+struct NoSuchFilterException: public Exception { // {{{
     std::string name;
     NoSuchFilterException(std::string const& name);
     virtual ~NoSuchFilterException() throw();
-};
-//@+node:gcross.20110602092541.2151: ** Properties
-//@+node:gcross.20110526150836.1961: *3* DatasetAccessProperties
-struct DatasetAccessProperties: public Properties {
+}; // }}}
+// Exceptions }}}
+
+// Properties {{{
+struct DatasetAccessProperties: public Properties { // {{{
     friend class Dataset;
 
     DECLARE_PROPERTIES_BOILERPLATE(DatasetAccess)
-};
-//@+node:gcross.20110526150836.1972: *3* DatasetCreationProperties
-//@+<< Forward declarations >>
-//@+node:gcross.20110527143225.1997: *4* << Forward declarations >>
+}; // }}}
+// struct DatasetCreationProperties {{{
 template<class> struct datatypeOf;
 class Datatype;
-//@-<< Forward declarations >>
 
 struct DatasetCreationProperties
   : public virtual Properties
@@ -41,11 +33,11 @@ struct DatasetCreationProperties
 
     DECLARE_PROPERTIES_BOILERPLATE(DatasetCreation)
 
-    //@+others
-    //@+node:gcross.20110528133907.2062: *4* allocation mode
+  // allocation mode {{{
     DatasetCreationProperties setAllocationMode(AllocationMode allocation_mode);
     AllocationMode getAllocationMode() const;
-    //@+node:gcross.20110526194358.1942: *4* chunk
+  // allocation mode }}}
+  // chunk size {{{
     DatasetCreationProperties setChunkSize(hsize_t const chunk_size) const;
     DatasetCreationProperties setChunkSizes(unsigned int rank, hsize_t const* chunk_sizes) const;
     template<typename Dimensions> DatasetCreationProperties setChunkSizes(Dimensions dimensions) const {
@@ -54,10 +46,12 @@ struct DatasetCreationProperties
     }
 
     std::vector<hsize_t> getChunkSizes() const;
-    //@+node:gcross.20110528133907.2054: *4* fill mode
+  // chunk size }}}
+  // fill mode {{{
     DatasetCreationProperties setFillMode(FillMode fill_mode);
     FillMode getFillMode() const;
-    //@+node:gcross.20110527143225.1994: *4* fill value
+  // fill mode }}}
+  // fill value {{{
     DatasetCreationProperties setFillValue(Datatype const& datatype, void const* value) const;
 
     template<typename T> DatasetCreationProperties setFillValue(T const& value) const {
@@ -77,7 +71,8 @@ struct DatasetCreationProperties
     }
 
     FillValueStatus getFillValueStatus() const;
-    //@+node:gcross.20110528133907.2023: *4* filter
+  // fill value }}}
+  // filters {{{
     bool allAddedFiltersAreAvailable() const;
 
     DatasetCreationProperties appendFilter(Filter const& filter) const;
@@ -97,24 +92,24 @@ struct DatasetCreationProperties
     template<typename FilterType> void removeFilterOfType() const{
         removeFilterWithId(FilterType::filter_id);
     }
-    //@+node:gcross.20110526194358.1953: *4* layout
+  // filters }}}
+  // layout {{{
     DatasetCreationProperties setLayout(DatasetLayout layout) const;
 
     DatasetLayout getLayout() const;
-    //@-others
+  // layour }}}
 };
-//@+node:gcross.20110526150836.1962: *3* DatasetTransferProperties
-struct DatasetTransferProperties: public Properties {
+// struct DatasetCreationProperties }}}
+struct DatasetTransferProperties: public Properties { // {{{
     DECLARE_PROPERTIES_BOILERPLATE(DatasetTransfer)
-};
-//@-others
+}; // }}}
+// Properties }}}
+
 
 }
 
 #endif
 
-//@+<< Trailing includes >>
-//@+node:gcross.20110527143225.1998: ** << Trailing includes >>
+// Trailing includes {{{
 #include "../datatype.hpp"
-//@-<< Trailing includes >>
-//@-leo
+// Trailing includes }}}

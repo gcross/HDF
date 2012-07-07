@@ -1,26 +1,19 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110521115623.2852: * @file object.hpp
-//@@language cplusplus
 #ifndef HDFPP_IMPLEMENTATION_OBJECT_HPP
 #define HDFPP_IMPLEMENTATION_OBJECT_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110521115623.2853: ** << Includes >>
+// Includes {{{
 #include "attributable.hpp"
 #include "contained.hpp"
 #include "properties.hpp"
 
 #include <boost/optional.hpp>
 #include <string>
-//@-<< Includes >>
+// Includes }}}
 
 namespace HDF {
 
-//@+others
-//@+node:gcross.20110521115623.2855: ** class Object
-class Object: public Contained, public Attributable {
-    //@+others
-    //@+node:gcross.20110521115623.2856: *3* Constructors
+class Object: public Contained, public Attributable { // {{{
+    // Constructors {{{
     protected:
 
     Object();
@@ -30,22 +23,22 @@ class Object: public Contained, public Attributable {
     Object(File const& file, hid_t id, Identity::Closer const& closer);
     Object(File const& file, Identity::Ptr const& self_identity);
     Object(Location const& location, boost::optional<LinkAccessProperties> const& optional_properties = boost::none);
-    //@+node:gcross.20110521115623.2861: *3* Comments
+    // Constructors }}}
+    // Comments {{{
     public:
 
     std::string getComment() const;
 
     void setComment(char const* comment) const;
     void setComment(std::string const& comment) const;
-    //@+node:gcross.20110523113700.1693: *3* Fields
+    // Comments }}}
+    // Fields {{{
     protected:
 
     virtual Contained const& getAttributeContained() const;
-    //@-others
-};
-//@-others
+    // Fields }}}
+}; // }}}
 
 }
 
 #endif
-//@-leo

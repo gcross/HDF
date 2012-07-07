@@ -1,17 +1,9 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110521115623.2880: * @file parameters.hpp
-//@@language cplusplus
 #ifndef HDFPP_IMPLEMENTATION_PARAMETERS_HPP
 #define HDFPP_IMPLEMENTATION_PARAMETERS_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110521115623.2881: ** << Includes >>
-//@-<< Includes >>
-
 namespace HDF {
 
-//@+others
-//@+node:gcross.20110521115623.2883: ** Parameter wrappers
+// Parameter wrappers {{{
 template<typename T> class ConstructorParameter {
 private:
     //! The data wrapped by this class.
@@ -40,11 +32,12 @@ DEFINE_TEMPLATIZED_PARAMETER(CopyOf,copyOf)
 DEFINE_TEMPLATIZED_PARAMETER(CreateAt,createAt)
 DEFINE_TEMPLATIZED_PARAMETER(RangeOf,rangeOf)
 DEFINE_TEMPLATIZED_PARAMETER(TakeOwnershipOf,takeOwnershipOf)
-//@+node:gcross.20110521115623.3174: ** Macros
+// Parameter wrappers }}}
+
+// Macros {{{
 #define GET_OPTIONAL_OR(optional,alternative) (optional ? (*optional) : alternative)
-//@-others
+// Macros }}}
 
 }
 
 #endif
-//@-leo

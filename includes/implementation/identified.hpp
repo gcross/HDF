@@ -1,23 +1,16 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110520194631.1319: * @file identified.hpp
-//@@language cplusplus
 #ifndef HDFPP_IMPLEMENTATION_IDENTIFIED_HPP
 #define HDFPP_IMPLEMENTATION_IDENTIFIED_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110520194631.1320: ** << Includes >>
+// Includes {{{
 #include "identifiable.hpp"
 
 #include <hdf5.h>
-//@-<< Includes >>
+// Includes }}}
 
 namespace HDF {
 
-//@+others
-//@+node:gcross.20110520194631.1322: ** class Identified
-class Identified: public virtual Identifiable {
-    //@+others
-    //@+node:gcross.20110520194631.1324: *3* Constructors
+class Identified: public virtual Identifiable { // {{{
+    // Constructors {{{
     protected:
 
     Identified(Identity::Ptr const& identity);
@@ -26,7 +19,8 @@ class Identified: public virtual Identifiable {
     public:
 
     Identified();
-    //@+node:gcross.20110520194631.1325: *3* Fields
+    // Constructors }}}
+    // Fields {{{
     protected:
 
     Identity::Ptr identity;
@@ -34,11 +28,9 @@ class Identified: public virtual Identifiable {
     public:
 
     virtual Identity::Ptr const& getIdentity() const;
-    //@-others
-};
-//@-others
+    // Fields }}}
+}; // }}}
 
 }
 
 #endif
-//@-leo

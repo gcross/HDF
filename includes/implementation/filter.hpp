@@ -1,11 +1,7 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110527192131.2335: * @file filter.hpp
-//@@language cplusplus
 #ifndef HDFPP_IMPLEMENTATION_FILTER_HPP
 #define HDFPP_IMPLEMENTATION_FILTER_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110527192131.2336: ** << Includes >>
+// Includes {{{
 #include "enumerations.hpp"
 #include "error.hpp"
 
@@ -15,14 +11,12 @@
 #include <map>
 #include <memory>
 #include <vector>
-//@-<< Includes >>
+// Includes }}}
 
 namespace HDF {
 
-//@+others
-//@+node:gcross.20110527192131.2369: ** Exceptions
-//@+node:gcross.20110527192131.2372: *3* WrongNumberOfParametersForFilterException
-struct WrongNumberOfParametersForFilterException: public Exception {
+// Exceptions {{{
+struct WrongNumberOfParametersForFilterException: public Exception { // {{{
     std::string filter_name;
     unsigned int expected_number_of_parameters, actual_number_of_parameters;
     WrongNumberOfParametersForFilterException(
@@ -31,12 +25,12 @@ struct WrongNumberOfParametersForFilterException: public Exception {
       , unsigned int actual_number_of_parameters
     );
     virtual ~WrongNumberOfParametersForFilterException() throw();
-};
-//@+node:gcross.20110528133907.2028: ** Classes
-//@+node:gcross.20110527192131.2338: *3* Filter
-class Filter {
-    //@+others
-    //@+node:gcross.20110527192131.2340: *4* Constructors / Destructors
+}; // }}}
+// Exceptions }}}
+
+// Classes {{{
+class Filter { // {{{
+    // Constructors/Destructors {{{
     public:
 
     Filter(
@@ -50,7 +44,8 @@ class Filter {
     );
 
     ~Filter();
-    //@+node:gcross.20110527192131.2341: *4* Fields
+    // Constructors/Destructors }}}
+    // Fields {{{
     private:
 
     std::vector<unsigned int> parameters;
@@ -71,7 +66,8 @@ class Filter {
     unsigned int getFlags() const;
 
     virtual H5Z_filter_t getFilterId() const = 0;
-    //@+node:gcross.20110527192131.2368: *4* Miscellaneous
+    // Fields }}}
+    // Miscellaneous {{{
     protected:
 
     void assertNumberOfParametersIs(unsigned int expected_number_of_parameters);
@@ -79,7 +75,8 @@ class Filter {
     public:
 
     static bool checkAvailabilityOf(H5Z_filter_t filter_id);
-    //@+node:gcross.20110527192131.2342: *4* Registry
+    // Miscellaneous }}}
+    // Registry {{{
     public:
 
     typedef boost::function<std::auto_ptr<Filter> (std::vector<unsigned int> const&,bool)> Factory;
@@ -113,10 +110,9 @@ class Filter {
       , std::vector<unsigned int> const& parameters
       , bool optional_flag
     );
-    //@-others
-};
-//@+node:gcross.20110528133907.2027: *3* UnknownFilter
-class UnknownFilter: public Filter {
+    // Registry }}}
+}; // }}}
+class UnknownFilter: public Filter { // {{{
 protected:
     H5Z_filter_t filter_id;
 public:
@@ -126,8 +122,10 @@ public:
       , bool optional_flag
     );
     virtual H5Z_filter_t getFilterId() const;
-};
-//@+node:gcross.20110527192131.2367: ** Macros
+}; // }}}
+// Classes }}}
+
+// Macros {{{
 #define FILTER_DECLARATION_BOILERPLATE(FilterType) \
     static H5Z_filter_t const filter_id; \
     static bool isAvailable(); \
@@ -140,9 +138,10 @@ public:
     bool FilterType::isAvailable() { return Filter::checkAvailabilityOf(filter_id_value); } \
     H5Z_filter_t FilterType::getFilterId() const { return filter_id_value; } \
     Filter::RegisterFactory<FilterType> const FilterType::__factory_registerer;
-//@+node:gcross.20110527192131.2359: ** Filters
-//@+node:gcross.20110527192131.2384: *3* DeflateCompressionFilter
-struct DeflateCompressionFilter: public Filter {
+// Macros }}}
+
+// Filters {{{
+struct DeflateCompressionFilter: public Filter { // {{{
     DeflateCompressionFilter(
         unsigned int compression_level
       , bool optional_flag = true
@@ -156,9 +155,8 @@ struct DeflateCompressionFilter: public Filter {
     void setCompressionLevel(unsigned int compression_level);
 
     FILTER_DECLARATION_BOILERPLATE(DeflateCompressionFilter);
-};
-//@+node:gcross.20110527192131.2360: *3* Fletcher32ChecksumFilter
-struct Fletcher32ChecksumFilter: public Filter {
+}; // }}}
+struct Fletcher32ChecksumFilter: public Filter { // {{{
     Fletcher32ChecksumFilter();
     Fletcher32ChecksumFilter(
         std::vector<unsigned int> const& parameters
@@ -166,9 +164,8 @@ struct Fletcher32ChecksumFilter: public Filter {
     );
 
     FILTER_DECLARATION_BOILERPLATE(Fletcher32ChecksumFilter);
-};
-//@+node:gcross.20110528133907.2039: *3* NBitCompressionFilter
-struct NBitCompressionFilter: public Filter {
+}; // }}}
+struct NBitCompressionFilter: public Filter { // {{{
     NBitCompressionFilter();
     NBitCompressionFilter(
         std::vector<unsigned int> const& parameters
@@ -176,9 +173,8 @@ struct NBitCompressionFilter: public Filter {
     );
 
     FILTER_DECLARATION_BOILERPLATE(NBitCompressionFilter);
-};
-//@+node:gcross.20110527192131.2396: *3* ScaleOffsetCompressionFilter
-struct ScaleOffsetCompressionFilter: public Filter {
+}; // }}}
+struct ScaleOffsetCompressionFilter: public Filter { // {{{
     ScaleOffsetCompressionFilter(
         ScaleMethod scale_method
       , unsigned int scale_factor
@@ -196,9 +192,8 @@ struct ScaleOffsetCompressionFilter: public Filter {
     void setScaleFactor(unsigned int scale_factor);
 
     FILTER_DECLARATION_BOILERPLATE(ScaleOffsetCompressionFilter);
-};
-//@+node:gcross.20110527192131.2378: *3* ShuffleFilter
-struct ShuffleFilter: public Filter {
+}; // }}}
+struct ShuffleFilter: public Filter { // {{{
     ShuffleFilter();
     ShuffleFilter(
         std::vector<unsigned int> const& parameters
@@ -206,9 +201,8 @@ struct ShuffleFilter: public Filter {
     );
 
     FILTER_DECLARATION_BOILERPLATE(ShuffleFilter);
-};
-//@+node:gcross.20110527192131.2388: *3* SZIPCompressionFilter
-struct SZIPCompressionFilter: public Filter {
+}; // }}}
+struct SZIPCompressionFilter: public Filter { // {{{
     SZIPCompressionFilter(
         SZIPCodingMethod coding_method
       , unsigned int pixels_per_block
@@ -226,10 +220,9 @@ struct SZIPCompressionFilter: public Filter {
     void setPixelsPerBlock(unsigned int pixels_per_block);
 
     FILTER_DECLARATION_BOILERPLATE(SZIPCompressionFilter);
-};
-//@-others
+}; // }}}
+// Filters }}}
 
 }
 
 #endif
-//@-leo

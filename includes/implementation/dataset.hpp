@@ -1,11 +1,7 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110523113700.1804: * @file dataset.hpp
-//@@language cplusplus
 #ifndef HDFPP_IMPLEMENTATION_DATASET_HPP
 #define HDFPP_IMPLEMENTATION_DATASET_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110523113700.1805: ** << Includes >>
+// Includes {{{
 #include "dataspace.hpp"
 #include "datatype.hpp"
 #include "object.hpp"
@@ -16,15 +12,12 @@
 #include <boost/optional.hpp>
 #include <boost/range/value_type.hpp>
 #include <vector>
-//@-<< Includes >>
+// Includes }}}
 
 namespace HDF {
 
-//@+others
-//@+node:gcross.20110523113700.1807: ** class Dataset
-class Dataset: public Object {
-    //@+others
-    //@+node:gcross.20110523113700.1808: *3* Constructors
+class Dataset: public Object { // {{{
+    //   Constructors {{{
     public:
 
     Dataset(
@@ -72,7 +65,7 @@ class Dataset: public Object {
       , boost::optional<DatasetCreationProperties const&> const& optional_creation_properties = boost::none
       , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
-    )
+    ) // {{{
       : Object(location->getFile(),Identity::Ptr())
     {
         createAndInitialize(
@@ -84,7 +77,7 @@ class Dataset: public Object {
             optional_access_properties,
             optional_link_creation_properties
         );
-    }
+    } // }}}
 
 
     template<typename Dimensions, typename T>
@@ -95,7 +88,7 @@ class Dataset: public Object {
       , boost::optional<DatasetCreationProperties const&> const& optional_creation_properties = boost::none
       , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
-    )
+    ) // {{{
       : Object(location->getFile(),Identity::Ptr())
     {
         createAndInitialize(
@@ -107,7 +100,7 @@ class Dataset: public Object {
             optional_access_properties,
             optional_link_creation_properties
         );
-    }
+    } // }}}
 
     template<typename Dimensions, typename T>
     Dataset(
@@ -117,7 +110,7 @@ class Dataset: public Object {
       , boost::optional<DatasetCreationProperties const&> const& optional_creation_properties = boost::none
       , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
-    )
+    ) // {{{
       : Object(location->getFile(),Identity::Ptr())
     {
         createAndInitialize(
@@ -129,7 +122,7 @@ class Dataset: public Object {
             optional_access_properties,
             optional_link_creation_properties
         );
-    }
+    } // }}}
 
     template<typename T>
     Dataset(
@@ -139,7 +132,7 @@ class Dataset: public Object {
       , boost::optional<DatasetCreationProperties const&> const& optional_creation_properties = boost::none
       , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
-    )
+    ) // {{{
       : Object(location->getFile(),Identity::Ptr())
     {
         createAndInitialize(
@@ -151,7 +144,7 @@ class Dataset: public Object {
             optional_access_properties,
             optional_link_creation_properties
         );
-    }
+    } // }}}
 
     template<typename DataRange>
     Dataset(
@@ -160,7 +153,7 @@ class Dataset: public Object {
       , boost::optional<DatasetCreationProperties const&> const& optional_creation_properties = boost::none
       , boost::optional<DatasetAccessProperties const&> const& optional_access_properties = boost::none
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties = boost::none
-    )
+    ) // {{{
       : Object(location->getFile(),Identity::Ptr())
     {
         typedef typename boost::range_value<DataRange>::type T;
@@ -174,7 +167,7 @@ class Dataset: public Object {
             optional_access_properties,
             optional_link_creation_properties
         );
-    }
+    } // }}}
 
     protected:
 
@@ -187,7 +180,8 @@ class Dataset: public Object {
       , boost::optional<DatasetAccessProperties const&> const& optional_access_properties
       , boost::optional<LinkCreationProperties const&> const& optional_link_creation_properties
     );
-    //@+node:gcross.20110523113700.1826: *3* Data access
+    //   Constructors }}}
+    //   Data access {{{
     public:
 
     void read(
@@ -236,7 +230,8 @@ class Dataset: public Object {
     ) const {
         write(data,datatypeOf<T>::get(),optional_memory_dataspace,optional_dataset_dataspace,optional_transfer_properties);
     }
-    //@+node:gcross.20110523113700.2383: *3* Informational
+    //   Data access }}}
+    //   Informational {{{
     public:
 
     std::vector<hsize_t> dimensions() const;
@@ -250,7 +245,8 @@ class Dataset: public Object {
     DatasetCreationProperties getCopyOfCreationProperties() const;
 
     size_t getStorageSize() const;
-    //@+node:gcross.20110523113700.2370: *3* Resizing
+    //   Informational }}}
+    //   Resizing {{{
     public:
 
     void resize(hsize_t const* dimensions) const;
@@ -259,11 +255,9 @@ class Dataset: public Object {
         HSizeArray dims(*dimensions);
         resize(dims);
     }
-    //@-others
-};
-//@-others
+    //   Resizing }}}
+}; // }}}
 
 }
 
 #endif
-//@-leo

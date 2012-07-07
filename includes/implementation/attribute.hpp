@@ -1,31 +1,27 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110521115623.1485: * @file attribute.hpp
-//@@language cplusplus
 #ifndef HDFPP_IMPLEMENTATION_ATTRIBUTE_HPP
 #define HDFPP_IMPLEMENTATION_ATTRIBUTE_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110521115623.1486: ** << Includes >>
+// Includes {{{
 #include "attributable.hpp"
 #include "contained.hpp"
 #include "error.hpp"
 
 #include <boost/optional.hpp>
 #include <string>
-//@-<< Includes >>
+// Includes }}}
 
 namespace HDF {
 
-//@+others
-//@+node:gcross.20110521115623.2781: ** Exceptions
-//@+node:gcross.20110521115623.2780: *3* NoSuchAttributeException
-struct NoSuchAttributeException : public Exception {
+// Exceptions {{{
+struct NoSuchAttributeException : public Exception { // {{{
     std::string name;
     NoSuchAttributeException(std::string const& name);
     virtual ~NoSuchAttributeException() throw();
-};
-//@+node:gcross.20110521115623.3957: ** Attribute traits
-//@+node:gcross.20110521115623.3958: *3* highlevelAttributeAccessorsOf
+}; // }}}
+// Exceptions }}}
+
+// Attribute traits {{{
+// highlevelAttributeAccessorsOf {{{
 template<typename T> struct highlevelAttributeAccessorsOf {};
 
 #define DECLARE_HIGH_LEVEL_ACCESSOR(T) \
@@ -47,22 +43,23 @@ DECLARE_HIGH_LEVEL_ACCESSOR(float)
 DECLARE_HIGH_LEVEL_ACCESSOR(double)
 
 #undef DECLARE_HIGH_LEVEL_ACCESSOR
-//@+node:gcross.20110521115623.1488: ** class Attribute
-class Attribute: public Contained {
-    //@+<< Nested types >>
-    //@+node:gcross.20110521115623.3944: *3* << Nested types >>
+// highlevelAttributeAccessorsOf }}}
+// Attribute traits }}}
+
+class Attribute: public Contained { // {{{
+    //   Nested types {{{
     public:
 
     template<typename T> struct getterOf { typedef void enabled; };
 
     template<typename T> struct setterOf { typedef void enabled; };
-    //@-<< Nested types >>
-    //@+others
-    //@+node:gcross.20110521115623.1489: *3* Constructors
+    //   Nested types }}}
+    //   Constructors {{{
     public:
 
     Attribute(Attributable const& parent, char const* name);
-    //@+node:gcross.20110521115623.1490: *3* Fields
+    //   Constructors }}}
+    //   Fields {{{
     protected:
 
     std::string name;
@@ -72,7 +69,8 @@ class Attribute: public Contained {
     public:
 
     std::string const& getName() const;
-    //@+node:gcross.20110521115623.1491: *3* Getters
+    //   Fields }}}
+    //   Getters {{{
     public:
 
     template<typename T> T get(
@@ -107,12 +105,14 @@ class Attribute: public Contained {
     operator boost::optional<float>() const;
     operator boost::optional<double>() const;
     operator boost::optional<std::string>() const;
-    //@+node:gcross.20110521115623.2763: *3* Informational
+    //   Getters }}}
+    //   Informational {{{
     public:
 
     bool exists() const;
     void assertExistence() const;
-    //@+node:gcross.20110521115623.3960: *3* Setters
+    //   Informational }}}
+    //   Setters {{{
     public:
 
     template<typename T> void set(
@@ -157,13 +157,11 @@ class Attribute: public Contained {
     void operator=(boost::optional<char const*> const& value) const;
     void operator=(boost::optional<std::string> const& value) const;
     void operator=(boost::optional<std::string const&> const& value) const;
-    //@-others
-};
+    //   Setters }}}
+}; // }}}
 
-//@+<< Accessor specializations >>
-//@+node:gcross.20110521115623.3962: *3* << Accessor specializations >>
-//@+others
-//@+node:gcross.20110521115623.4802: *4* Getters
+// Accessor specializations {{{
+//   Getters {{{
 #define DECLARE_GETTER(T) \
     template<> struct Attribute::getterOf<T> { \
         typedef boost::none_t enabled; \
@@ -197,7 +195,8 @@ template<typename T> struct Attribute::getterOf<boost::optional<T> > {
             return getterOf<T>::get(attribute,true);
     }
 };
-//@+node:gcross.20110521115623.4803: *4* Setters
+//   Getters }}}
+//   Setters {{{
 #define DECLARE_SETTER(T) \
     template<> struct Attribute::setterOf<T> { \
         typedef boost::none_t enabled; \
@@ -219,11 +218,9 @@ DECLARE_SETTER(char const*)
 DECLARE_SETTER(std::string const&)
 
 #undef DECLARE_SETTER
-//@-others
-//@-<< Accessor specializations >>
-//@-others
+//   Setters }}}
+// Accessor specializations }}}
 
 }
 
 #endif
-//@-leo

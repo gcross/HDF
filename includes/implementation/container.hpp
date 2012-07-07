@@ -1,11 +1,7 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110524225139.1832: * @file container.hpp
-//@@language cplusplus
 #ifndef HDFPP_IMPLEMENTATION_CONTAINER_HPP
 #define HDFPP_IMPLEMENTATION_CONTAINER_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110524225139.1833: ** << Includes >>
+// Includes {{{
 #include "file.hpp"
 #include "group.hpp"
 #include "locatable.hpp"
@@ -15,15 +11,12 @@
 
 #include <boost/optional.hpp>
 #include <utility>
-//@-<< Includes >>
+// Includes }}}
 
 namespace HDF {
 
-//@+others
-//@+node:gcross.20110524225139.1835: ** class Container
-class Container: public Contained, public Parent {
-    //@+others
-    //@+node:gcross.20110524225139.1836: *3* Constructors
+class Container: public Contained, public Parent { // {{{
+    //   Constructors {{{
     public:
 
     Container(File const& file);
@@ -44,7 +37,8 @@ class Container: public Contained, public Parent {
          ,  boost::optional<GroupCreationProperties const&>
         > > const& creation_properties = boost::none
     );
-    //@+node:gcross.20110524225139.1837: *3* Fields
+    //   Constructors }}}
+    //   Fields {{{
     protected:
 
     File file;
@@ -53,16 +47,15 @@ class Container: public Contained, public Parent {
 
     virtual File const& getFile() const;
     virtual Identity::Ptr const& getIdentity() const;
-    //@+node:gcross.20110524225139.1856: *3* Operators
+    //   Fields }}}
+    //   Operators {{{
     public:
 
     void operator=(File const& file);
     void operator=(Group const& group);
-    //@-others
-};
-//@-others
+    //   Operators }}}
+}; // }}}
 
 }
 
 #endif
-//@-leo

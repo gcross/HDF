@@ -1,11 +1,7 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110521115623.3028: * @file dataspace.hpp
-//@@language cplusplus
 #ifndef HDFPP_IMPLEMENTATION_DATASPACE_HPP
 #define HDFPP_IMPLEMENTATION_DATASPACE_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110521115623.3029: ** << Includes >>
+// Includes {{{
 #include "enumerations.hpp"
 #include "error.hpp"
 #include "identified.hpp"
@@ -15,26 +11,23 @@
 
 #include <hdf5.h>
 #include <vector>
-//@-<< Includes >>
+// Includes }}}
 
 namespace HDF {
 
-//@+others
-//@+node:gcross.20110523113700.2374: ** Exceptions
-//@+node:gcross.20110523113700.2376: *3* UnexpectedTensorRankException
-struct UnexpectedTensorRankException : public Exception {
+// Exceptions {{{
+struct UnexpectedTensorRankException : public Exception { // {{{
     unsigned int expected_rank, actual_rank;
     UnexpectedTensorRankException(unsigned int const expected_rank, unsigned int const actual_rank);
-};
-//@+node:gcross.20110521115623.3130: ** Dataspace
-//@+<< Forward declarations >>
-//@+node:gcross.20110521115623.3149: *3* << Forward declarations >>
-class Dataset;
-//@-<< Forward declarations >>
+}; // }}}
+// Exceptions }}}
 
-class Dataspace: public Identified {
-//@+others
-//@+node:gcross.20110521115623.3131: *3* Constructors
+// Forward declarations {{{
+class Dataset;
+// Forward declarations }}}
+
+class Dataspace: public Identified { // {{{
+//   Constructors {{{
 public:
 
 Dataspace(CopyOf<Dataspace const> other);
@@ -59,7 +52,8 @@ void createAndInitializeSimple(
   , hsize_t const* current_dimensions
   , hsize_t const* maximum_dimensions
 );
-//@+node:gcross.20110523113700.2373: *3* Informational
+//   Constructors }}}
+//   Informational {{{
 public:
 
 std::vector<hsize_t> dimensions() const;
@@ -68,14 +62,13 @@ std::vector<hsize_t> maximumDimensions() const;
 unsigned int rank() const;
 unsigned int selectedSize() const;
 unsigned int size() const;
-//@-others
-};
-//@+node:gcross.20110521115623.4245: ** Function
-//@+node:gcross.20110521115623.4246: *3* getOptionalDataspaceId
+//   Informational }}}
+}; // }}}
+
+// Functions {{{
 hid_t getOptionalDataspaceId(boost::optional<Dataspace const&> const& dataspace);
-//@-others
+// Functions }}}
 
 }
 
 #endif
-//@-leo

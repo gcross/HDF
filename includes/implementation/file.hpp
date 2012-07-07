@@ -1,11 +1,7 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110520194631.1392: * @file file.hpp
-//@@language cplusplus
 #ifndef HDFPP_IMPLEMENTATION_FILE_HPP
 #define HDFPP_IMPLEMENTATION_FILE_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110520194631.1393: ** << Includes >>
+// Includes {{{
 #include "attributable.hpp"
 #include "error.hpp"
 #include "locatable.hpp"
@@ -17,24 +13,22 @@
 #include <boost/optional.hpp>
 #include <hdf5.h>
 #include <string>
-//@-<< Includes >>
+// Includes }}}
 
 namespace HDF {
 
-//@+others
-//@+node:gcross.20110520194631.1395: ** class File
-//@+<< Forward declarations >>
-//@+node:gcross.20110529102535.2040: *3* << Forward declarations >>
+// class File {{{
+
+// Forward declarations {{{
 class Contained;
-//@-<< Forward declarations >>
+// Forward declarations }}}
 
 class File
   : public Identified
   , public Parent
   , public Attributable
 {
-    //@+others
-    //@+node:gcross.20110520194631.1424: *3* Constructors
+    // Constructors {{{
     protected:
 
     File(hid_t id);
@@ -56,14 +50,17 @@ class File
       , boost::optional<FileCreationProperties const&> const& optional_creation_properties = boost::none
       , boost::optional<FileAccessProperties const&> const& optional_access_properties = boost::none
     );
-    //@+node:gcross.20110523113700.1690: *3* Fields
+    // Constructors }}}
+    // Fields {{{
     public:
 
     virtual File const& getFile() const;
     virtual Identity::Ptr const& getIdentity() const;
-    //@+node:gcross.20110520211700.1487: *3* Friends
+    // Fields }}}
+    // Friends {{{
     friend class Contained;
-    //@+node:gcross.20110521115623.3023: *3* Miscellaneous
+    // Friends }}}
+    // Miscellaneous {{{
     public:
 
     void flush(FileFlushScope scope=GlobalFileScope) const;
@@ -71,11 +68,10 @@ class File
     FileAccessProperties getCopyOfAccessProperties() const;
     FileCreationProperties getCopyOfCreationProperties() const;
     size_t getFreeSpace() const;
-    //@-others
+    // Miscellaneous }}}
 };
-//@-others
+// class Files }}}
 
 }
 
 #endif
-//@-leo

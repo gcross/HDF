@@ -1,20 +1,14 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110602092541.2124: * @file group.hpp
-//@@language cplusplus
 #ifndef HDFPP_IMPLEMENTATION_PROPERTIES_GROUP_CREATION_HPP
 #define HDFPP_IMPLEMENTATION_PROPERTIES_GROUP_CREATION_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110602092541.2125: ** << Includes >>
+// Includes {{{
 #include "../properties.hpp"
 #include "shared/create_missing_intermediate_groups.hpp"
-//@-<< Includes >>
+// Includes }}}
 
 namespace HDF {
 
-//@+others
-//@+node:gcross.20110526150836.1960: ** class GroupCreationProperties
-struct GroupCreationProperties
+struct GroupCreationProperties // {{{
   : public virtual Properties
   , public CreateMissingIntermediateGroupsProperty<GroupCreationProperties>
 {
@@ -22,8 +16,7 @@ struct GroupCreationProperties
 
     DECLARE_PROPERTIES_BOILERPLATE(GroupCreation)
  
-    //@+others
-    //@+node:gcross.20110602121059.2114: *3* estimated link information
+  // estimated link informations {{{
     GroupCreationProperties setEstimatedLinkInformation(
         unsigned int estimated_number_of_links,
         unsigned int estimated_average_link_name_lengths
@@ -35,17 +28,17 @@ struct GroupCreationProperties
     ) const;
 
     std::pair<unsigned int,unsigned int> getEstimatedLinkInformation() const;
-    //@+node:gcross.20110602092541.2057: *3* link creation order
+  // estimated link informations }}}
+  // link creation order {{{
     GroupCreationProperties setLinkCreationOrderTracking(LinkCreationOrderTracking creation_order_tracking);
     LinkCreationOrderTracking getLinkCreationOrderTracking() const;
-    //@+node:gcross.20110602092541.2048: *3* local heap size hint
+  // link creation order }}}
+  // local heap size hint {{{
     GroupCreationProperties setLocalHeapSizeHint(size_t size_hint);
     size_t getLocalHeapSizeHint() const;
-    //@-others
-};
-//@-others
+  // local heap size hint }}}
+}; // }}}
 
 }
 
 #endif
-//@-leo

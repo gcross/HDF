@@ -1,21 +1,14 @@
-//@+leo-ver=5-thin
-//@+node:gcross.20110521115623.3157: * @file memory_file.hpp
-//@@language cplusplus
 #ifndef HDFPP_IMPLEMENTATION_MEMORY_FILE_HPP
 #define HDFPP_IMPLEMENTATION_MEMORY_FILE_HPP
 
-//@+<< Includes >>
-//@+node:gcross.20110521115623.3158: ** << Includes >>
+// Includes {{{
 #include "file.hpp"
-//@-<< Includes >>
+// Includes }}}
 
 namespace HDF {
 
-//@+others
-//@+node:gcross.20110521115623.3160: ** class MemoryFile
-class MemoryFile: public File {
-    //@+others
-    //@+node:gcross.20110521115623.3161: *3* Constructors
+class MemoryFile: public File { // {{{
+    // Constructors {{{
     public:
 
     MemoryFile(
@@ -34,11 +27,9 @@ class MemoryFile: public File {
       , boost::optional<FileCreationProperties const&> const& optional_creation_properties = boost::none
       , boost::optional<FileAccessProperties const&> const& optional_access_properties = boost::none
     );
-    //@-others
-};
-//@-others
+    // Constructors }}}
+}; // }}}
 
 }
 
 #endif
-//@-leo
