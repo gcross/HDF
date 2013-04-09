@@ -32,6 +32,7 @@ add_library(HDF++
 target_link_libraries(HDF++
     ${HDF5_LIBRARIES}
 )
+install (TARGETS HDF++ LIBRARY DESTINATION lib)
 install (
     TARGETS HDF++
     DESTINATION lib/HDF++-${version}
