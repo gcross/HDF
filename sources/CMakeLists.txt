@@ -35,6 +35,6 @@ target_link_libraries(HDF++
 install (TARGETS HDF++ LIBRARY DESTINATION lib)
 install (
     TARGETS HDF++
-    DESTINATION lib/HDF++-${version}
+    DESTINATION lib
     EXPORT HDF++-targets
 )
